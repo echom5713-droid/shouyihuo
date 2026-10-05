@@ -1,16 +1,16 @@
 # 手艺活 · Local MVP v0.2
 
-[English project overview](README.md) · [英文项目摘要](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [2026-10-05 复验结果](docs/portfolio/VALIDATION.md)
+[English project overview](README.md) · [英文项目摘要](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [分阶段验收结果](docs/portfolio/VALIDATION.md) · [双语材料版说明](docs/BILINGUAL_PORTFOLIO.md)
 
-本说明保留中文应用的使用方式。本次英文材料版增加 `/review/` 审阅入口，没有改变训练规则或存储版本。
+本版面向英文项目审阅：应用与 `/review/` 介绍页首次打开默认英文，可通过 **English / 中文** 随时切换。以下保留中文按钮说明；需要按步骤操作时先切换为中文。训练规则、首次诊断规则、评分权重和学习记录格式保持不变。
 
-可在个人电脑运行的中文 3D 维修实训原型。课程为「普通非电动马桶水箱：结构认知与基础故障诊断」。无需账号、后端、API Key、Docker、Unity 或 Blender。
+可在个人电脑运行的中英文 3D 维修实训原型。课程为「普通非电动马桶水箱：结构认知与基础故障诊断」。无需账号、后端、API Key、Docker、Unity 或 Blender。
 
 **教学原型，内容未经维修专业人士审核，仅适用于内置简化模型。** 本项目不是实际维修指导、工程级数字孪生或正式职业技能考核。
 
 ## 1. 获取源码与启动
 
-下载并完整解压 `shouyihuo-portfolio-v0.2.zip`，得到 `shouyihuo-local` 文件夹。不要直接双击 `index.html`；应用需要通过本地服务器打开。
+下载并完整解压源码 ZIP，进入含有 `package.json` 的工程文件夹。GitHub 下载的 ZIP 可能使用仓库名和分支名作为文件夹名。不要直接双击 `index.html`；应用需要通过本地服务器打开。
 
 这次开发、安装、测试均在云端 Linux 中完成。云端的 `127.0.0.1` **不是你的电脑**，也不是公开网站。将源码下载到电脑并执行下面命令后，浏览器访问的才是你自己的本机服务。
 
@@ -44,7 +44,7 @@ npm.cmd run dev
 3. 按上面的地址栏方法打开 PowerShell，在新版目录执行 `npm.cmd ci`，安装结束后执行 `npm.cmd run dev`。
 4. 用**原来的浏览器与浏览器用户配置**，继续访问 **http://127.0.0.1:5173/**。
 
-**升级不需要清空学习记录。** v0.2 继续读取 `shouyihuo.local.v1` 和 `schemaVersion: 1`，当前尝试、已结束记录、昵称及安全错误保留。记录属于浏览器访问地址，不属于源码所在的硬盘文件夹；换源码文件夹不会迁移或清除记录。
+**升级不需要清空学习记录。** v0.2 继续读取 `shouyihuo.local.v1` 和 `schemaVersion: 1`，当前尝试、已结束记录、昵称及安全错误保留。语言偏好单独保存在 `shouyihuo.locale.v1`，切换语言不会重开尝试、修改安全记录或刷新分数。记录属于浏览器访问地址，不属于源码所在的硬盘文件夹；换源码文件夹不会迁移或清除记录。
 
 地址要完全保持一致：`127.0.0.1` 与 `localhost` 是不同存储位置；5173 与 4173 也不同。若原来使用 `localhost:5173`，请继续使用你原来的同一地址，不能切换到另一个地址后误以为记录丢失。本文其余步骤统一使用 `127.0.0.1:5173`。
 
@@ -69,7 +69,7 @@ npm.cmd run build
 npm.cmd run preview
 ```
 
-打开 **http://127.0.0.1:4173/**。开发服务和预览服务均只监听 `127.0.0.1`，没有公网隧道、发布或部署。源码包包含本次生成的 `dist/`；修改源码后应重新构建。
+打开 **http://127.0.0.1:4173/**。开发服务和预览服务均只监听 `127.0.0.1`，没有公网隧道、发布或部署。公开源码包不包含构建产物 `dist/`；请先执行构建，再运行预览。
 
 ## 2. 已实现的体验
 
@@ -160,9 +160,11 @@ npm.cmd run build
 
 `npm run test` 是单次运行，不进入 watch。`test:e2e` 会自动启动本地 Vite；结束后可用 `npx playwright show-report` 查看本机运行生成的 HTML 报告。
 
-本次升级验收日期：2026-09-26。修改前基线核对为 25 项单元测试、7 项 E2E；v0.2 增加了阶段派生和只读建议测试，最终 40 项单元测试与 12 项 E2E 全部通过，类型检查、构建及真实 WebGL 生产预览也通过。**本轮最终执行结果、失败修复记录和未验证项目以 [docs/TEST_REPORT.md](docs/TEST_REPORT.md) 为准**。UI 改动和新版截图索引见 [docs/UI_UPGRADE_v0.2.md](docs/UI_UPGRADE_v0.2.md)。
+历史 UI 升级验收日期为 **2026-09-26**：修改前基线为 25 项单元测试、7 项 E2E；当时 v0.2 最终 40 项单元测试与 12 项 E2E 通过，类型检查、构建及 WebGL 预览也通过。原始结果保留在 [docs/TEST_REPORT.md](docs/TEST_REPORT.md)。**2026-10-05 的材料版复验与随后中英文切换的专项验收分别记录于 [docs/portfolio/VALIDATION.md](docs/portfolio/VALIDATION.md)**，不能用双语改动前的结果替代改动后的验证。历史 UI 改动和截图索引见 [docs/UI_UPGRADE_v0.2.md](docs/UI_UPGRADE_v0.2.md)。
 
-本轮浏览器检查覆盖真实用户操作流程、真实 Canvas 点击、镜头与放大保持状态、原数据兼容、安全错误恢复、首次诊断与证明限制、键盘操作和本地网络请求。业务规则测试与 WebGL 视觉验证分别记录；构建成功不等于所有浏览器或显卡都验证通过。重点视口为 1440×900、1366×768、1280×800，并检查 1024×768 和 390×844；实际完成情况见测试报告。
+2026-10-05 双语版已实际通过类型检查、**47 项单元测试、18 项 E2E** 与构建；最终生产预览也单独实际通过，确认双语切换、审阅页、PDF 和真实 WebGL，且没有外部资源请求或未捕获页面错误。详见上述分阶段验收报告。
+
+历史 v0.2 浏览器检查覆盖真实用户操作流程、真实 Canvas 点击、镜头与放大保持状态、原数据兼容、安全错误恢复、首次诊断与证明限制、键盘操作和本地网络请求。业务规则测试与 WebGL 视觉验证分别记录；构建成功不等于所有浏览器或显卡都验证通过。重点视口为 1440×900、1366×768、1280×800，并检查 1024×768 和 390×844；实际完成情况见测试报告。
 
 测试环境使用已有的 `@sparticuz/chromium 153.0.0`（Chromium 153.0.8010.0）浏览器，通过配置变量 `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` 指定路径。v0.1 时官方浏览器下载曾返回损坏压缩包，临时测试浏览器不进入应用依赖，也不要求你的 Windows 安装它；你通常只需上面的 `npx.cmd playwright install chromium`。运行应用本身不需要安装 Playwright 浏览器。
 
@@ -200,7 +202,9 @@ e2e/flows.spec.ts            真实操作端到端测试
 e2e/fixtures/v0.1-store.json 冻结的旧格式兼容性数据
 docs/screenshots/v0.2/      本轮实际浏览器运行截图
 docs/UI_UPGRADE_v0.2.md     UI 升级说明与截图索引
-docs/TEST_REPORT.md         本轮实际测试结果及验证边界
+docs/TEST_REPORT.md         2026-09-26 历史 UI 验收及边界
+docs/portfolio/VALIDATION.md 后续材料版和双语版的分阶段验收
+docs/BILINGUAL_PORTFOLIO.md 中英文展示与材料版说明
 ```
 
 增加课程时，先定义小范围的教学模型、案例、证据与验证条件，再扩展类型和 reducer，添加正确路径与非法路径测试，最后把状态映射到新 3D 场景。若存储结构变化，增加 schemaVersion 并编写明确迁移或重置逻辑。当前不需要插件系统、数据库或复杂通用编辑器。

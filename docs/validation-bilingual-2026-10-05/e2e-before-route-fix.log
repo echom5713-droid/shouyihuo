@@ -1,0 +1,147 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 18 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:26:56 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:02 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:09 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   1 e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record (28.1s)
+[WebServer] 6:27:24 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:25 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:27 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   2 e2e/bilingual.spec.ts:159:1 › English critical safety failure survives language switches and remains failed at 100 points (17.7s)
+[WebServer] 6:27:42 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:42 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:44 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   3 e2e/bilingual.spec.ts:194:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation (5.1s)
+[WebServer] 6:27:47 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:48 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:51 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:27:52 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   4 e2e/bilingual.spec.ts:229:1 › English first diagnosis stays locked across language and refresh; exploration remains unscored (6.8s)
+[WebServer] 6:27:54 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   5 e2e/bilingual.spec.ts:255:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data (3.1s)
+[WebServer] 6:27:57 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘   6 e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app (1.1m)
+(node:247) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:29:24 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:29:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   7 e2e/flows.spec.ts:56:1 › 真实 WebGL、模型点击、完整密封案例、持久化、证明与本地请求 (25.2s)
+[WebServer] 6:29:49 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:29:50 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:29:53 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   8 e2e/flows.spec.ts:137:1 › 非法拆卸被阻止，刷新与复位不能消除关键错误，报告保留原因 (19.7s)
+[WebServer] 6:30:09 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:30:11 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   9 e2e/flows.spec.ts:161:1 › 进水控制情境：观察真实溢流、处理进水组件并通过完整复测 (17.5s)
+[WebServer] 6:30:27 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:30:28 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:30:40 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  10 e2e/flows.spec.ts:174:1 › 供水情境无需更换零件；引导与结构认知不生成合格证明 (14.8s)
+[WebServer] 6:30:42 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:30:43 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  11 e2e/flows.spec.ts:200:1 › 视图、正常排水、模型状态变化和窄屏折叠 (12.6s)
+[WebServer] 6:30:55 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  12 e2e/flows.spec.ts:231:1 › 损坏存储不白屏、确认后只清本项目数据 (2.7s)
+  ✓  13 e2e/flows.spec.ts:246:1 › WebGL 不可用时二维界面可操作 (1.3s)
+[WebServer] 6:30:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:30:59 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:02 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  14 e2e/flows.spec.ts:279:1 › v0.1 数据兼容：旧记录、昵称、进行中尝试和安全错误原样保留 (6.6s)
+[WebServer] 6:31:05 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:06 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:19 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  15 e2e/flows.spec.ts:315:1 › 阶段提示、镜头与放大保持状态，键盘可操作并恢复焦点 (16.3s)
+[WebServer] 6:31:22 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:23 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  16 e2e/flows.spec.ts:395:1 › 1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露答案 (3.9s)
+(node:480) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:31:26 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:27 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  17 e2e/flows.spec.ts:441:1 › 减少动态效果设置保留真实3D与即时镜头操作 (3.3s)
+[WebServer] 6:31:30 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:32 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:33 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:34 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:35 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:36 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:38 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:38 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:39 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:31:41 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  18 e2e/flows.spec.ts:456:1 › 独立测评首次错误诊断保持锁定，所有情境开始时没有定向提示 (13.8s)
+
+
+  1) e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.getAttribute: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('link', { name: /Read the project brief/ })
+
+
+      289 |     await shot(page, `49-review-en-${width}`);
+      290 |   }
+    > 291 |   const brief = await page.getByRole('link', { name: /Read the project brief/ }).getAttribute('href');
+          |                                                                                  ^
+      292 |   const response = await page.request.get(new URL(brief!, page.url()).href);
+      293 |   expect(response.ok()).toBe(true);
+      294 |   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/bilingual.spec.ts:291:82
+
+    Error Context: test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/flows.spec.ts:395:1 › 1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露答案 ──────────────────────────
+
+    Error: page.evaluate: TypeError: Failed to execute 'getComputedStyle' on 'Window': parameter 1 is not of type 'Element'.
+        at eval (eval at evaluate (:311:30), <anonymous>:9:25)
+        at Array.map (<anonymous>)
+        at eval (eval at evaluate (:311:30), <anonymous>:7:84)
+        at UtilityScript.evaluate (<anonymous>:313:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at eval (eval at evaluate (:311:30), <anonymous>:9:25)
+        at eval (eval at evaluate (:311:30), <anonymous>:7:84)
+        at UtilityScript.evaluate (<anonymous>:313:16)
+        at UtilityScript.<anonymous> (<anonymous>:1:44)
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/flows.spec.ts:408:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/flows-1440、1366、1280、1024-与-390px-响应式可操作，窄屏不泄露答案/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/flows-1440、1366、1280、1024-与-390px-响应式可操作，窄屏不泄露答案/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/flows-1440、1366、1280、1024-与-390px-响应式可操作，窄屏不泄露答案/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/flows-1440、1366、1280、1024-与-390px-响应式可操作，窄屏不泄露答案/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app 
+    e2e/flows.spec.ts:395:1 › 1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露答案 ───────────────────────────
+  16 passed (4.8m)

@@ -6,6 +6,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import type { Attempt, PartId } from '../domain/types';
 import { flows } from '../domain/engine';
 import { PARTS } from '../domain/course';
+import { useLocale } from '../i18n';
 
 type Vec3 = [number, number, number];
 export type CameraView = 'overview' | 'top' | 'focus';
@@ -340,14 +341,15 @@ function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, 
   </SceneContext.Provider>;
 }
 function Fallback({ attempt, onSelect, selected }: Pick<ModelProps, 'attempt' | 'onSelect' | 'selected'>) {
+  const { t } = useLocale();
   return <div className="fallback" data-testid="webgl-fallback">
-    <p><strong>WebGL 不可用，已切换二维交互</strong><br />可继续全部规则训练；二维示意不代表 3D 已成功加载。</p>
-    <svg viewBox="0 0 440 330" role="img" aria-label="二维水箱交互示意图">
+    <p><strong>{t('WebGL 不可用，已切换二维交互')}</strong><br />{t('可继续全部规则训练；二维示意不代表 3D 已成功加载。')}</p>
+    <svg viewBox="0 0 440 330" role="img" aria-label={t('二维水箱交互示意图')}>
       <path d="M60 50v235h320V50" fill="#edf0e6" stroke="#738573" strokeWidth="8" />
       <rect x="66" y={278 - attempt.water * 230} width="308" height={Math.max(3, attempt.water * 230)} fill="#95cad6" opacity=".6" />
-      {([{ id: 'lid', x: 50, y: attempt.lidOpen ? 12 : 40, w: 340, h: 16 }, { id: 'inlet', x: 94, y: 82, w: 25, h: 195 }, { id: 'float', x: 152, y: 243 - attempt.water * 200, w: 46, h: 38 }, { id: 'overflow', x: 304, y: 71, w: 22, h: 208 }, { id: 'drain', x: 207, y: 260, w: 50, h: 20 }, { id: 'supply', x: 10, y: 250, w: 33, h: 25 }] as const).map(p => <g key={p.id} role="button" tabIndex={0} aria-label={PARTS.find(i => i.id === p.id)?.name} onClick={() => onSelect(p.id, '2d')} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onSelect(p.id, '2d'); }}><rect x={p.x} y={p.y} width={p.w} height={p.h} rx="6" fill={selected === p.id ? '#226953' : '#829480'} /><title>{PARTS.find(i => i.id === p.id)?.name}</title></g>)}
+      {([{ id: 'lid', x: 50, y: attempt.lidOpen ? 12 : 40, w: 340, h: 16 }, { id: 'inlet', x: 94, y: 82, w: 25, h: 195 }, { id: 'float', x: 152, y: 243 - attempt.water * 200, w: 46, h: 38 }, { id: 'overflow', x: 304, y: 71, w: 22, h: 208 }, { id: 'drain', x: 207, y: 260, w: 50, h: 20 }, { id: 'supply', x: 10, y: 250, w: 33, h: 25 }] as const).map(p => <g key={p.id} role="button" tabIndex={0} aria-label={t(PARTS.find(i => i.id === p.id)?.name ?? '')} onClick={() => onSelect(p.id, '2d')} onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') onSelect(p.id, '2d'); }}><rect x={p.x} y={p.y} width={p.w} height={p.h} rx="6" fill={selected === p.id ? '#226953' : '#829480'} /><title>{t(PARTS.find(i => i.id === p.id)?.name ?? '')}</title></g>)}
     </svg>
-    <small>可使用部件列表选择、检查和操作。二维模式不支持镜头工具；旋转、俯视与聚焦需 WebGL。</small>
+    <small>{t('可使用部件列表选择、检查和操作。二维模式不支持镜头工具；旋转、俯视与聚焦需 WebGL。')}</small>
   </div>;
 }
 class ModelBoundary extends Component<{ children: ReactNode; fallback: ReactNode; onFailure: () => void }, { failed: boolean }> {
@@ -360,6 +362,9 @@ function supportsWebGL() {
   try { const canvas = document.createElement('canvas'); const context = canvas.getContext('webgl2'); if (!context) return false; context.getExtension('WEBGL_lose_context')?.loseContext(); return true; } catch { return false; }
 }
 export function TankModel(props: ModelProps) {
+  const { t } = useLocale();
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  useEffect(() => { canvasRef.current?.setAttribute('aria-label', t('可旋转、缩放和点击部件的三维水箱')); }, [t]);
   const [supported] = useState(supportsWebGL);
   const [ready, setReady] = useState(false);
   const reduced = useReducedMotion();
@@ -375,7 +380,8 @@ export function TankModel(props: ModelProps) {
     {supported && !lost ? <ModelBoundary fallback={fallback} onFailure={() => setLost(true)}>
       <Canvas shadows={{ type: THREE.PCFShadowMap }} dpr={[1, 1.5]} camera={{ position: [3.8, 3.9, 8.1], fov: 36, near: 0.1, far: 60 }} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }} onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.02;
-        gl.domElement.setAttribute('aria-label', '可旋转、缩放和点击部件的三维水箱');
+        canvasRef.current = gl.domElement;
+        gl.domElement.setAttribute('aria-label', t('可旋转、缩放和点击部件的三维水箱'));
         gl.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); setLost(true); }, { once: true });
         setReady(true);
       }} fallback={fallback}>
@@ -383,7 +389,7 @@ export function TankModel(props: ModelProps) {
       </Canvas>
       <svg aria-hidden="true" className="model-label-leaders" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>{Object.keys(ANCHORS).map(key => { const id = key as PartId; return <line key={id} ref={el => { if (el) leaderRefs.current[id] = el; }} stroke={props.selected === id ? '#22644d' : '#7c9086'} strokeWidth={props.selected === id ? 1.5 : 1} style={{ visibility: 'hidden' }} />; })}</svg>
       <div className={`model-labels ${props.labels ? '' : 'labels-hidden'}`} aria-hidden={!props.labels}>
-        {Object.keys(ANCHORS).map(key => { const id = key as PartId; return <button key={id} type="button" tabIndex={props.labels ? 0 : -1} data-testid={`anchor-${id}`} ref={el => { if (el) labelsRef.current[id] = el; }} onClick={() => props.onSelect(id, 'label')} className={props.selected === id ? 'chosen' : ''}><span />{PARTS.find(p => p.id === id)?.short}</button>; })}
+        {Object.keys(ANCHORS).map(key => { const id = key as PartId; return <button key={id} type="button" tabIndex={props.labels ? 0 : -1} data-testid={`anchor-${id}`} ref={el => { if (el) labelsRef.current[id] = el; }} onClick={() => props.onSelect(id, 'label')} className={props.selected === id ? 'chosen' : ''}><span />{t(PARTS.find(p => p.id === id)?.short ?? '')}</button>; })}
       </div>
     </ModelBoundary> : fallback}
   </div>;

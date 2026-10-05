@@ -1,0 +1,38 @@
+{
+  "src/domain/engine.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "770cc2d063d952d623ffc1f201c028082272ed5941dede391377bda1f162fd0d"
+  },
+  "src/domain/course.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "af56a14cc39218fb6085457d89d4d8e2ddda2fb2fd494cdc21767e493287ad43"
+  },
+  "src/domain/types.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "334a5c9d2d7bfe218b55f966ae3e80c3c72f270ac695c440cbbf24076193e921"
+  },
+  "src/storage/local.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "ae8a4c3aed2a2204a64769a356a6e4c7a2ea4b175c9aa3517f2f8b9c979f7042"
+  },
+  "src/ui/presentation.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "4c03a8f41b438464a94faa7a062c9142870240a144cd961e80213ca1896be2f4"
+  },
+  "package.json": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "955ce26073065308548aef208b756e4afd871958f6c076d1bb1b037e92b5b1f9"
+  },
+  "package-lock.json": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "3b8bac2b086b4573e1914a750f65a7d53debeb9cdba939c05f6102af3dd2c3ba"
+  },
+  "tests/engine.test.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "ec6593be89bc73359ca7ce429d37fef186a6a320f1571d648daa51662a20c7c1"
+  },
+  "tests/presentation.test.ts": {
+    "identical_to_pre_localisation_baseline": true,
+    "sha256": "c695b42bd4abc37287839b56cbd5b378259f4d95d6e1767e2cf186d7c270660a"
+  }
+}

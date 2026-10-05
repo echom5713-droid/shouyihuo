@@ -1,6 +1,45 @@
 # Validation evidence — 5 October 2026
 
-This report records a fresh validation run for the English portfolio package. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
+This report distinguishes the portfolio checks **before localisation** from the subsequent **English-default bilingual edition**. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
+
+## Bilingual edition: acceptance status
+
+The final bilingual run on **5 October 2026** passed type checking, **47 unit tests** and **18 Playwright tests (3.6 minutes)**. The final production build and separately executed production-preview smoke check also passed. The preview rendered a real **WebGL 2** scene through **ANGLE / Vulkan SwiftShader**, with **zero external requests and zero uncaught page errors**.
+
+| Bilingual check | Actual result | Evidence |
+|---|---|---|
+| `npm run typecheck` | **PASS** | [TypeScript log](../validation-bilingual-2026-10-05/typecheck.log) |
+| `npm run test` | **PASS — 47 tests** | [Unit test log](../validation-bilingual-2026-10-05/unit-tests.log) |
+| `npm run test:e2e` | **PASS — 18 tests, 3.6 minutes** | [Final browser log](../validation-bilingual-2026-10-05/e2e-final.log) |
+| `npm run build` | **PASS** | [Build log](../validation-bilingual-2026-10-05/build.log) |
+| Final production preview | **PASS — bilingual review, PDF and live WebGL application** | [Preview result](../validation-bilingual-2026-10-05/production-preview.json) · [Reproducible smoke script](../validation-bilingual-2026-10-05/production-smoke.mjs) |
+
+The final suite combines the 12 original browser scenarios with six bilingual scenarios. It verifies English-default startup, English / 中文 switching, translated dynamic feedback and 3D labels, persisted language choice, unchanged active attempt and retained safety errors, a full user-operated assessment, translated reports/print content, and the review page. The bilingual layouts were checked at **1440×900, 1366×768, 1280×800 and 390×844**. [Environment](../validation-bilingual-2026-10-05/environment.json), [core-file comparison](../validation-bilingual-2026-10-05/core-integrity.json) and [acceptance scope](../BILINGUAL_PORTFOLIO.md) are recorded separately.
+
+### Fresh bilingual visual evidence
+
+The following captures come from the running bilingual application on 5 October and were opened for visual review. The new English workbench and the amber 100-point safety-failure report replace historical images in the main portfolio. The 3D scene is real WebGL, not a static replacement.
+
+| View | Capture |
+|---|---|
+| English course entrance | [1440 px](../screenshots/bilingual-2026-10-05/40-home-en-1440.png) · [1366 px](../screenshots/bilingual-2026-10-05/40-home-en-1366.png) · [1280 px](../screenshots/bilingual-2026-10-05/40-home-en-1280.png) · [390 px](../screenshots/bilingual-2026-10-05/40-home-en-390.png) |
+| English training workbench | [1440 px](../screenshots/bilingual-2026-10-05/41-workbench-en-1440.png) |
+| Critical safety error retained | [Workbench notice](../screenshots/bilingual-2026-10-05/47-safety-error-en.png) · [100-point failed report](../screenshots/bilingual-2026-10-05/48-safety-report-en.png) |
+| Exploded WebGL view | [English model view](../screenshots/bilingual-2026-10-05/55-exploded-en.png) |
+
+The final production smoke check opened the English review page at 1440×900 and 390×844, checked all images and horizontal overflow, switched to Chinese and refreshed to verify the preference, fetched the linked PDF and checked its signature, then followed the launch link to the actual application. English / Chinese switching preserved the live WebGL model. The server was stopped after checking. Production captures: [English desktop](../screenshots/bilingual-2026-10-05/60-review-desktop-en.png), [English mobile](../screenshots/bilingual-2026-10-05/61-review-mobile-en.png), and [Chinese mobile](../screenshots/bilingual-2026-10-05/63-review-mobile-zh.png).
+
+### Problems found and corrected in this iteration
+
+- Longer English copy exposed clipping in a compact action panel. The layout and content order were corrected, then the browser workflows and fresh captures were rerun.
+- The development `/review/` route initially fell back to the application route. The route handling was corrected and checked again through the reviewer flow.
+- A contrast-sampling selector still assumed the earlier Chinese interface. Its selector was corrected in the test; this was a test-maintenance fix, not a change to assessment rules.
+
+The original simulation engine, course definitions, domain types, attempt storage, stage derivation, dependency files and original rule tests match the pre-localisation baseline at the paths listed in the integrity report. UI/localisation files do change; no blanket claim that all source files are identical is made. All physical-device and professional-validation limits below still apply.
+
+## Pre-localisation portfolio run
+
+The following environment, results and screenshots describe the completed 5 October portfolio verification before application localisation.
 
 ## Environment and reproducibility
 
@@ -25,7 +64,21 @@ npm run preview
 
 The browser installation is a development prerequisite, not a runtime dependency of the course. A test-specific executable can be selected with `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`. To keep old visual evidence intact, `E2E_SCREENSHOT_DIR` and `E2E_VALIDATION_DIR` can redirect generated screenshots and contrast samples.
 
-## Current results
+For a separate evidence run, use new output directories:
+
+```sh
+# bash / zsh
+E2E_SCREENSHOT_DIR=docs/screenshots/local-recheck E2E_VALIDATION_DIR=docs/validation-local-recheck npm run test:e2e
+```
+
+```powershell
+# Windows PowerShell
+$env:E2E_SCREENSHOT_DIR = "docs/screenshots/local-recheck"
+$env:E2E_VALIDATION_DIR = "docs/validation-local-recheck"
+npm.cmd run test:e2e
+```
+
+## Results before localisation
 
 | Check | Result | Evidence |
 |---|---|---|
@@ -77,7 +130,7 @@ The production smoke check was run after the final English reviewer assets were 
 
 ## Fresh screenshots
 
-All files below were captured from the running application on **5 October 2026**. Historical v0.2 screenshots were preserved separately. The English review page intentionally includes its labelled historical 26 September app captures; its surrounding page was freshly rendered for this check.
+All files below were captured from the running application on **5 October 2026**. Historical v0.2 screenshots were preserved separately. At that pre-localisation stage, the English review page included labelled historical 26 September app captures; its surrounding page was freshly rendered for that check. The later bilingual edition uses new English-interface captures.
 
 | View | Fresh capture |
 |---|---|

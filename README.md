@@ -4,14 +4,14 @@
 
 Shouyihuo (手艺活, “craft skills”) turns a small teaching scenario into an inspectable software system: a learner explores a simplified gravity-fed toilet cistern, gathers evidence, diagnoses a fault, performs simulated actions and verifies the result. The workbench runs in the browser, with no backend, account or API key.
 
-**Local MVP v0.2 · English portfolio edition · 5 October 2026**
+**Local MVP v0.2 · Bilingual portfolio edition · English by default · 5 October 2026**
 
 [Public source repository](https://github.com/echom5713-droid/shouyihuo)  
 [中文运行说明](README.zh-CN.md) · [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) · [Five-minute review guide](docs/portfolio/REVIEWER_GUIDE.md) · [Project brief (PDF)](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [Validation evidence](docs/portfolio/VALIDATION.md)
 
-![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/v0.2/02-workbench-1440.png)
+![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/bilingual-2026-10-05/41-workbench-en-1440.png)
 
-*Actual application capture from the v0.2 validation run on 26 September 2026. The learner interface is in Simplified Chinese. English reviewers can use the bilingual walkthrough; this edition does not claim that the application itself has been translated.*
+*Actual English-interface WebGL capture from 5 October 2026. The application starts in English and supports an English / 中文 switch. [Validation](docs/portfolio/VALIDATION.md) separates bilingual checks from earlier runs.*
 
 ## What to inspect first
 
@@ -22,7 +22,7 @@ Shouyihuo (手艺活, “craft skills”) turns a small teaching scenario into a
 | 10 minutes | [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) | State transitions, invariants, persistence and trade-offs |
 | Deeper review | [Pure simulation engine](src/domain/engine.ts), [unit tests](tests/engine.test.ts), [browser flows](e2e/flows.spec.ts) | Whether the implementation supports the claims |
 
-An English review page is included at `/review/` when running the app locally. It introduces the project and links to the working simulation. No public live demo is implied by this repository.
+A bilingual review page is included at `/review/` when running the app locally. Both the review page and the working simulation open in English for a new visitor and expose an **English / 中文** switch. This makes the implementation directly reviewable alongside the English case study and project brief. No public live demo is implied by this repository.
 
 ## The engineering problem
 
@@ -46,6 +46,7 @@ This is a bounded software-engineering prototype. It is **not** computational fl
 - **A complete attempt:** observe → diagnose → simulate treatment → retest → explain the score → save locally.
 - **Failure handling:** illegal disassembly is rejected and recorded, corrupt storage is reported, and unavailable WebGL has an explicit 2D fallback.
 - **UI refinement:** stage-specific action hierarchy, persistent safety feedback, keyboard focus handling, responsive layouts and a workspace expansion that preserves the same attempt and Canvas.
+- **Bilingual presentation:** English by default, with an English / 中文 switch for the application and review page. Language changes affect labels and explanations, not case IDs, events, assessment or progress.
 
 The 25/30/25/20 score covers evidence, diagnosis, process and verification. Passing additionally requires at least 80 points, a correct diagnosis and repair, all applicable verification conditions and **no critical safety error**. A score of 100 can therefore still fail. [See the rule explanation](docs/portfolio/TECHNICAL_CASE_STUDY.md).
 
@@ -81,7 +82,7 @@ npm run preview
 
 Use `E2E_SCREENSHOT_DIR` and `E2E_VALIDATION_DIR` to select new evidence directories instead of replacing the historical v0.2 captures. Shell-specific examples and the actual current results are in [Validation](docs/portfolio/VALIDATION.md).
 
-The original v0.2 verification on **26 September 2026** recorded 40 passing unit tests, 12 passing browser tests, type checking and a production build. The **5 October 2026 portfolio recheck is recorded separately**; earlier results are not presented as a new execution. Test results demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
+The **5 October bilingual run** passed type checking, **47 unit tests**, **18 browser tests** and a production build. [Validation](docs/portfolio/VALIDATION.md) records the final production-preview status separately. Earlier September and pre-localisation October results remain dated historical evidence. Tests demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
 
 ## Source map
 
@@ -92,6 +93,7 @@ The original v0.2 verification on **26 September 2026** recorded 40 passing unit
 | [`src/domain/engine.ts`](src/domain/engine.ts) | Pure transitions, safety conditions, time stepping and scoring |
 | [`src/storage/local.ts`](src/storage/local.ts) | Zod validation, recovery, persistence and idempotent archiving |
 | [`src/ui/presentation.ts`](src/ui/presentation.ts) | Read-only stage and review-advice derivation |
+| [`src/i18n/index.tsx`](src/i18n/index.tsx) | English-default locale context and local presentation translation; separate language preference |
 | [`src/components/TankModel.tsx`](src/components/TankModel.tsx) | Procedural geometry, state rendering, camera and fallback |
 | [`src/views/Workbench.tsx`](src/views/Workbench.tsx) | Interaction hierarchy, selection and expanded workspace |
 | [`tests/`](tests/) / [`e2e/`](e2e/) | Rule-level checks and actual browser interaction |
@@ -100,7 +102,7 @@ The stack is Vite, React, TypeScript, Three.js, React Three Fiber, Zod, Vitest a
 
 ## Learning records and boundaries
 
-The storage key remains `shouyihuo.local.v1`, with `schemaVersion: 1`. Current attempts are separated by mode; completed attempts are deduplicated by ID. Keep the same browser profile and origin to retain your records. `localhost`, `127.0.0.1` and different ports have separate storage.
+The learning-record storage key remains `shouyihuo.local.v1`, with `schemaVersion: 1`. Current attempts are separated by mode; completed attempts are deduplicated by ID. The display preference uses the separate `shouyihuo.locale.v1` key. Switching language does not create a new attempt, change safety errors, or rewrite a score. Keep the same browser profile and origin to retain your records. `localhost`, `127.0.0.1` and different ports have separate storage.
 
 Records stay in the browser and are editable by its owner. The printable completion sheet is only a **local demonstration record**, not a tamper-resistant certificate, occupational qualification or permission to perform real repairs. No personal learning records are included in this repository; the compatibility fixture is synthetic.
 

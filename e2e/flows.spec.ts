@@ -8,6 +8,11 @@ import type { LocalStore } from '../src/storage/local';
 const oldStore = JSON.parse(readFileSync(new URL('./fixtures/v0.1-store.json', import.meta.url), 'utf8')) as LocalStore;
 const shots = process.env.E2E_SCREENSHOT_DIR || 'docs/screenshots/v0.2';
 const validationOutput = process.env.E2E_VALIDATION_DIR || 'docs/validation-v0.2';
+// The learner interface now defaults to English, irrespective of browser locale.
+// Keep the original Chinese regression journeys explicit without touching v1 data.
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('shouyihuo.locale.v1', 'zh'));
+});
 async function screenshot(page: Page, name: string, fullPage = true) { await mkdir(shots, { recursive: true }); await page.screenshot({ path: `${shots}/${name}.png`, fullPage }); }
 async function collect(page: Page, part: 'drain' | 'inlet' = 'drain') {
   await page.getByRole('button', { name: '查看水位', exact: true }).click();
@@ -304,7 +309,7 @@ test('v0.1 数据兼容：旧记录、昵称、进行中尝试和安全错误原
   expect(after.records).toEqual(oldStore.records);
   expect(after.nickname).toBe(oldStore.nickname);
   expect(after.records).toHaveLength(1);
-  expect(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('shouyihuo.')))).toEqual(['shouyihuo.local.v1']);
+  expect(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('shouyihuo.')).sort())).toEqual(['shouyihuo.local.v1', 'shouyihuo.locale.v1']);
 });
 
 test('阶段提示、镜头与放大保持状态，键盘可操作并恢复焦点', async ({ page }) => {
@@ -403,7 +408,7 @@ test('1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露�
       const contrast = await page.evaluate(() => {
         const rgb = (text: string) => (text.match(/[\d.]+/g) ?? []).map(Number);
         const luminance = (channels: number[]) => channels.slice(0, 3).map(n => n / 255).map(n => n <= 0.04045 ? n / 12.92 : ((n + 0.055) / 1.055) ** 2.4).reduce((sum, n, i) => sum + n * [0.2126, 0.7152, 0.0722][i], 0);
-        return ['.persistent-safety span', '.part-detail p', '.current-task span'].map(selector => {
+        return ['.persistent-safety span', '.selected-part-description', '.current-task span'].map(selector => {
           const el = document.querySelector(selector)!;
           const style = getComputedStyle(el);
           let ancestor: Element | null = el, background = 'rgb(255, 255, 255)';

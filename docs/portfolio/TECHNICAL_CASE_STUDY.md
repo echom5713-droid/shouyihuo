@@ -2,15 +2,15 @@
 
 **Version:** Local MVP v0.2  
 **Documentation prepared:** 5 October 2026  
-**Scope:** a browser-based teaching model of a simple gravity-fed toilet cistern. The application interface is in Simplified Chinese; this case study and the [reviewer guide](REVIEWER_GUIDE.md) are in English.
+**Scope:** a browser-based teaching model of a simple gravity-fed toilet cistern. The application and review page default to English, with an English / 中文 switch. This case study and the [reviewer guide](REVIEWER_GUIDE.md) provide English review material.
 
 Shouyihuo connects an interactive 3D model to a deterministic training simulation. A learner observes symptoms, collects evidence, submits a diagnosis, performs simulated actions, runs a working-cycle test, and receives an explainable report. Its main engineering problem is keeping the visual model, permissible actions, assessment rules, and saved progress consistent.
 
 This is a teaching prototype, not a digital twin or real repair guidance. Its content has not been reviewed by a repair professional. The three scenarios apply only to the built-in simplified model. [Provenance and AI assistance](PROVENANCE.md) describe how the project was produced.
 
-![The v0.2 training workbench in a real browser run](../screenshots/v0.2/02-workbench-1440.png)
+![The v0.2 training workbench in a real browser run](../screenshots/bilingual-2026-10-05/41-workbench-en-1440.png)
 
-*Historical v0.2 browser screenshot, captured during the 26 September 2026 validation. The model is rendered with WebGL, not a background image.*
+*Actual English-interface browser screenshot, captured on 5 October 2026. The model is rendered with WebGL, not a background image.*
 
 ## 1. A deliberately bounded system
 
@@ -35,6 +35,7 @@ Three modes share this model: unscored structure exploration, guided practice, a
 | Simulation and scoring | State transitions, action guards, water approximation, retest, score calculation | [engine.ts](../../src/domain/engine.ts) |
 | Persistence | Schema validation, local storage, idempotent archiving | [local.ts](../../src/storage/local.ts) |
 | Presentation derivation | Current stage and prioritised review suggestions | [presentation.ts](../../src/ui/presentation.ts) |
+| Localisation | English-default context, bundled UI/domain text and separate locale preference | [i18n/index.tsx](../../src/i18n/index.tsx) |
 | Application and workbench | Route/session ownership, event dispatch, controls and feedback | [App.tsx](../../src/App.tsx), [Workbench.tsx](../../src/views/Workbench.tsx) |
 | 3D view | Procedural geometry, selection, camera and visual interpolation | [TankModel.tsx](../../src/components/TankModel.tsx) |
 
@@ -43,6 +44,8 @@ The `Attempt` stores supply state, water level, component installation/replaceme
 The 3D scene reads this attempt. It does not decide whether a repair succeeded, award points, or keep a second copy of the fault state. Selecting a mesh, a part-list entry, or the operation selector updates the same selected-part value. Camera and display settings are separate transient UI state.
 
 The model does interpolate displayed water and component positions between updates. That smoothing is a rendering concern; the reducer's values remain authoritative.
+
+Language is also presentation state. Local, bundled translations render the interface and course explanations in English or Chinese; stable domain identifiers and event payloads remain independent of display language. The locale preference is stored separately as `shouyihuo.locale.v1`, so an old attempt does not need a schema migration merely to display in English. Switching languages must preserve the same attempt, evidence, first diagnosis, errors and report. See [the bilingual release note](../BILINGUAL_PORTFOLIO.md).
 
 ## 3. Deterministic simulation, with explicit limits
 
@@ -83,9 +86,9 @@ At least two applicable observations are required before diagnosis. Independent 
 
 This distinction is visible in the report: **a score of 100 can still be a failed assessment**. The report uses the pass gate, not the numeric score alone, to choose its result treatment and certificate eligibility. A successful guided attempt does not issue the independent-assessment completion certificate.
 
-![A 100-point attempt that fails because of a retained critical safety error](../screenshots/v0.2/08-safety-report.png)
+![A 100-point attempt that fails because of a retained critical safety error](../screenshots/bilingual-2026-10-05/48-safety-report-en.png)
 
-*Historical browser evidence from 26 September 2026. The unsafe removal was blocked; completing the later repair did not erase it.*
+*Actual English-interface browser evidence from 5 October 2026. The unsafe removal was blocked; completing the later treatment did not erase it.*
 
 ## 6. Local persistence and its trust boundary
 
@@ -115,7 +118,7 @@ Evidence: [preserved failure context](../validation-v0.2/regression-found/retest
 
 ## 9. Verification and remaining uncertainty
 
-The historical validation dated **26 September 2026** reports successful type checking, **40 unit tests**, **12 E2E tests**, a production build, and a production-preview check. These are dated results, not a claim that those commands were rerun when this English document was prepared. The separately dated [portfolio recheck](VALIDATION.md) records the 5 October run. See the [full original validation report](../TEST_REPORT.md) and [production-preview evidence](../validation-v0.2/production-preview.json).
+The historical validation dated **26 September 2026** reports successful type checking, **40 unit tests**, **12 E2E tests**, a production build, and a production-preview check. These are dated results, not a claim that those commands were rerun when this English document was prepared. The separately dated [validation report](VALIDATION.md) distinguishes the 5 October pre-localisation run from the bilingual acceptance checks. See the [full original validation report](../TEST_REPORT.md) and [production-preview evidence](../validation-v0.2/production-preview.json).
 
 The browser evidence used Linux Chromium with a real WebGL 2.0 context backed by ANGLE/Vulkan SwiftShader. It covered real Canvas selection, all three complete scenario paths, persisted records, a 100-point safety failure, old-store compatibility, fallback behaviour, and desktop/narrow-screen layouts. It did not establish native-GPU performance, Safari/Firefox support, real touchscreen usability, physical printing, or learning effectiveness. No participant study or professional repair-content review has been conducted as part of this work.
 

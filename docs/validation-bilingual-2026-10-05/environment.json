@@ -1,0 +1,41 @@
+{
+  "runDate": "2026-10-05",
+  "runTimestamp": "2026-10-05T09:34:56.844634+00:00",
+  "platform": "linux",
+  "architecture": "x64",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "projectVersion": "0.2.0",
+  "dependencies": {
+    "@react-three/fiber": "9.8.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "0.186.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "26.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "typescript": "5.9.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  },
+  "browser": "Chromium 153.0.8010.0",
+  "browserSource": "@sparticuz/chromium 153.0.0, temporary test-only installation outside the project",
+  "rendering": "Software WebGL requested with --use-angle=swiftshader --enable-unsafe-swiftshader; actual context recorded separately",
+  "screenshots": "docs/screenshots/bilingual-2026-10-05",
+  "notes": [
+    "Existing pinned project dependencies reused without upgrades.",
+    "Test-only Chromium and local CJK fonts reused from the documented pre-localisation run.",
+    "New English-first tests run with a zh-CN browser locale; legacy regression tests explicitly choose zh."
+  ],
+  "testFont": "Noto Sans SC 400/700, from @fontsource/noto-sans-sc 5.3.0, test-only temporary Fontconfig directory",
+  "edition": "English-default bilingual v0.2",
+  "localeKey": "shouyihuo.locale.v1",
+  "learningStorageKey": "shouyihuo.local.v1",
+  "schemaVersion": 1
+}

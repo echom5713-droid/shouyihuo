@@ -1,0 +1,21 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test --grep Bilingual reviewer page|1440、1366
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:32:43 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  1 e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app (5.6s)
+[WebServer] 6:32:45 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 e2e/flows.spec.ts:395:1 › 1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露答案 (8.3s)
+
+  2 passed (15.6s)

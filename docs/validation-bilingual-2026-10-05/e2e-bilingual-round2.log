@@ -1,0 +1,80 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test e2e/bilingual.spec.ts
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:25:23 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:25:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:25:36 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  1 e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record (27.5s)
+[WebServer] 6:25:51 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:25:52 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:25:53 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 e2e/bilingual.spec.ts:159:1 › English critical safety failure survives language switches and remains failed at 100 points (17.0s)
+[WebServer] 6:26:08 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:26:08 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:26:10 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  3 e2e/bilingual.spec.ts:194:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation (5.2s)
+[WebServer] 6:26:13 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:26:14 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:26:17 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:26:18 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  4 e2e/bilingual.spec.ts:229:1 › English first diagnosis stays locked across language and refresh; exploration remains unscored (7.2s)
+[WebServer] 6:26:21 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  5 e2e/bilingual.spec.ts:255:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data (3.5s)
+[WebServer] 6:26:24 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  6 e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app (14.7s)
+
+
+  1) e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('heading', { level: 1 })
+    Expected pattern: /simulation/i
+    Received string:  "Explore the system.Diagnose the fault."
+    Timeout: 12000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('heading', { level: 1 }) with timeout 12000ms
+      - waiting for getByRole('heading', { level: 1 })
+        28 × locator resolved to <h1>…</h1>
+           - unexpected value "Explore the system.Diagnose the fault."
+
+
+      280 |   await page.goto('/review/');
+      281 |   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    > 282 |   await expect(page.getByRole('heading', { level: 1 })).toContainText(/simulation/i);
+          |                                                         ^
+      283 |   for (const [width, height] of [[1440, 900], [390, 844]] as const) {
+      284 |     await page.setViewportSize({ width, height });
+      285 |     for (const image of await page.locator('img').all()) await image.scrollIntoViewIfNeeded();
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/bilingual.spec.ts:282:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bilingual-Bilingual-review-c2889-e-and-opens-the-working-app/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app 
+  5 passed (1.3m)

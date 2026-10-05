@@ -1,0 +1,154 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test e2e/bilingual.spec.ts
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:22:57 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:23:10 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  1 e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record (28.3s)
+(node:162) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:23:27 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:23:28 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:23:30 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 e2e/bilingual.spec.ts:158:1 › English critical safety failure survives language switches and remains failed at 100 points (19.3s)
+[WebServer] 6:23:46 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:24:20 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  3 e2e/bilingual.spec.ts:193:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation (1.0m)
+(node:263) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:24:49 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:24:51 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:24:54 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:24:55 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:24:56 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  4 e2e/bilingual.spec.ts:228:1 › English first diagnosis stays locked across language and refresh; exploration remains unscored (8.3s)
+[WebServer] 6:24:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  5 e2e/bilingual.spec.ts:254:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data (14.6s)
+
+
+  1) e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record 
+
+    Error: expect(locator).toBeInViewport() failed
+
+    Locator:  getByRole('button', { name: 'Check water level', exact: true })
+    Expected: in viewport
+    Received: viewport ratio 0
+    Timeout:  12000ms
+
+    Call log:
+      - Expect "toBeInViewport" getByRole('button', { name: 'Check water level', exact: true }) with timeout 12000ms
+      - waiting for getByRole('button', { name: 'Check water level', exact: true })
+        26 × locator resolved to <button class="button">Check water level</button>
+           - unexpected value "viewport ratio 0"
+
+
+      88 |     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      89 |     if (width >= 1280) {
+    > 90 |       await expect(button(page, '查看水位')).toBeInViewport();
+         |                                          ^
+      91 |       await expect(button(page, '检查供水')).toBeInViewport();
+      92 |       await expect(page.locator('.persistent-safety')).toBeInViewport();
+      93 |     }
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/bilingual.spec.ts:90:42
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bilingual-English-defaults-3d01b-ificate-preserve-one-record/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bilingual-English-defaults-3d01b-ificate-preserve-one-record/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bilingual-English-defaults-3d01b-ificate-preserve-one-record/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bilingual-English-defaults-3d01b-ificate-preserve-one-record/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/bilingual.spec.ts:193:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: '继续引导训练', exact: true })
+
+
+      201 |   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+      202 |   await noUntranslatedChinese(page, [oldStore.nickname]);
+    > 203 |   await button(page, '继续引导训练').click();
+          |                                ^
+      204 |   await page.locator('.operation-log summary').click();
+      205 |   await page.getByTestId('persistent-safety-error').locator('summary').click();
+      206 |   await noUntranslatedChinese(page, [oldStore.nickname]);
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/bilingual.spec.ts:203:32
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bilingual-v0-1-Chinese-log-eb398-anslates-their-presentation/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bilingual-v0-1-Chinese-log-eb398-anslates-their-presentation/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bilingual-v0-1-Chinese-log-eb398-anslates-their-presentation/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bilingual-v0-1-Chinese-log-eb398-anslates-their-presentation/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) e2e/bilingual.spec.ts:254:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('alert')
+    Expected pattern: /corrupt/i
+    Received string:  "Saved data is damaged and has not been overwritten. You can use a temporary session or explicitly reset it.Reset local data"
+    Timeout: 12000ms
+
+    Call log:
+      - Expect "toContainText" getByRole('alert') with timeout 12000ms
+      - waiting for getByRole('alert')
+        27 × locator resolved to <div role="alert" class="storage-notice no-print">…</div>
+           - unexpected value "Saved data is damaged and has not been overwritten. You can use a temporary session or explicitly reset it.Reset local data"
+
+
+      261 |     }
+      262 |   });
+    > 263 |   await page.goto('/');
+          |                        ^
+      264 |   await expect(page.getByRole('alert')).toContainText(/corrupt/i);
+      265 |   await noUntranslatedChinese(page);
+      266 |   await button(page, '重置本地数据').click();
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/bilingual.spec.ts:263:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/bilingual-English-storage--17ee7-overwriting-corrupt-v1-data/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/bilingual-English-storage--17ee7-overwriting-corrupt-v1-data/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/bilingual-English-storage--17ee7-overwriting-corrupt-v1-data/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/bilingual-English-storage--17ee7-overwriting-corrupt-v1-data/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record 
+    e2e/bilingual.spec.ts:193:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation 
+    e2e/bilingual.spec.ts:254:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data 
+  2 passed (2.3m)

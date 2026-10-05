@@ -1,7 +1,9 @@
 """Regenerate the optional English project brief (requires Python + reportlab).
 
 This document generator is not part of the application runtime.
-Uses the supplied, dated v0.2 browser screenshots; no network assets.
+Uses actual, dated application screenshots; no network assets.
+The default is the approved 5 October English workbench capture.
+Optional SHOUYIHUO_BRIEF_SCREENSHOT and SHOUYIHUO_BRIEF_CAPTION override both.
 """
 from pathlib import Path
 from reportlab.pdfgen import canvas
@@ -12,6 +14,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.platypus import Paragraph
 from reportlab.lib.utils import ImageReader
 import shutil
+import os
 
 FONT_DIR = Path('/usr/share/fonts/truetype/dejavu')
 if FONT_DIR.exists():
@@ -25,6 +28,8 @@ else:
  pdfmetrics.registerFontFamily('PortfolioSans', normal='PortfolioSans', bold='PortfolioSans-Bold')
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/portfolio/Shouyihuo_Project_Brief.pdf'
+SCREENSHOT = Path(os.environ.get('SHOUYIHUO_BRIEF_SCREENSHOT', str(ROOT/'docs/screenshots/bilingual-2026-10-05/41-workbench-en-1440.png')))
+SCREENSHOT_CAPTION = os.environ.get('SHOUYIHUO_BRIEF_CAPTION', 'Actual English-interface WebGL workbench, recorded on 5 October 2026. The app defaults to English; the English / Chinese switch preserves the current attempt.')
 OUT.parent.mkdir(parents=True, exist_ok=True)
 W, H = 595.276, 841.89
 M, CW = 44, 507.276
@@ -66,7 +71,7 @@ def page(number,label):
  text('SHOUYIHUO / ENGINEERING PORTFOLIO',M,30,8,GREEN,'PortfolioSans-Bold')
  text(label,W-170,30,8,MUTED)
  line(783)
- text('Local MVP v0.2 | English edition | 5 October 2026',M,803,8,MUTED)
+ text('Local MVP v0.2 | Bilingual edition | 5 October 2026',M,803,8,MUTED)
  text(f'{number} / 3',W-M-24,803,8,MUTED)
  text('Source: github.com/echom5713-droid/shouyihuo',M,819,8,GREEN)
  c.linkURL('https://github.com/echom5713-droid/shouyihuo',(M,H-824,M+285,H-809),relative=0)
@@ -74,14 +79,14 @@ def page(number,label):
 page(1,'PROJECT OVERVIEW')
 text('Shouyihuo',M,83,35,GREEN,'PortfolioSans-Bold')
 y=para('An inspectable 3D training simulation',M,99,style='lead')+14
-y=para('A local-first browser prototype that connects observation, diagnosis, simulated treatment and verification to one explicit state model.',M,y)+18
+y=para('A local-first, bilingual browser prototype connecting observation, diagnosis, simulated treatment and verification to one explicit state model. English is the default.',M,y)+18
 c.setFillColor(HexColor(LIGHT));c.roundRect(M,H-y-39,CW,39,5,fill=1,stroke=0)
 text('3 fault cases',M+14,y+24,10,GREEN,'PortfolioSans-Bold')
 text('3 learning modes',M+169,y+24,10,GREEN,'PortfolioSans-Bold')
 text('No backend or API key',M+333,y+24,10,GREEN,'PortfolioSans-Bold')
 y+=54
-y=photo(ROOT/'docs/screenshots/v0.2/02-workbench-1440.png',M,y,CW)
-y=para('Actual WebGL workbench, recorded on 26 September 2026. The learner interface is in Simplified Chinese; an English guide supplies exact bilingual control labels.',M,y+7,style='small')+19
+y=photo(SCREENSHOT,M,y,CW)
+y=para(SCREENSHOT_CAPTION,M,y+7,style='small')+19
 y=section('01','The problem: keep visual actions and rules consistent',y)
 y=para('A convincing model is insufficient if an unsafe action silently succeeds or a camera change affects the score. The prototype makes these constraints testable: rejected disassembly preserves the assembly, records the error and prevents a later safety pass.',M,y)+14
 y=para('<b>Built-in course:</b> a simplified gravity-fed toilet cistern with a float-controlled inlet and flapper-style drain seal. Cases cover seal failure, inlet-control failure and a closed supply valve; the last requires no replacement.',M,y)+13
@@ -105,7 +110,7 @@ for num,title,body in [
  ('02','Determinism with bounded claims','The same initial state and event sequence produce the same outcome. The UI advances the model by 0.25 simulation seconds per tick; the reducer uses internal steps of at most 0.05 seconds. Water is normalised teaching state, not a measured hydraulic quantity.'),
  ('03','Safety is a gate, not a score deduction','Evidence, diagnosis, process and verification receive 25, 30, 25 and 20 points. Passing also requires correct diagnosis and treatment, complete verification and no critical safety error. Even a 100-point attempt may fail.'),
  ('04','Visual controls cannot bypass business rules','The 3D view reads the authoritative attempt. Cutaway, exploded view, camera focus and workspace expansion change presentation only. Model selection, the part list and the operation target share one selection.'),
- ('05','Persistence preserves both progress and errors','Schema-validated localStorage keeps separate mode sessions and archives each completed attempt once by ID. The v0.1 storage key and schema remain compatible. Corrupt storage is reported instead of silently overwritten.')]:
+ ('05','Persistence preserves both progress and errors','Schema-validated localStorage keeps separate mode sessions and archives each completed attempt once by ID. The original attempt key and schema remain compatible. Locale is a separate preference; changing language cannot repair a fault or erase an error.')]:
  y=section(num,title,y);y=para(body,M,y)+19
 para('<b>Inspect in the repository:</b> src/domain/engine.ts, src/storage/local.ts, src/components/TankModel.tsx, tests/engine.test.ts and e2e/flows.spec.ts.',M,y,style='small')
 c.showPage()
@@ -114,17 +119,17 @@ page(3,'EVIDENCE AND REVIEW')
 text('Evidence with clear limits',M,77,25,GREEN,'PortfolioSans-Bold')
 y=para('Review the behaviour, the implementation and the recorded checks together.',M,91,style='lead')+19
 y=section('06','Verification record',y)
-y=para('The v0.2 run on <b>26 September 2026</b> recorded passing type checks, <b>40 unit tests</b>, <b>12 browser tests</b>, a build and a production-preview check. A separately dated <b>5 October 2026 recheck</b> is documented in <b>docs/portfolio/VALIDATION.md</b>, including the actual environment, results and any setup failures.',M,y)+12
+y=para('The <b>5 October 2026 bilingual run</b> passed type checking, <b>47 unit tests</b>, <b>18 browser tests</b> and a production build. The final production-preview status, actual environment, logs and fresh screenshots are recorded in <b>docs/portfolio/VALIDATION.md</b>. Earlier checks are retained separately as dated historical evidence.',M,y)+12
 y=para('Browser evidence includes real Canvas selection, all three complete scenario paths, persistence, rejected operations, retained safety errors, legacy-store compatibility and narrow-screen layouts. WebGL was exercised in Linux Chromium through SwiftShader software rendering.',M,y)+17
 y=section('07','A failure that changed the implementation',y)
 y=para('A viewport change exposed a Canvas sizing regression: the footer intercepted a retest click. The fix constrained the grid and Canvas container. The browser test kept a normal click, rather than forcing it through the obstruction. The failure screenshot and corrective record are retained.',M,y)+18
 y=section('08','Review in five minutes',y)
 for head,body in [
- ('Run','Use npm ci and npm run dev from the project folder. Open http://127.0.0.1:5173/review/ for the English introduction.'),
+ ('Run','Use npm ci and npm run dev from the project folder. Open http://127.0.0.1:5173/review/ for the English-default bilingual introduction.'),
  ('Interact','Follow docs/portfolio/REVIEWER_GUIDE.md to complete the supply-valve case, inspect a score report and refresh the saved record.'),
  ('Challenge','Start a new attempt, request premature removal and inspect the rejected action. Complete the case to see why a numeric score alone cannot pass.')]:
  y=para(f'<b>{head}.</b> {body}',M,y)+9
-y+=7
+y+=19
 y=section('09','Contribution and limitations',y)
 y=para('<b>AI-assisted development:</b> the project owner supplied the product brief and acceptance constraints. OpenAI Codex contributed substantial implementation, testing, debugging and documentation. The artefact does not imply unaided solo coding; personal contribution claims require their own evidence.',M,y)+12
 y=para('No professional repair review, learner study, physical validation or improved-learning claim is made. Native-GPU performance, every browser/device and physical printing have not been established. Local records are editable and are not formal certificates. The project demonstrates software design and verification practices, not machine learning or computational fluid dynamics.',M,y)+13

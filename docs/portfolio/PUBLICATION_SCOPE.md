@@ -1,6 +1,6 @@
 # Publication scope
 
-This is an English portfolio edition of Shouyihuo Local MVP v0.2, prepared on 5 October 2026. The application remains in Simplified Chinese; the repository overview, technical case study, review guide, project brief and review page are in English.
+This is a bilingual portfolio edition of Shouyihuo Local MVP v0.2, prepared on 5 October 2026. The application and review page start in English and offer an English / 中文 switch. The repository overview, technical case study, review guide and project brief are primarily in English; Chinese setup instructions are retained.
 
 ## Intended public contents
 
@@ -23,7 +23,7 @@ No licence grant is inferred from publication. No software licence has been sele
 
 ## History and authorship
 
-The original development workspace did not have a Git history. A future repository import must be described as an import of the existing project, without fabricated earlier commits or backdated authorship. See [Provenance](PROVENANCE.md).
+The original development workspace did not have a Git history. The public repository therefore starts with an honest import of the existing project, rather than fabricated earlier implementation commits or backdated authorship. The original source import was published before the later bilingual update. Subsequent commits record actual package changes; they do not reconstruct an unaided development history. See [Provenance](PROVENANCE.md).
 
 ## Hosting and local data
 
