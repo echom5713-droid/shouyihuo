@@ -8,7 +8,7 @@ Shouyihuo connects an interactive 3D model to a deterministic training simulatio
 
 This is a teaching prototype, not a digital twin or real repair guidance. Its content has not been reviewed by a repair professional. The three scenarios apply only to the built-in simplified model. [Provenance and AI assistance](PROVENANCE.md) describe how the project was produced.
 
-![The v0.2 training workbench in a real browser run](../screenshots/refinement-2026-10-05/41-workbench-en-1440.png)
+![The detailed v0.2 model in real WebGL structure exploration](../screenshots/model-detail-2026-10-05/60-detailed-interior-en-1440.png)
 
 *Actual English-interface browser screenshot, captured on 5 October 2026. The model is rendered with WebGL, not a background image.*
 
@@ -122,8 +122,12 @@ Evidence: [preserved failure context](../validation-v0.2/regression-found/retest
 
 ## 9. Verification and remaining uncertainty
 
-The [validation report](VALIDATION.md) records the completed **5 October rendering refinement** (**56 unit tests**, **21 E2E tests**, type checking and production build) separately from the earlier **5 October bilingual baseline** (**47 unit tests**, **18 E2E tests**) and the **26 September UI baseline** (**40 unit tests**, **12 E2E tests**). Each result applies to its own dated run. Earlier evidence is retained in the [original validation report](../TEST_REPORT.md) and [production-preview record](../validation-v0.2/production-preview.json).
+The latest **5 October model-detail run** passed **56 unit tests** and **23 E2E tests**, type checking, production build and preview. The [validation report](VALIDATION.md) also records the completed historical **5 October rendering refinement** (**56 unit tests**, **21 E2E tests**, type checking and production build) separately from the earlier **5 October bilingual baseline** (**47 unit tests**, **18 E2E tests**) and the **26 September UI baseline** (**40 unit tests**, **12 E2E tests**). Each result applies to its own dated run. Earlier evidence is retained in the [original validation report](../TEST_REPORT.md) and [production-preview record](../validation-v0.2/production-preview.json).
 
 The browser evidence used Linux Chromium with a real WebGL 2.0 context backed by ANGLE/Vulkan SwiftShader. It covered real Canvas selection, all three complete scenario paths, persisted records, a 100-point safety failure, old-store compatibility, fallback behaviour, and desktop/narrow-screen layouts. It did not establish native-GPU performance, Safari/Firefox support, real touchscreen usability, physical printing, or learning effectiveness. No participant study or professional repair-content review has been conducted as part of this work.
 
 The most useful next evaluations would be expert review of the course assumptions, observed learner usability sessions, and testing on representative hardware. Their results should be reported as new evidence rather than inferred from the current automated tests.
+
+## Subsequent procedural-detail refinement
+
+The [model detail note](../MODEL_DETAIL_REFINEMENT.md) explains a fixed-pivot float arm, real annular bores, instanced chain links and thread bands, a locally generated hose normal map, and double-click focus that preserves the action target. The refinement retains the course engine and learning schema. New browser checks inspect actual mesh world transforms during user-operated drainage/refill and compare protected assessment state before and after view gestures. Geometry improves explanatory coherence; it is still illustrative rather than physically calibrated. The latest dated results are at the start of [Validation](VALIDATION.md).

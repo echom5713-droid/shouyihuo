@@ -4,14 +4,14 @@
 
 Shouyihuo (手艺活, “craft skills”) turns a small teaching scenario into an inspectable software system: a learner explores a simplified gravity-fed toilet cistern, gathers evidence, diagnoses a fault, performs simulated actions and verifies the result. The workbench runs in the browser, with no backend, account or API key.
 
-**Local MVP v0.2 · Rendering and interaction refinement · English by default · 5 October 2026**
+**Local MVP v0.2 · Procedural model detail refinement · English by default · 5 October 2026**
 
 [Public source repository](https://github.com/echom5713-droid/shouyihuo)  
-[中文运行说明](README.zh-CN.md) · [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) · [Five-minute review guide](docs/portfolio/REVIEWER_GUIDE.md) · [Project brief (PDF)](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [Validation evidence](docs/portfolio/VALIDATION.md) · [Rendering decisions](docs/RENDERING_REFINEMENT.md)
+[中文运行说明](README.zh-CN.md) · [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) · [Five-minute review guide](docs/portfolio/REVIEWER_GUIDE.md) · [Project brief (PDF)](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [Validation evidence](docs/portfolio/VALIDATION.md) · [Rendering decisions](docs/RENDERING_REFINEMENT.md) · [Model detail and inspection](docs/MODEL_DETAIL_REFINEMENT.md)
 
-![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/refinement-2026-10-05/41-workbench-en-1440.png)
+![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/model-detail-2026-10-05/60-detailed-interior-en-1440.png)
 
-*Actual refined English-interface WebGL capture from 5 October 2026. The application starts in English and supports an English / 中文 switch. [Validation](docs/portfolio/VALIDATION.md) separates this refinement from earlier runs.*
+*Actual detailed-model WebGL capture from 5 October 2026, in unscored structure exploration. The application starts in English and supports an English / 中文 switch. [Validation](docs/portfolio/VALIDATION.md) separates this refinement from earlier runs.*
 
 ## What to inspect first
 
@@ -42,6 +42,7 @@ This is a bounded software-engineering prototype. It is **not** computational fl
 - **Three deterministic cases:** drain-seal failure, inlet-control failure and a closed supply valve. The supply-valve case requires no component replacement.
 - **Three modes:** structure exploration, guided practice and independent assessment. Independent assessment locks the first diagnosis; guided practice permits retries.
 - **Real WebGL model:** procedural tank cavity, lid, inlet, float, drain, overflow, supply valve and water. Rotate, zoom, select, inspect a cutaway, explode the view, focus a part and look down into the tank.
+- **Construction detail:** hollow sleeves and drain seat, lid alignment pads, mounting seals and fasteners, instanced chain links and thread bands, and an in-memory braided-hose normal map. A fixed-pivot float arm stays connected while water changes. Double-click a mesh or visible label to focus it; keyboard users retain the Focus selection button. [Model detail note](docs/MODEL_DETAIL_REFINEMENT.md).
 - **Connected visual state:** water level, flow indicators, valve direction and component assembly reflect the reducer state.
 - **Rendering refinement:** the scene requests frames for visible changes and settles when idle. Procedurally generated lighting improves material separation without external environment maps. [The engineering note](docs/RENDERING_REFINEMENT.md) explains invalidation, memoisation and their correctness risks.
 - **A complete attempt:** observe → diagnose → simulate treatment → retest → explain the score → save locally.
@@ -83,7 +84,7 @@ npm run preview
 
 Use `E2E_SCREENSHOT_DIR` and `E2E_VALIDATION_DIR` to select new evidence directories instead of replacing the historical v0.2 captures. Shell-specific examples and the actual current results are in [Validation](docs/portfolio/VALIDATION.md).
 
-The **5 October refinement run** passed type checking, **56 unit tests**, **21 browser tests (6.3 minutes)** and a production build. Nine new invariant tests exercise 3,888 deterministic transitions and 1,944 persisted continuation steps; three new browser tests check idle-render wake-up, label invalidation and live WebGL context loss. The [validation report](docs/portfolio/VALIDATION.md) retains the earlier 47/18 bilingual result as historical evidence. Tests demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
+The **5 October model-detail run** passed type checking, **56 unit tests**, **23 browser tests (7.8 minutes)** and a production build. Nine new invariant tests exercise 3,888 deterministic transitions and 1,944 persisted continuation steps; the rendering browser checks cover idle-render wake-up, label invalidation and live WebGL context loss; two additional tests verify real mesh double-click focus and the rendered fixed-pivot linkage. The [validation report](docs/portfolio/VALIDATION.md) retains the earlier 56/21 rendering and 47/18 bilingual results as historical evidence. Tests demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
 
 ## Source map
 
@@ -95,7 +96,8 @@ The **5 October refinement run** passed type checking, **56 unit tests**, **21 b
 | [`src/storage/local.ts`](src/storage/local.ts) | Zod validation, recovery, persistence and idempotent archiving |
 | [`src/ui/presentation.ts`](src/ui/presentation.ts) | Read-only stage and review-advice derivation |
 | [`src/i18n/index.tsx`](src/i18n/index.tsx) | English-default locale context and local presentation translation; separate language preference |
-| [`src/components/TankModel.tsx`](src/components/TankModel.tsx) | Procedural geometry, state rendering, camera and fallback |
+| [`src/components/TankModel.tsx`](src/components/TankModel.tsx) | Procedural geometry, state rendering, fixed-pivot linkage, camera and fallback |
+| [`src/components/model/MechanicalDetails.tsx`](src/components/model/MechanicalDetails.tsx) | Hollow sleeves, fasteners, instanced thread/chain detail and a local normal-map generator |
 | [`src/views/Workbench.tsx`](src/views/Workbench.tsx) | Interaction hierarchy, selection and expanded workspace |
 | [`tests/`](tests/) / [`e2e/`](e2e/) | Rule-level checks and actual browser interaction |
 

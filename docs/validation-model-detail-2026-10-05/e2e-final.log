@@ -1,0 +1,99 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test
+
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 23 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:56:21 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:56:33 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:56:42 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   1 e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record (39.7s)
+[WebServer] 8:57:01 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:05 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:10 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   2 e2e/bilingual.spec.ts:159:1 › English critical safety failure survives language switches and remains failed at 100 points (28.7s)
+[WebServer] 8:57:30 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:32 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:38 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   3 e2e/bilingual.spec.ts:194:1 › v0.1 Chinese logs, evidence and nickname remain intact while the English view translates their presentation (14.5s)
+[WebServer] 8:57:44 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:49 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:57:56 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:58:00 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   4 e2e/bilingual.spec.ts:229:1 › English first diagnosis stays locked across language and refresh; exploration remains unscored (19.7s)
+[WebServer] 8:58:06 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   5 e2e/bilingual.spec.ts:255:1 › English storage warning and confirmation are usable without overwriting corrupt v1 data (8.0s)
+[WebServer] 8:58:16 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   6 e2e/bilingual.spec.ts:277:1 › Bilingual reviewer page shares language preference, loads local evidence and opens the working app (7.5s)
+[WebServer] 8:58:19 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:58:28 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   7 e2e/flows.spec.ts:56:1 › 真实 WebGL、模型点击、完整密封案例、持久化、证明与本地请求 (38.9s)
+[WebServer] 8:58:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:59:02 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:59:07 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   8 e2e/flows.spec.ts:137:1 › 非法拆卸被阻止，刷新与复位不能消除关键错误，报告保留原因 (36.6s)
+[WebServer] 8:59:35 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:59:39 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓   9 e2e/flows.spec.ts:161:1 › 进水控制情境：观察真实溢流、处理进水组件并通过完整复测 (34.0s)
+[WebServer] 9:00:09 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:00:13 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:00:30 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  10 e2e/flows.spec.ts:174:1 › 供水情境无需更换零件；引导与结构认知不生成合格证明 (24.5s)
+[WebServer] 9:00:34 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:00:37 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  11 e2e/flows.spec.ts:200:1 › 视图、正常排水、模型状态变化和窄屏折叠 (21.7s)
+[WebServer] 9:00:55 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  12 e2e/flows.spec.ts:231:1 › 损坏存储不白屏、确认后只清本项目数据 (5.8s)
+  ✓  13 e2e/flows.spec.ts:246:1 › WebGL 不可用时二维界面可操作 (1.3s)
+[WebServer] 9:01:02 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:01:06 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:01:14 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  14 e2e/flows.spec.ts:279:1 › v0.1 数据兼容：旧记录、昵称、进行中尝试和安全错误原样保留 (16.6s)
+[WebServer] 9:01:19 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:01:22 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:01:50 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  15 e2e/flows.spec.ts:315:1 › 阶段提示、镜头与放大保持状态，键盘可操作并恢复焦点 (34.8s)
+[WebServer] 9:01:56 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:01:59 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  16 e2e/flows.spec.ts:395:1 › 1440、1366、1280、1024 与 390px 响应式可操作，窄屏不泄露答案 (28.8s)
+[WebServer] 9:02:24 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:26 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  17 e2e/flows.spec.ts:441:1 › 减少动态效果设置保留真实3D与即时镜头操作 (6.5s)
+[WebServer] 9:02:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:32 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:36 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:40 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:43 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:47 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:50 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:53 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:02:57 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:03:03 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  18 e2e/flows.spec.ts:456:1 › 独立测评首次错误诊断保持锁定，所有情境开始时没有定向提示 (38.3s)
+[WebServer] 9:03:09 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:03:11 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  19 e2e/model-detail.spec.ts:28:1 › double-clicking a real mesh focuses the same action target without changing assessment state (10.4s)
+[WebServer] 9:03:18 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:03:20 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  20 e2e/model-detail.spec.ts:73:1 › the rendered float follows water while its rigid arm stays attached to a fixed pivot (10.1s)
+[WebServer] 9:03:28 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:03:32 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  21 e2e/refinement.spec.ts:50:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes (23.7s)
+[WebServer] 9:03:52 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:03:53 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  22 e2e/refinement.spec.ts:98:1 › reduced-motion labels update on explosion and language changes without changing an attempt (6.7s)
+[WebServer] 9:03:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:04:02 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 9:04:08 PM [vite] (client) [console.warn] THREE.WebGLRenderer: WEBGL_lose_context extension not supported.
+  ✓  23 e2e/refinement.spec.ts:130:1 › a real WebGL context loss preserves the attempt and leaves component checks operable (11.2s)
+
+  23 passed (7.8m)

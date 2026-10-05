@@ -1,0 +1,23 @@
+[
+  {
+    "selector": ".persistent-safety span",
+    "color": "rgb(59, 79, 67)",
+    "background": "rgb(249, 251, 247)",
+    "fontSize": "14px",
+    "ratio": 8.455549477617986
+  },
+  {
+    "selector": ".selected-part-description",
+    "color": "rgb(82, 97, 89)",
+    "background": "rgb(255, 255, 255)",
+    "fontSize": "14px",
+    "ratio": 6.536152993963598
+  },
+  {
+    "selector": ".current-task span",
+    "color": "rgb(82, 97, 89)",
+    "background": "rgb(255, 255, 255)",
+    "fontSize": "13px",
+    "ratio": 6.536152993963598
+  }
+]

@@ -1,0 +1,56 @@
+{
+  "full": {
+    "pivot": [
+      -1.12,
+      1.87,
+      -0.035
+    ],
+    "tip": [
+      0.4706,
+      1.6048,
+      0.12
+    ],
+    "center": [
+      0.4706,
+      1.6048,
+      0.12
+    ]
+  },
+  "empty": {
+    "pivot": [
+      -1.12,
+      1.87,
+      -0.035
+    ],
+    "tip": [
+      -0.3747,
+      0.44,
+      0.12
+    ],
+    "center": [
+      -0.3747,
+      0.44,
+      0.12
+    ]
+  },
+  "refilled": {
+    "pivot": [
+      -1.12,
+      1.87,
+      -0.035
+    ],
+    "tip": [
+      0.4587,
+      1.5411,
+      0.12
+    ],
+    "center": [
+      0.4587,
+      1.5411,
+      0.12
+    ]
+  },
+  "armLengthModelUnits": 1.62,
+  "source": "Rendered mesh world matrices after real supply-off, flush and refill actions. Teaching geometry, not calibrated physical units.",
+  "passed": true
+}

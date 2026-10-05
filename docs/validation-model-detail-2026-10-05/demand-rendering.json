@@ -1,0 +1,13 @@
+{
+  "renderer": "real WebGL",
+  "idleWindowMs": 3028,
+  "idleDrawCalls": 0,
+  "simulationElapsedBefore": 3.4999999999999956,
+  "simulationElapsedAfter": 6.499999999999985,
+  "cameraWake": true,
+  "supplyWake": true,
+  "settlesAfterRefill": true,
+  "externalRequests": [],
+  "pageErrors": [],
+  "interpretation": "Actual drawElements/drawArrays calls, not frame rate or hardware performance."
+}

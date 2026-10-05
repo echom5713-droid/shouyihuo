@@ -1,8 +1,71 @@
 # Validation evidence — 5 October 2026
 
-This report distinguishes the latest **rendering and interaction refinement**, the **English-default bilingual edition**, and the portfolio checks **before localisation**. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
+This report distinguishes the latest **procedural model detail**, the earlier **rendering and interaction refinement**, the **English-default bilingual edition**, and the portfolio checks **before localisation**. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
 
-## Rendering and interaction refinement: acceptance status
+## Procedural model detail: latest acceptance run
+
+A new run on **5 October 2026** checks the detailed model and double-click inspection gesture. The following results apply to this source iteration; the earlier 56/21 rendering run below remains historical evidence. No score, course or learning-data migration is part of this change.
+
+| Check | Actual result | Evidence |
+|---|---|---|
+| `npm run typecheck` | **PASS** | [TypeScript log](../validation-model-detail-2026-10-05/typecheck.log) |
+| `npm run test` | **PASS — 56 tests / 4 files** | [Unit log](../validation-model-detail-2026-10-05/unit-tests.log) |
+| `npm run test:e2e` | **PASS — 23 tests, 7.8 minutes** | [Full browser log](../validation-model-detail-2026-10-05/e2e-final.log) |
+| `npm run build` | **PASS** | [Build log](../validation-model-detail-2026-10-05/build.log) |
+| Final `npm run preview` smoke check | **PASS — real WebGL 2, bilingual review, updated PDF** | [Preview result](../validation-model-detail-2026-10-05/production-preview.json) · [Executable check](../validation-model-detail-2026-10-05/production-smoke.mjs) |
+| Fresh desktop and narrow-screen inspection | **PASS within the listed visual checks** | New captures below |
+
+The full suite retains 12 original Chinese workflows, six bilingual workflows and three rendering checks, then adds two geometry/gesture checks. Its user journeys cover all three cases, legal and rejected actions, scoring and retest gates, refresh, old records, report verdicts and language switching. It does not substitute an injected final attempt for those journeys. The 56 unit tests still exercise the domain and bounded invariant sequences; no new repair rule was introduced.
+
+**WebGL geometry checks:** a real canvas double-click focuses the clicked inlet and makes it the inspector/list/action target without changing protected attempt state or score. A second user-operated exploration turns supply off, drains and refills. It reads the rod and ball world matrices to check that the pivot stays fixed, the arm length stays constant and the rod tip follows the ball centre. [Rendered-transform observations](../validation-model-detail-2026-10-05/float-linkage.json). Model units describe illustration geometry, not calibrated physical measurements.
+
+**Rendering checks:** the existing demand-loop test still records zero calls to its instrumented `drawElements` / `drawArrays` entry points in the settled sampling window, while simulation time advances; camera and refill wake it again. [Current sample](../validation-model-detail-2026-10-05/demand-rendering.json). The sampling wrapper does not count instanced draw methods or measure GPU time. The retained label-invalidation and live context-loss tests also pass. The production check records actual renderer counters for one completed frame; neither those counters nor software WebGL constitute a frame-rate or native-GPU benchmark.
+
+**Business preservation:** [14 protected files](../validation-model-detail-2026-10-05/core-integrity.json) match the pre-detail source snapshot associated with commit `a6fb4636874e236ea815c157e1b58bb7863bad22`, including the reducer, course, storage, dependency files and original tests. This is a scoped comparison; procedural geometry, workbench gestures, translated hint text and documentation are changed. The original `shouyihuo.local.v1` / `schemaVersion: 1` contract is preserved.
+
+### Fresh model-detail captures
+
+These images were generated from the running detailed-model application and opened for inspection. Full-page captures may exceed their viewport height. English remains the default; Chinese regression captures are in the new `zh-regression/` subfolder.
+
+| View | 1440×900 | 1366×768 | 1280×800 | 390×844 |
+|---|---|---|---|---|
+| Course | [Capture](../screenshots/model-detail-2026-10-05/40-home-en-1440.png) | [Capture](../screenshots/model-detail-2026-10-05/40-home-en-1366.png) | [Capture](../screenshots/model-detail-2026-10-05/40-home-en-1280.png) | [Capture](../screenshots/model-detail-2026-10-05/40-home-en-390.png) |
+| Workbench | [Capture](../screenshots/model-detail-2026-10-05/41-workbench-en-1440.png) | [Capture](../screenshots/model-detail-2026-10-05/41-workbench-en-1366.png) | [Capture](../screenshots/model-detail-2026-10-05/41-workbench-en-1280.png) | [Capture](../screenshots/model-detail-2026-10-05/41-workbench-en-390.png) |
+| Report | [Capture](../screenshots/model-detail-2026-10-05/42-report-en-1440.png) | [Capture](../screenshots/model-detail-2026-10-05/42-report-en-1366.png) | [Capture](../screenshots/model-detail-2026-10-05/42-report-en-1280.png) | [Capture](../screenshots/model-detail-2026-10-05/42-report-en-390.png) |
+
+Model inspection: [open-lid normal structure](../screenshots/model-detail-2026-10-05/60-detailed-interior-en-1440.png), [mesh double-click focus](../screenshots/model-detail-2026-10-05/61-inlet-focus-en-1440.png), [exploded construction](../screenshots/model-detail-2026-10-05/62-mechanical-exploded-en-1440.png), [hose close-up](../screenshots/model-detail-2026-10-05/63-braided-hose-focus-en-1440.png), [empty tank / attached arm](../screenshots/model-detail-2026-10-05/64-empty-tank-rigid-arm-en-1440.png), and [production float focus](../screenshots/model-detail-2026-10-05/74-production-float-focus-en.png). Structure exploration is unscored and creates no completion certificate.
+
+The [100-point safety-failure report](../screenshots/model-detail-2026-10-05/48-safety-report-en.png) remains amber and explicitly failed. New production reviewer captures: [desktop English](../screenshots/model-detail-2026-10-05/70-review-desktop-en.png), [mobile English](../screenshots/model-detail-2026-10-05/71-review-mobile-en.png), [mobile Chinese](../screenshots/model-detail-2026-10-05/73-review-mobile-zh.png).
+
+### Corrections and incomplete runs
+
+- The first two new-test failures were test assumptions: hidden labels were incorrectly required to be visible, and the exploration button used a different English name from the actual interface. The canvas test now reads the projection and clicks the mesh, without requiring a visible label. The two corrected tests passed. [First log](../validation-model-detail-2026-10-05/e2e-detail-round1.log) · [Corrected run](../validation-model-detail-2026-10-05/e2e-detail-corrected.log).
+- Opening the normal-water image revealed the chain route crossing the float. Its geometry was moved clear of the float's arc and given an upper support. The hose's first coarse pattern was also made finer. A full run was deliberately interrupted for that visual correction; its partial log is retained and is not a passed suite. [Interrupted visual review](../validation-model-detail-2026-10-05/e2e-visual-review-interrupted.log).
+- A fresh Chromium invocation subsequently stalled before yielding a test verdict and was stopped. The cause was not established. The identical source passed an isolated full bilingual journey in a new process, then the final 23-test run above. No guard, timeout or course prerequisite was relaxed. [Stalled invocation](../validation-model-detail-2026-10-05/e2e-browser-stall.log) · [Diagnostic run](../validation-model-detail-2026-10-05/e2e-browser-diagnostic.log).
+
+### Reproduce this iteration
+
+Use the standard commands with normal Playwright Chromium on a local machine. The cloud-host run used these temporary browser/font overrides:
+
+```sh
+FONTCONFIG_FILE=/tmp/shouyihuo-test-fonts/fonts.conf \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/tmp/shouyihuo-chromium/chromium \
+E2E_SCREENSHOT_DIR=docs/screenshots/model-detail-2026-10-05/zh-regression \
+E2E_BILINGUAL_SCREENSHOT_DIR=docs/screenshots/model-detail-2026-10-05 \
+E2E_VALIDATION_DIR=docs/validation-model-detail-2026-10-05 \
+npm run test:e2e
+
+npm run build
+FONTCONFIG_FILE=/tmp/shouyihuo-test-fonts/fonts.conf \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/tmp/shouyihuo-chromium/chromium \
+node docs/validation-model-detail-2026-10-05/production-smoke.mjs
+```
+
+Node **24.19.0**, npm **11.9.0**, Chromium **153.0.8010.0**; [actual environment](../validation-model-detail-2026-10-05/environment.json). The final preview reported zero external requests and zero uncaught page errors and stopped its loopback server afterward. The large Three.js build chunk and dependency `THREE.Clock` deprecation warning remain recorded.
+
+**Unverified:** native-GPU/Windows performance, Safari/Firefox, physical touch devices and printing, calibrated mechanics or hydraulics, professional repair accuracy, learning outcomes and full accessibility compliance. This iteration updates public source, not a hosted deployment or a newly executed GitHub Actions result. [Model-detail rationale](../MODEL_DETAIL_REFINEMENT.md).
+
+## Rendering and interaction refinement: completed historical baseline
 
 A separate refinement run completed on **5 October 2026**. Its results come from new executions, not the earlier 47/18 test counts below. The final production preview was checked after rebuilding with the updated reviewer images and PDF.
 

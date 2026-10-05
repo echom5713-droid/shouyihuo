@@ -1,0 +1,98 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test e2e/model-detail.spec.ts
+
+[WebServer] (node:32) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:45) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:47:26 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:47:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  1 e2e/model-detail.spec.ts:28:1 › double-clicking a real mesh focuses the same action target without changing assessment state (16.6s)
+(node:161) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:47:43 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  2 e2e/model-detail.spec.ts:73:1 › the rendered float follows water while its rigid arm stays attached to a fixed pivot (1.0m)
+
+
+  1) e2e/model-detail.spec.ts:28:1 › double-clicking a real mesh focuses the same action target without changing assessment state 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('anchor-inlet')
+    Expected: "true"
+    Received: "false"
+    Timeout:  12000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('anchor-inlet') with timeout 12000ms
+      - waiting for getByTestId('anchor-inlet')
+        27 × locator resolved to <button class="" type="button" tabindex="-1" data-x="325.8" data-y="175.1" aria-hidden="true" data-visible="false" data-testid="anchor-inlet">…</button>
+           - unexpected value "false"
+
+
+      39 |   await page.getByTestId('part-tank').click();
+      40 |   const anchor = page.getByTestId('anchor-inlet');
+    > 41 |   await expect(anchor).toHaveAttribute('data-visible', 'true');
+         |                        ^
+      42 |   const x = Number(await anchor.getAttribute('data-x')), y = Number(await anchor.getAttribute('data-y'));
+      43 |   await page.locator('canvas').dblclick({ position: { x, y }, delay: 80 });
+      44 |   await expect(page.locator('canvas')).toHaveAttribute('data-camera-view', 'focus');
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/model-detail.spec.ts:41:24
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/model-detail-double-clicki-1b4e0-t-changing-assessment-state/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/model-detail-double-clicki-1b4e0-t-changing-assessment-state/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/model-detail-double-clicki-1b4e0-t-changing-assessment-state/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/model-detail-double-clicki-1b4e0-t-changing-assessment-state/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/model-detail.spec.ts:73:1 › the rendered float follows water while its rigid arm stays attached to a fixed pivot 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Explore structure', exact: true })
+
+
+      74 |   await page.emulateMedia({ reducedMotion: 'reduce' });
+      75 |   await page.goto('/');
+    > 76 |   await button(page, 'Explore structure').click();
+         |                                           ^
+      77 |   await expect(page.getByTestId('tank-model')).toHaveAttribute('data-renderer', 'webgl');
+      78 |   await button(page, 'Open lid').click();
+      79 |   await expect(page.locator('canvas')).toHaveAttribute('data-float-center', /\d/);
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/model-detail.spec.ts:76:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/model-detail-the-rendered--d5be5-s-attached-to-a-fixed-pivot/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/model-detail-the-rendered--d5be5-s-attached-to-a-fixed-pivot/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/model-detail-the-rendered--d5be5-s-attached-to-a-fixed-pivot/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/model-detail-the-rendered--d5be5-s-attached-to-a-fixed-pivot/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e/model-detail.spec.ts:28:1 › double-clicking a real mesh focuses the same action target without changing assessment state 
+    e2e/model-detail.spec.ts:73:1 › the rendered float follows water while its rigid arm stays attached to a fixed pivot 

@@ -3,7 +3,7 @@ import { CASES, DISCLAIMER, EVIDENCE_LABELS, MODES, PARTS } from '../domain/cour
 import { flows, isRetesting, removalConditions, waterLabel } from '../domain/engine';
 import type { Attempt, CaseId, ComponentId, Event, PartId } from '../domain/types';
 import { getStage } from '../ui/presentation';
-import { TankModel } from '../components/TankModel';
+import { TankModel, type CameraCommand, type CameraView } from '../components/TankModel';
 import { Icon } from '../components/Icon';
 import { useLocale } from '../i18n';
 
@@ -28,7 +28,7 @@ export function Workbench({ attempt: a, dispatch, onFinish, onRestart, persisten
   const [exploded, setExploded] = useState(false);
   const [labels, setLabels] = useState(false);
   const [resetToken, setResetToken] = useState(0);
-  const [viewCommand, setViewCommand] = useState<{ type: 'overview' | 'top' | 'focus'; token: number }>({ type: 'overview', token: 0 });
+  const [viewCommand, setViewCommand] = useState<CameraCommand>({ type: 'overview', token: 0 });
   const [tab, setTab] = useState<'observe' | 'operate'>('observe');
   const [sidebar, setSidebar] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -48,10 +48,11 @@ export function Workbench({ attempt: a, dispatch, onFinish, onRestart, persisten
   const evidenceCount = c.evidence.filter(id => a.evidence[id]).length;
   const completedStages = [evidenceCount >= 2, a.diagnosis === a.caseId, a.process.repaired && !a.defects.seal && !a.defects.inlet && a.assembly.inlet.installed && a.assembly.drain.installed && a.supplyOpen, stage.complete];
   const select = (id: PartId, origin = 'list') => { setSelected(id); setSource(origin); };
-  const camera = (type: 'overview' | 'top' | 'focus') => {
+  const camera = (type: CameraView) => {
     setViewCommand(v => ({ type, token: v.token + 1 }));
     if (type === 'overview') setResetToken(n => n + 1);
   };
+  const focus = (id: PartId) => { select(id, 'model'); setViewCommand(v => ({ type: 'focus', part: id, token: v.token + 1 })); };
   useEffect(() => {
     if (!expanded) return;
     const previous = document.activeElement as HTMLElement;
@@ -97,7 +98,7 @@ export function Workbench({ attempt: a, dispatch, onFinish, onRestart, persisten
           <div className="camera-tools"><button disabled={renderer !== 'webgl'} onClick={() => camera('overview')} title={t("复位视角")}><Icon name="rotate" /><span>{t("整体视角")}</span></button><button disabled={renderer !== 'webgl'} onClick={() => camera('top')} title={t("只改变镜头，内部结构需打开箱盖")}><Icon name="cube" /><span>{t("俯视内部")}</span></button><button disabled={renderer !== 'webgl'} onClick={() => camera('focus')}><Icon name="focus" /><span>{t("聚焦选中部件")}</span></button><button ref={expandRef} className="expand-workspace" title={expanded ? t('退出放大') : t('放大工作区')} aria-pressed={expanded} onClick={() => setExpanded(!expanded)}><Icon name={expanded ? 'close' : 'expand'} /><span>{expanded ? t('退出放大') : t('放大工作区')}</span></button></div>
           <div className="display-tools"><button aria-pressed={cutaway} onClick={() => setCutaway(!cutaway)}><Icon name="cut" /><span>{t("结构剖视")}</span></button><button aria-pressed={exploded} onClick={() => setExploded(!exploded)}><Icon name="expand" /><span>{t("爆炸视图")}</span></button><button aria-pressed={labels} onClick={() => setLabels(!labels)}><Icon name="tag" /><span>{t("部件标签")}</span></button><span className="view-only">{t("仅改变观察视图")}</span></div>
         </div>
-        <div className="model-stage"><div className="stage-caption"><span className="stage-badge"><span className="status-dot" />{t("3D 实训")}</span><span>{exploded ? t('部件分离展示 · 未执行拆装') : cutaway ? t('前壁已隐藏 · 可观察内部') : t('完整外观')}</span></div><TankModel attempt={a} selected={selected} onSelect={select} cutaway={cutaway} exploded={exploded} labels={labels} resetToken={resetToken} viewCommand={viewCommand} onRendererChange={setRenderer} /><div className="stage-bottom"><span><Icon name="rotate" size={15} /><span className="mouse-help">{t("拖动旋转 · 滚轮缩放")}</span><span className="touch-help">{t("单指滚页 · 双指旋转缩放")}</span></span><button onClick={() => dispatch({ type: 'TOGGLE_LID' })}>{a.lidOpen ? t('放回箱盖') : t('打开箱盖')}<Icon name="chevron" size={14} /></button></div></div>
+        <div className="model-stage"><div className="stage-caption"><span className="stage-badge"><span className="status-dot" />{t("3D 实训")}</span><span>{exploded ? t('部件分离展示 · 未执行拆装') : cutaway ? t('前壁已隐藏 · 可观察内部') : t('完整外观')}</span></div><TankModel attempt={a} selected={selected} onSelect={select} onFocus={focus} cutaway={cutaway} exploded={exploded} labels={labels} resetToken={resetToken} viewCommand={viewCommand} onRendererChange={setRenderer} /><div className="stage-bottom"><span><Icon name="rotate" size={15} /><span className="mouse-help">{t("拖动旋转 · 滚轮缩放 · 双击聚焦")}</span><span className="touch-help">{t("单指滚页 · 双指旋转缩放")}</span></span><button onClick={() => dispatch({ type: 'TOGGLE_LID' })}>{a.lidOpen ? t('放回箱盖') : t('打开箱盖')}<Icon name="chevron" size={14} /></button></div></div>
         {renderer === 'fallback' && <p className="renderer-note">{t("二维交互模式：镜头工具需 WebGL，规则训练仍可使用。")}</p>}
         {expanded && <div className="expanded-selection"><span>{t("选中：")}<strong>{t(part.name)}</strong> · {t(part.description)}</span><button className="button small-button" onClick={() => dispatch({ type: 'OBSERVE', part: selected })}>{t("记录部件观察")}</button><span className="small">{t("Esc 退出放大 · 进度保持")}</span></div>}
         <div className="model-readings"><div data-state={a.supplyOpen ? 'on' : 'off'}><span><Icon name="drop" size={15} />{t("供水状态")}</span><strong data-testid="supply-reading">{a.supplyOpen ? t('供水打开') : t('供水关闭')}</strong></div><div><span>{t("教学近似水位")}</span><strong data-testid="water-reading">{t(waterLabel(a))}</strong></div><div><span>{t("水流观察")}</span><strong>{f.overflowing ? t('可见溢流') : f.draining ? t('正在排水') : f.leaking ? t('持续流出') : f.incoming ? t('正在补水') : t('无持续水流')}</strong></div></div>

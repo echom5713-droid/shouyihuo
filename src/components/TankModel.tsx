@@ -8,16 +8,18 @@ import type { Attempt, PartId } from '../domain/types';
 import { flows } from '../domain/engine';
 import { PARTS } from '../domain/course';
 import { useLocale } from '../i18n';
+import { Sleeve, Fastener, ThreadBands, LinkedChain, createBraidNormalMap } from './model/MechanicalDetails';
 
 type Vec3 = [number, number, number];
 export type CameraView = 'overview' | 'top' | 'focus';
-export interface CameraCommand { type: CameraView; token: number }
+export interface CameraCommand { type: CameraView; token: number; part?: PartId }
 interface ModelProps {
   attempt: Attempt; selected: PartId | null; onSelect: (id: PartId, source?: string) => void;
   cutaway: boolean; exploded: boolean; labels: boolean; resetToken: number; compact?: boolean;
   viewCommand?: CameraCommand; onRendererChange?: (renderer: 'webgl' | 'fallback') => void;
+  onFocus?: (id: PartId) => void;
 }
-const SceneContext = createContext<{ selected: PartId | null; hovered: PartId | null; setHovered: (id: PartId | null) => void; onSelect: ModelProps['onSelect'] }>({ selected: null, hovered: null, setHovered: () => {}, onSelect: () => {} });
+const SceneContext = createContext<{ selected: PartId | null; hovered: PartId | null; setHovered: (id: PartId | null) => void; onSelect: ModelProps['onSelect']; onFocus?: ModelProps['onFocus'] }>({ selected: null, hovered: null, setHovered: () => {}, onSelect: () => {} });
 const PartContext = createContext<PartId>('tank');
 const MotionContext = createContext(false);
 function useReducedMotion() {
@@ -30,13 +32,13 @@ function useReducedMotion() {
   }, []);
   return reduced;
 }
-function Material({ color = '#dbe1d8', metal = 0, roughness = 0.46, side = THREE.FrontSide }: { color?: string; metal?: number; roughness?: number; side?: THREE.Side }) {
+function Material({ color = '#dbe1d8', metal = 0, roughness = 0.46, side = THREE.FrontSide, normalMap, finish }: { color?: string; metal?: number; roughness?: number; side?: THREE.Side; normalMap?: THREE.Texture | null; finish?: 'matte' }) {
   const id = useContext(PartContext);
   const { selected, hovered } = useContext(SceneContext);
   const active = selected === id, over = hovered === id;
   const tint = useMemo(() => new THREE.Color(color).lerp(new THREE.Color('#39836c'), active ? 0.32 : over ? 0.16 : 0), [color, active, over]);
-  const ceramic = id === 'tank' || id === 'lid';
-  return <meshPhysicalMaterial color={tint} side={side} roughness={ceramic ? 0.29 : roughness} metalness={metal} clearcoat={ceramic ? 0.32 : 0} clearcoatRoughness={0.3} emissive={active || over ? '#205c45' : '#000'} emissiveIntensity={active ? 0.075 : over ? 0.025 : 0} />;
+  const ceramic = (id === 'tank' || id === 'lid') && finish !== 'matte';
+  return <meshPhysicalMaterial color={tint} side={side} normalMap={normalMap} normalScale={[0.23, 0.23]} roughness={ceramic && metal === 0 ? 0.29 : roughness} metalness={metal} clearcoat={ceramic && metal === 0 ? 0.32 : 0} clearcoatRoughness={0.3} emissive={active || over ? '#205c45' : '#000'} emissiveIntensity={active ? 0.075 : over ? 0.025 : 0} />;
 }
 function Box({ position = [0, 0, 0], size, color, radius = 0.04, metal }: { position?: Vec3; size: Vec3; color?: string; radius?: number; metal?: number }) {
   const geo = useMemo(() => new RoundedBoxGeometry(...size, 3, radius), [size[0], size[1], size[2], radius]);
@@ -46,11 +48,13 @@ function Box({ position = [0, 0, 0], size, color, radius = 0.04, metal }: { posi
 function Cylinder({ position = [0, 0, 0], radius = 0.12, height = 1, color, rotation = [0, 0, 0], metal = 0, roughness = 0.46, segments = 32, hollow = false }: { position?: Vec3; radius?: number; height?: number; color?: string; rotation?: Vec3; metal?: number; roughness?: number; segments?: number; hollow?: boolean }) {
   return <mesh position={position} rotation={rotation} castShadow receiveShadow><cylinderGeometry args={[radius, radius, height, segments, 1, hollow]} /><Material color={color} metal={metal} roughness={roughness} side={hollow ? THREE.DoubleSide : THREE.FrontSide} /></mesh>;
 }
-function Pipe({ points, radius = 0.06, color = '#b3c2b6', metal = 0.1 }: { points: Vec3[]; radius?: number; color?: string; metal?: number }) {
+function Pipe({ points, radius = 0.06, color = '#b3c2b6', metal = 0.1, braided = false }: { points: Vec3[]; radius?: number; color?: string; metal?: number; braided?: boolean }) {
   const data = JSON.stringify(points);
   const geo = useMemo(() => new THREE.TubeGeometry(new THREE.CatmullRomCurve3(points.map(p => new THREE.Vector3(...p))), 32, radius, 12, false), [data, radius]);
+  const normalMap = useMemo(() => braided ? createBraidNormalMap() : null, [braided]);
   useEffect(() => () => geo.dispose(), [geo]);
-  return <mesh geometry={geo} castShadow><Material color={color} metal={metal} roughness={metal > 0.4 ? 0.3 : 0.47} /></mesh>;
+  useEffect(() => () => normalMap?.dispose(), [normalMap]);
+  return <mesh geometry={geo} castShadow><Material color={color} metal={metal} normalMap={normalMap} roughness={metal > 0.4 ? 0.3 : 0.47} /></mesh>;
 }
 function Part({ id, target = [0, 0, 0], children, partRefs }: { id: PartId; target?: Vec3; children: ReactNode; partRefs: React.RefObject<Partial<Record<PartId, THREE.Group>>> }) {
   const group = useRef<THREE.Group>(null);
@@ -66,7 +70,8 @@ function Part({ id, target = [0, 0, 0], children, partRefs }: { id: PartId; targ
     else { group.current.position.lerp(destination, 1 - Math.exp(-Math.min(dt, 0.05) * 8)); invalidate(); }
   });
   const click = (e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); if (e.delta > 4) return; ctx.onSelect(id, 'model'); };
-  return <PartContext.Provider value={id}><group ref={group} userData={{ partId: id }} onClick={click} onPointerOver={e => { e.stopPropagation(); ctx.setHovered(id); document.body.style.cursor = 'pointer'; }} onPointerOut={() => { ctx.setHovered(null); document.body.style.cursor = ''; }}>{children}</group></PartContext.Provider>;
+  const focus = (e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); if (e.delta <= 4) ctx.onFocus?.(id); };
+  return <PartContext.Provider value={id}><group ref={group} userData={{ partId: id }} onClick={click} onDoubleClick={focus} onPointerOver={e => { e.stopPropagation(); ctx.setHovered(id); document.body.style.cursor = 'pointer'; }} onPointerOut={() => { ctx.setHovered(null); document.body.style.cursor = ''; }}>{children}</group></PartContext.Provider>;
 }
 // Presentation-only camera commands never dispatch an event to the simulation.
 function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pick<ModelProps, 'resetToken' | 'viewCommand' | 'exploded' | 'selected'> & { partRefs: React.RefObject<Partial<Record<PartId, THREE.Group>>> }) {
@@ -144,7 +149,7 @@ function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pic
     invalidate();
   };
   // Deliberately exclude selected: selecting a part must not move the camera.
-  useEffect(() => { frame(viewCommand?.type ?? 'overview', selectedRef.current); }, [viewCommand?.token, viewCommand?.type]);
+  useEffect(() => { frame(viewCommand?.type ?? 'overview', viewCommand?.part ?? selectedRef.current); }, [viewCommand?.token, viewCommand?.type, viewCommand?.part]);
   useEffect(() => { frame('overview', null); }, [resetToken, exploded]);
   useEffect(() => { frame(view.current, focused.current); }, [size.width, size.height]);
   useFrame((_, dt) => {
@@ -289,21 +294,45 @@ function Flow({ from, to, active }: { from: Vec3; to: Vec3; active: boolean }) {
 }
 function Float({ attempt }: { attempt: Attempt }) {
   const ball = useRef<THREE.Group>(null);
+  const rod = useRef<THREE.Mesh>(null);
   const reduced = useContext(MotionContext);
-  const invalidate = useThree(state => state.invalidate);
-  const target = 0.36 + attempt.water * 1.95;
-  const initial = useRef<Vec3>([0, target, 0]);
+  const { invalidate, gl } = useThree();
+  const pivot = useMemo(() => new THREE.Vector3(-1.12, 1.87, -0.035), []);
+  const length = 1.62;
+  const target = Math.min(2.12, 0.44 + attempt.water * 1.82);
+  const xAt = (y: number) => pivot.x + Math.sqrt(length * length - (y - pivot.y) ** 2 - (0.12 - pivot.z) ** 2);
+  const initial = useRef<Vec3>([xAt(target) + 0.23, target, 0]);
+  const vectors = useMemo(() => ({ center: new THREE.Vector3(), direction: new THREE.Vector3(), up: new THREE.Vector3(0, 1, 0), start: new THREE.Vector3(), end: new THREE.Vector3(), actualCenter: new THREE.Vector3() }), []);
   useEffect(() => { invalidate(); }, [target, reduced, invalidate]);
   useFrame((_, dt) => {
-    if (!ball.current) return;
+    if (!ball.current || !rod.current) return;
     if (reduced || Math.abs(ball.current.position.y - target) < 0.0005) ball.current.position.y = target;
     else { ball.current.position.y = THREE.MathUtils.lerp(ball.current.position.y, target, 1 - Math.exp(-Math.min(dt, 0.05) * 8)); invalidate(); }
+    const y = ball.current.position.y;
+    ball.current.position.x = xAt(y) + 0.23;
+    vectors.center.set(xAt(y), y, 0.12);
+    vectors.direction.copy(vectors.center).sub(pivot).normalize();
+    rod.current.position.copy(pivot).add(vectors.center).multiplyScalar(0.5);
+    rod.current.quaternion.setFromUnitVectors(vectors.up, vectors.direction);
+    // Inspect the rendered meshes' world transforms, including assembly offsets,
+    // rather than publishing a second copy of the requested simulation state.
+    rod.current.updateWorldMatrix(true, false); ball.current.updateWorldMatrix(true, false);
+    vectors.start.set(0, -length / 2, 0).applyMatrix4(rod.current.matrixWorld);
+    vectors.end.set(0, length / 2, 0).applyMatrix4(rod.current.matrixWorld);
+    vectors.actualCenter.set(-0.23, 0, 0.12).applyMatrix4(ball.current.matrixWorld);
+    gl.domElement.dataset.floatPivot = vectors.start.toArray().map(n => n.toFixed(4)).join(',');
+    gl.domElement.dataset.floatTip = vectors.end.toArray().map(n => n.toFixed(4)).join(',');
+    gl.domElement.dataset.floatCenter = vectors.actualCenter.toArray().map(n => n.toFixed(4)).join(',');
   });
-  return <group ref={ball} position={initial.current}>
-    <Pipe points={[[-1.1, 0.18, 0], [-0.85, 0.17, 0], [-0.23, 0, 0.12]]} radius={0.026} color="#bca46d" metal={0.65} />
-    <mesh position={[-0.23, 0, 0.12]} castShadow><sphereGeometry args={[0.31, 40, 32]} /><Material color="#486958" roughness={0.4} /></mesh>
-    <mesh position={[-0.23, 0, 0.12]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.309, 0.009, 8, 40]} /><Material color="#94ac98" /></mesh>
-  </group>;
+  return <>
+    <group ref={ball} position={initial.current}>
+      <mesh position={[-0.23, 0, 0.12]} castShadow><sphereGeometry args={[0.29, 40, 28]} /><Material color="#486958" roughness={0.38} /></mesh>
+      <mesh position={[-0.23, 0, 0.12]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.289, 0.006, 6, 40]} /><Material color="#91a795" /></mesh>
+    </group>
+    <mesh ref={rod} castShadow><cylinderGeometry args={[0.018, 0.018, length, 16]} /><Material color="#b5a078" metal={0.68} roughness={0.32} /></mesh>
+    <Cylinder position={[-1.12, 1.87, -0.035]} radius={0.067} height={0.13} rotation={[Math.PI / 2, 0, 0]} color="#b6b8a6" metal={0.6} />
+    <Cylinder position={[-1.12, 1.87, 0.036]} radius={0.036} height={0.025} rotation={[Math.PI / 2, 0, 0]} color="#697467" metal={0.7} segments={6} />
+  </>;
 }
 function StudioLighting() {
   const { gl, scene, invalidate } = useThree();
@@ -344,13 +373,13 @@ function visualState(a: Attempt) {
   return [a.water, a.supplyOpen, a.lidOpen, a.drainRemaining > 0, a.defects.inlet, a.defects.seal,
     a.assembly.inlet.installed, a.assembly.inlet.replaced, a.assembly.drain.installed, a.assembly.drain.replaced].join('|');
 }
-const Scene = memo(function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, viewCommand, labels, labelsRef, leaderRefs, locale }: SceneProps) {
+const Scene = memo(function Scene({ attempt: a, cutaway, exploded, selected, onSelect, onFocus, resetToken, viewCommand, labels, labelsRef, leaderRefs, locale }: SceneProps) {
   const [hovered, setHovered] = useState<PartId | null>(null);
   const partRefs = useRef<Partial<Record<PartId, THREE.Group>>>({});
   const f = flows(a);
   const inletOffset: Vec3 = !a.assembly.inlet.installed ? [-1.15, 0.95, 0.5] : exploded ? [-0.72, 0.6, 0] : [0, 0, 0];
   const drainOffset: Vec3 = !a.assembly.drain.installed ? [1.4, 0.75, 0.45] : exploded ? [0.25, 1, 0.15] : [0, 0, 0];
-  return <SceneContext.Provider value={{ selected, hovered, setHovered, onSelect }}>
+  return <SceneContext.Provider value={{ selected, hovered, setHovered, onSelect, onFocus }}>
     <Controls resetToken={resetToken} viewCommand={viewCommand} exploded={exploded} selected={selected} partRefs={partRefs} />
     <StudioLighting />
     <RenderMetrics />
@@ -362,48 +391,81 @@ const Scene = memo(function Scene({ attempt: a, cutaway, exploded, selected, onS
         <Box position={[1.76, 1.28, 0]} size={[0.15, 2.45, 1.82]} color="#f5f5f1" />
         {!cutaway && <Box position={[0, 1.28, 0.83]} size={[3.65, 2.45, 0.16]} color="#f5f5f1" />}
         {cutaway && <Box position={[0, 0.27, 0.83]} size={[3.65, 0.24, 0.16]} color="#e5e7df" />}
+        <Box position={[0, 2.48, -0.83]} size={[3.65, 0.1, 0.19]} radius={0.035} color="#eeeee7" />
+        {[-1.76, 1.76].map(x => <Box key={x} position={[x, 2.48, 0]} size={[0.19, 0.1, 1.77]} radius={0.035} color="#eeeee7" />)}
+        {!cutaway && <Box position={[0, 2.48, 0.83]} size={[3.65, 0.1, 0.19]} radius={0.035} color="#eeeee7" />}
         <Cylinder position={[0.5, -0.25, 0.22]} radius={0.25} height={0.55} color="#e6e7de" />
         <Cylinder position={[0.5, -0.52, 0.22]} radius={0.28} height={0.1} color="#bcc3b7" />
         <Box position={[-1.36, -0.1, -0.5]} size={[0.23, 0.2, 0.23]} color="#cacabd" />
         <Box position={[1.35, -0.1, -0.5]} size={[0.23, 0.2, 0.23]} color="#cacabd" />
+        {[-1.36, 1.35].map(x => <group key={x}>
+          <Sleeve position={[x, 0.184, -0.5]} outer={0.115} inner={0.03} height={0.025}><Material color="#4d5550" finish="matte" roughness={0.86} /></Sleeve>
+          <Fastener position={[x, 0.201, -0.5]}><Material color="#aab2a8" metal={0.74} roughness={0.32} /></Fastener>
+        </group>)}
       </Part>
       <Part id="lid" target={[0, exploded ? 1.25 : a.lidOpen ? 0.72 : 0, exploded || a.lidOpen ? -1.95 : 0]} partRefs={partRefs}>
         <Box position={[0, 2.57, 0]} size={[3.83, 0.2, 1.99]} color="#f5f5f1" radius={0.08} />
         <Box position={[0, 2.46, 0]} size={[3.35, 0.065, 1.48]} color="#dcdfd6" radius={0.025} />
-        <Cylinder position={[0.95, 2.71, 0.08]} radius={0.18} height={0.08} color="#aeb9ad" metal={0.65} />
+        {[-0.63, 0.63].map(z => <Box key={z} position={[0, 2.412, z]} size={[3.12, 0.09, 0.075]} radius={0.02} color="#e1e3d9" />)}
+        {[-1.53, 1.53].map(x => <Box key={x} position={[x, 2.412, 0]} size={[0.075, 0.09, 1.27]} radius={0.02} color="#e1e3d9" />)}
+        {[-1.43, 1.43].flatMap(x => [-0.54, 0.54].map(z => <mesh key={`${x},${z}`} position={[x, 2.411, z]}><cylinderGeometry args={[0.064, 0.064, 0.036, 16]} /><Material color="#606861" finish="matte" roughness={0.86} /></mesh>))}
+        <Sleeve position={[0.95, 2.68, 0.08]} outer={0.21} inner={0.177} height={0.034}><Material color="#c5cdc5" metal={0.85} roughness={0.24} /></Sleeve>
+        <Cylinder position={[0.95, 2.701, 0.08]} radius={0.176} height={0.041} color="#b5c0b9" metal={0.72} roughness={0.23} />
+        <Cylinder position={[0.95, 2.73, 0.08]} radius={0.144} height={0.025} color="#d2d8d3" metal={0.67} roughness={0.23} />
       </Part>
       <Part id="pipe" partRefs={partRefs}>
-        <Pipe points={[[-2.12, 0.12, 1.27], [-2.1, -0.38, 1.27], [-1.63, -0.51, 0.8], [-1.12, -0.28, 0], [-1.12, 0.26, 0]]} radius={0.063} color="#959f95" metal={0.65} />
+        <Pipe points={[[-2.12, 0.12, 1.27], [-2.1, -0.38, 1.27], [-1.63, -0.51, 0.8], [-1.12, -0.28, 0], [-1.12, 0.26, 0]]} radius={0.063} color="#a3aca8" metal={0.72} braided />
         <Cylinder position={[-1.12, -0.07, 0]} radius={0.12} height={0.12} color="#bea66d" metal={0.7} segments={6} />
+        <Cylinder position={[-1.12, -0.18, 0]} radius={0.083} height={0.075} color="#b1b9b3" metal={0.78} />
+        <ThreadBands position={[-1.12, 0.057, 0]} radius={0.095} count={5} spacing={0.017}><Material color="#b7a16c" metal={0.62} /></ThreadBands>
+        <Sleeve position={[-1.12, 0.169, 0]} outer={0.137} inner={0.073} height={0.036}><Material color="#444f47" roughness={0.88} /></Sleeve>
+        <Cylinder position={[-2.12, -0.096, 1.27]} radius={0.128} height={0.117} color="#b6bdb4" metal={0.72} segments={6} />
+        <Cylinder position={[-2.12, -0.19, 1.27]} radius={0.076} height={0.073} color="#b1b9b3" metal={0.78} />
       </Part>
       <Part id="supply" partRefs={partRefs}>
         <Cylinder position={[-2.12, 0.06, 1.27]} radius={0.11} height={0.3} color="#b7a16e" metal={0.65} />
+        <Cylinder position={[-2.12, 0.14, 1.27]} radius={0.134} height={0.048} color="#a38c5a" metal={0.62} segments={6} />
+        <ThreadBands position={[-2.12, 0.016, 1.27]} radius={0.112} count={4} spacing={0.026}><Material color="#bcaa7a" metal={0.65} /></ThreadBands>
         <group position={[-2.12, 0.23, 1.27]} rotation={[0, a.supplyOpen ? 0 : Math.PI / 2, 0]}>
           <Box size={[0.48, 0.08, 0.12]} radius={0.04} color="#2b6455" />
+          {[-0.16, 0.16].map(x => <Box key={x} position={[x, 0.044, 0]} size={[0.053, 0.012, 0.075]} radius={0.004} color="#3c7864" />)}
         </group>
         <Cylinder position={[-2.12, 0.29, 1.27]} radius={0.04} height={0.04} color="#b5baad" metal={0.6} />
       </Part>
       <Part id="inlet" target={inletOffset} partRefs={partRefs}>
         <Cylinder position={[-1.12, 0.98, 0]} radius={0.1} height={1.65} color="#d9dfcf" />
         <Cylinder position={[-1.12, 0.24, 0]} radius={0.18} height={0.16} color="#556e5e" />
+        <Sleeve position={[-1.12, 0.345, 0]} outer={0.137} inner={0.101} height={0.034}><Material color="#c7cdbd" /></Sleeve>
+        <Cylinder position={[-1.12, 0.52, 0]} radius={0.114} height={0.075} color="#aab7a4" />
+        <Cylinder position={[-1.12, 1.61, 0]} radius={0.143} height={0.07} color="#b1bca8" />
         <Cylinder position={[-1.12, 1.85, 0]} radius={0.22} height={0.32} color={a.assembly.inlet.replaced ? '#719688' : '#697d69'} />
         <Cylinder position={[-1.12, 2.02, 0]} radius={0.245} height={0.1} color="#4d6556" />
+        <Sleeve position={[-1.12, 1.695, 0]} outer={0.231} inner={0.212} height={0.028}><Material color="#495b4e" roughness={0.72} /></Sleeve>
+        <Cylinder position={[-1.12, 2.075, 0]} radius={0.156} height={0.018} color="#789080" />
+        {[-1.24, -1].map(x => <Fastener key={x} position={[x, 2.074, 0]}><Material color="#bbc3b4" metal={0.55} /></Fastener>)}
         <Pipe points={[[-1.12, 1.82, 0], [-0.98, 1.87, 0.23], [-0.89, 1.64, 0.29]]} radius={0.072} color="#b8c9b3" />
+        <Sleeve position={[-0.89, 1.629, 0.29]} outer={0.077} inner={0.049} height={0.031}><Material color="#d5dfce" /></Sleeve>
       </Part>
       <Part id="float" target={inletOffset} partRefs={partRefs}><Float attempt={a} /></Part>
       <Part id="drain" target={drainOffset} partRefs={partRefs}>
-        <Cylinder position={[0.45, 0.25, 0.25]} radius={0.33} height={0.17} color="#59635c" roughness={0.84} />
+        <Sleeve position={[0.45, 0.25, 0.25]} outer={0.33} inner={0.225} height={0.17}><Material color="#667069" roughness={0.7} /></Sleeve>
+        <Sleeve position={[0.45, 0.19, 0.25]} outer={0.367} inner={0.224} height={0.035}><Material color="#bec7b9" /></Sleeve>
         <mesh position={[0.45, 0.35, 0.25]} rotation={[Math.PI / 2, 0, 0]} castShadow><torusGeometry args={[0.265, 0.051, 12, 40]} /><Material color="#454e48" roughness={0.88} /></mesh>
         <group position={[0.45, 0.39, 0.05]} rotation={[a.drainRemaining > 0 ? -1.05 : 0, 0, 0]}>
-          <Cylinder position={[0, 0, 0.2]} radius={0.275} height={0.07} color={a.assembly.drain.replaced ? '#b8a674' : '#b39965'} />
+          <Cylinder position={[0, 0, 0.2]} radius={0.275} height={0.07} color={a.assembly.drain.replaced ? '#bcad87' : '#ab9973'} roughness={0.62} />
+          <Sleeve position={[0, 0.044, 0.2]} outer={0.206} inner={0.182} height={0.014}><Material color="#c6b691" roughness={0.66} /></Sleeve>
           <Box position={[0, 0, 0]} size={[0.12, 0.08, 0.22]} color="#7e7c60" />
+          <Cylinder position={[0, 0, 0]} radius={0.035} height={0.22} rotation={[0, 0, Math.PI / 2]} color="#a8b1a5" metal={0.7} />
         </group>
-        <Pipe points={[[0.45, 0.4, 0.26], [0.5, 1.0, 0.24], [0.56, 1.62, 0.07], [0.9, 2.25, 0.02]]} radius={0.012} color="#a09f7d" metal={0.65} />
+        <LinkedChain points={[[0.45, a.drainRemaining > 0 ? 0.602 : 0.451, a.drainRemaining > 0 ? 0.147 : 0.25], [0.88, 1.0, 0.37], [1.22, 1.67, 0.24], [1.29, 2.25, 0.02]]}><Material color="#aab2a4" metal={0.7} roughness={0.32} /></LinkedChain>
+        <Box position={[1.29, 2.25, -0.699]} size={[0.14, 0.15, 0.1]} color="#7e8d7d" radius={0.015} />
+        <Cylinder position={[1.29, 2.25, -0.326]} radius={0.022} height={0.712} rotation={[Math.PI / 2, 0, 0]} color="#b4bdae" metal={0.65} />
+        <mesh position={[1.29, 2.25, 0.02]}><torusGeometry args={[0.031, 0.009, 6, 16]} /><Material color="#b4bdae" metal={0.65} /></mesh>
       </Part>
       <Part id="overflow" target={exploded ? [0.5, 0.3, 0] : [0, 0, 0]} partRefs={partRefs}>
-        <Cylinder position={[1.05, 1.1, -0.2]} radius={0.15} height={1.9} color="#d1d7c3" hollow />
-        <mesh position={[1.05, 2.06, -0.2]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[0.104, 0.17, 40]} /><Material color="#f0ede0" /></mesh>
-        <Cylinder position={[1.05, 1.65, -0.2]} radius={0.104} height={0.79} color="#8a9783" hollow />
+        <Sleeve position={[1.05, 1.1, -0.2]} outer={0.15} inner={0.104} height={1.9}><Material color="#d1d7c3" /></Sleeve>
+        <Sleeve position={[1.05, 2.041, -0.2]} outer={0.17} inner={0.104} height={0.038}><Material color="#ebeadd" /></Sleeve>
+        <Sleeve position={[1.05, 0.319, -0.2]} outer={0.174} inner={0.104} height={0.07}><Material color="#afbaa7" /></Sleeve>
         <Pipe points={[[1.05, 0.25, -0.2], [1.03, 0.23, 0.1], [0.56, 0.23, 0.22]]} radius={0.12} color="#cdd4c1" />
       </Part>
       <Part id="water" partRefs={partRefs}><Water attempt={a} /></Part>
@@ -417,8 +479,8 @@ const Scene = memo(function Scene({ attempt: a, cutaway, exploded, selected, onS
 }, (before, next) => visualState(before.attempt) === visualState(next.attempt)
   && before.selected === next.selected && before.cutaway === next.cutaway && before.exploded === next.exploded
   && before.labels === next.labels && before.resetToken === next.resetToken && before.locale === next.locale
-  && before.viewCommand?.type === next.viewCommand?.type && before.viewCommand?.token === next.viewCommand?.token
-  && before.onSelect === next.onSelect && before.labelsRef === next.labelsRef && before.leaderRefs === next.leaderRefs);
+  && before.viewCommand?.type === next.viewCommand?.type && before.viewCommand?.token === next.viewCommand?.token && before.viewCommand?.part === next.viewCommand?.part
+  && before.onSelect === next.onSelect && before.onFocus === next.onFocus && before.labelsRef === next.labelsRef && before.leaderRefs === next.leaderRefs);
 function Fallback({ attempt, onSelect, selected }: Pick<ModelProps, 'attempt' | 'onSelect' | 'selected'>) {
   const { t } = useLocale();
   return <div className="fallback" data-testid="webgl-fallback">
@@ -444,6 +506,8 @@ export function TankModel(props: ModelProps) {
   const { t, locale } = useLocale();
   const onSelectRef = useRef(props.onSelect); onSelectRef.current = props.onSelect;
   const select = useCallback<ModelProps['onSelect']>((id, source) => onSelectRef.current(id, source), []);
+  const onFocusRef = useRef(props.onFocus); onFocusRef.current = props.onFocus;
+  const focus = useCallback((id: PartId) => onFocusRef.current?.(id), []);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => { canvasRef.current?.setAttribute('aria-label', t('可旋转、缩放和点击部件的三维水箱')); }, [t]);
   const [supported] = useState(supportsWebGL);
@@ -467,11 +531,11 @@ export function TankModel(props: ModelProps) {
         gl.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); setLost(true); }, { once: true });
         setReady(true);
       }} fallback={fallback}>
-        <MotionContext.Provider value={reduced}><Scene {...props} onSelect={select} labelsRef={labelsRef} leaderRefs={leaderRefs} locale={locale} /></MotionContext.Provider>
+        <MotionContext.Provider value={reduced}><Scene {...props} onSelect={select} onFocus={props.onFocus ? focus : undefined} labelsRef={labelsRef} leaderRefs={leaderRefs} locale={locale} /></MotionContext.Provider>
       </Canvas>
       <svg aria-hidden="true" className="model-label-leaders" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>{Object.keys(ANCHORS).map(key => { const id = key as PartId; return <line key={id} ref={el => { if (el) leaderRefs.current[id] = el; }} stroke={props.selected === id ? '#22644d' : '#7c9086'} strokeWidth={props.selected === id ? 1.5 : 1} style={{ visibility: 'hidden' }} />; })}</svg>
       <div className={`model-labels ${props.labels ? '' : 'labels-hidden'}`} aria-hidden={!props.labels}>
-        {Object.keys(ANCHORS).map(key => { const id = key as PartId; return <button key={id} type="button" tabIndex={props.labels ? 0 : -1} data-testid={`anchor-${id}`} ref={el => { if (el) labelsRef.current[id] = el; }} onClick={() => props.onSelect(id, 'label')} className={props.selected === id ? 'chosen' : ''}><span />{t(PARTS.find(p => p.id === id)?.short ?? '')}</button>; })}
+        {Object.keys(ANCHORS).map(key => { const id = key as PartId; return <button key={id} type="button" tabIndex={props.labels ? 0 : -1} data-testid={`anchor-${id}`} ref={el => { if (el) labelsRef.current[id] = el; }} onClick={() => props.onSelect(id, 'label')} onDoubleClick={() => props.onFocus?.(id)} className={props.selected === id ? 'chosen' : ''}><span />{t(PARTS.find(p => p.id === id)?.short ?? '')}</button>; })}
       </div>
     </ModelBoundary> : fallback}
   </div>;

@@ -1,6 +1,6 @@
 # 手艺活 · Local MVP v0.2
 
-[English project overview](README.md) · [英文项目摘要](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [分阶段验收结果](docs/portfolio/VALIDATION.md) · [双语材料版说明](docs/BILINGUAL_PORTFOLIO.md) · [渲染与交互精修说明（英文）](docs/RENDERING_REFINEMENT.md)
+[English project overview](README.md) · [英文项目摘要](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [分阶段验收结果](docs/portfolio/VALIDATION.md) · [双语材料版说明](docs/BILINGUAL_PORTFOLIO.md) · [渲染与交互精修说明（英文）](docs/RENDERING_REFINEMENT.md) · [建模细节与观察交互（英文）](docs/MODEL_DETAIL_REFINEMENT.md)
 
 本版面向英文项目审阅：应用与 `/review/` 介绍页首次打开默认英文，可通过 **English / 中文** 随时切换。以下保留中文按钮说明；需要按步骤操作时先切换为中文。训练规则、首次诊断规则、评分权重和学习记录格式保持不变。
 
@@ -76,6 +76,8 @@ npm.cmd run preview
 - 课程入口：首屏同时提供认识结构、引导训练与独立测评；症状选择与后续开始按钮相邻。真实未完成尝试显示继续入口，开始新尝试保留确认。
 - 真实 WebGL 3D 水箱：程序化空腔、盖、供水阀、进水管、进水机构、浮球与连杆、翻板及密封件、溢流管、水体。
 - 拖动旋转、滚轮缩放、镜头范围限制、高亮与双向部件选择；支持整体视角、俯视内部和主动聚焦选中部件。
+- 双击真实部件或可见标签可直接聚焦，部件列表与操作目标同步；普通单击只选择，键盘可使用「聚焦选中部件」。
+- 细化水箱口沿、箱盖定位垫、安装垫圈与螺栓、进水接头、翻板转轴、真实空心管口；实例化链环与螺纹，软管纹理由内存中的程序生成，不加载外部贴图。浮球连杆围绕固定支点摆动。
 - 开合箱盖、隐藏前壁、平滑爆炸视图、随部件跟随的标签与关联线；标签按视角处理出画、背面和重叠。
 - 页面内放大工作区，点击「退出放大」或按 Esc 返回；保留同一尝试与 Canvas，不重开模拟计时器。
 - 业务状态驱动供水阀方向、浮球高度、水位、水流、翻板开启和拆下组件的位置。
@@ -164,7 +166,7 @@ npm.cmd run build
 
 历史 UI 升级验收日期为 **2026-09-26**：修改前基线为 25 项单元测试、7 项 E2E；当时 v0.2 最终 40 项单元测试与 12 项 E2E 通过，类型检查、构建及 WebGL 预览也通过。原始结果保留在 [docs/TEST_REPORT.md](docs/TEST_REPORT.md)。**2026-10-05 的材料版复验与随后中英文切换的专项验收分别记录于 [docs/portfolio/VALIDATION.md](docs/portfolio/VALIDATION.md)**，不能用双语改动前的结果替代改动后的验证。历史 UI 改动和截图索引见 [docs/UI_UPGRADE_v0.2.md](docs/UI_UPGRADE_v0.2.md)。
 
-2026-10-05 最新精修版已实际通过类型检查、**56 项单元测试、21 项 E2E（6.3 分钟）** 与生产构建。最终生产预览单独通过，确认双语审阅页、新版 PDF、真实 WebGL 2，且没有外部资源请求或未捕获页面错误。新增检查覆盖静止时停止绘制、操作唤醒、标签遮挡更新和真实上下文丢失；固定种子测试覆盖 3,888 次状态转换和 1,944 次持久化续接步骤。之前的 47/18 双语结果仍作为历史证据保留，完整日志、失败修复记录与新版截图在上述报告开头。
+2026-10-05 最新建模精修版已实际通过类型检查、**56 项单元测试、23 项 E2E（7.8 分钟）** 与生产构建。最终生产预览单独通过，确认双语审阅页、新版 PDF、真实 WebGL 2，且没有外部资源请求或未捕获页面错误。新增建模检查验证真实模型双击聚焦及浮球连杆的世界坐标；渲染检查保留静止时停止绘制、操作唤醒、标签遮挡更新和真实上下文丢失；固定种子测试覆盖 3,888 次状态转换和 1,944 次持久化续接步骤。之前的 56/21 渲染精修与 47/18 双语结果仍作为历史证据保留，完整日志、失败修复记录与新版截图在上述报告开头。
 
 历史 v0.2 浏览器检查覆盖真实用户操作流程、真实 Canvas 点击、镜头与放大保持状态、原数据兼容、安全错误恢复、首次诊断与证明限制、键盘操作和本地网络请求。业务规则测试与 WebGL 视觉验证分别记录；构建成功不等于所有浏览器或显卡都验证通过。重点视口为 1440×900、1366×768、1280×800，并检查 1024×768 和 390×844；实际完成情况见测试报告。
 
@@ -192,7 +194,8 @@ src/domain/types.ts          状态、事件与评分类型
 src/domain/course.ts         课程内容、部件、案例、证据和限制说明
 src/domain/engine.ts         纯 reducer、固定步长模拟、安全规则、确定性评分
 src/storage/local.ts         schema 校验、恢复、写入、清空和幂等归档
-src/components/TankModel.tsx 程序化 3D、镜头、标签、二维降级
+src/components/TankModel.tsx 程序化 3D、固定支点连杆、镜头、标签、二维降级
+src/components/model/MechanicalDetails.tsx 空心几何、实例化链环与螺纹、本地纹理
 src/components/Icon.tsx      内联 SVG 图标
 src/views/Workbench.tsx      工作台布局、阶段操作层级、放大与键盘交互
 src/ui/presentation.ts       从引擎状态只读派生阶段及复习建议
@@ -202,12 +205,15 @@ tests/engine.test.ts         业务与存储测试
 tests/presentation.test.ts   阶段同步、建议、安全与防答案泄露测试
 e2e/flows.spec.ts            真实操作端到端测试
 e2e/fixtures/v0.1-store.json 冻结的旧格式兼容性数据
-docs/screenshots/v0.2/      本轮实际浏览器运行截图
+docs/screenshots/v0.2/      历史 UI 升级的实际运行截图
+docs/screenshots/model-detail-2026-10-05/ 最新建模精修的实际运行截图
 docs/UI_UPGRADE_v0.2.md     UI 升级说明与截图索引
 docs/TEST_REPORT.md         2026-09-26 历史 UI 验收及边界
 docs/portfolio/VALIDATION.md 后续材料版和双语版的分阶段验收
 docs/BILINGUAL_PORTFOLIO.md 中英文展示与材料版说明
 docs/RENDERING_REFINEMENT.md 渲染与交互精修的工程决策、验证与边界
+docs/MODEL_DETAIL_REFINEMENT.md 几何细节、聚焦手势与机械近似的边界
+e2e/model-detail.spec.ts     新增真实双击与连杆世界坐标验证
 ```
 
 增加课程时，先定义小范围的教学模型、案例、证据与验证条件，再扩展类型和 reducer，添加正确路径与非法路径测试，最后把状态映射到新 3D 场景。若存储结构变化，增加 schemaVersion 并编写明确迁移或重置逻辑。当前不需要插件系统、数据库或复杂通用编辑器。

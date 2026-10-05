@@ -1,0 +1,839 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test:e2e
+> playwright test e2e/bilingual.spec.ts --grep English defaults
+
+[WebServer] (node:32) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:45) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  pw:api => browserType.launch started +0ms
+  pw:browser <launching> /tmp/shouyihuo-chromium/chromium --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --use-angle=swiftshader --enable-unsafe-swiftshader --disable-dev-shm-usage --user-data-dir=/tmp/playwright_chromiumdev_profile-r2YDZj --remote-debugging-pipe --no-startup-window +0ms
+  pw:browser <launched> pid=91 +4ms
+  pw:browser [pid=91][err] [1005/205455.785863:ERROR:../net/base/address_tracker_linux.cc:224] Could not create NETLINK socket: Operation not permitted (1) +19ms
+  pw:browser [pid=91][err] [1005/205455.787018:ERROR:../content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 107: No such file or directory (2) +1ms
+  pw:browser [pid=91][err] [1005/205455.797228:WARNING:../sandbox/policy/linux/sandbox_linux.cc:405] InitializeSandbox() called with multiple threads in process gpu-process. +10ms
+  pw:api <= browserType.launch succeeded +38ms
+  pw:api => browser.newContext started +3ms
+  pw:api <= browser.newContext succeeded +6ms
+  pw:api => browserContext.newPage started +6ms
+  pw:browser [pid=91][err] [1005/205455.816145:ERROR:../content/browser/zygote_host/zygote_host_impl_linux.cc:300] Failed to adjust OOM score of renderer with pid 143: No such file or directory (2) +19ms
+  pw:api <= browserContext.newPage succeeded +26ms
+  pw:api => page.goto started +2ms
+  pw:api navigating to "http://127.0.0.1:5173/", waiting until "load" +4ms
+  pw:api   "commit" event fired +10ms
+  pw:api   navigated to "http://127.0.0.1:5173/" +1ms
+  pw:browser [pid=91][err] [1005/205456.078906:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5173/@vite/client (883) +263ms
+  pw:browser [pid=91][err] [1005/205456.237809:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5173/@vite/client (996) +167ms
+  pw:browser [pid=91][err] [1005/205456.237865:INFO:CONSOLE:15558] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=e4eee7c6 (15558)
+  pw:api   "domcontentloaded" event fired +394ms
+  pw:api   "load" event fired +1ms
+  pw:api <= page.goto succeeded +334ms
+[WebServer] 8:54:56 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  pw:api => Expect "toHaveAttribute" started +6ms
+  pw:browser [pid=91][err] [1005/205456.585988:INFO:CONSOLE:299] "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.", source: http://127.0.0.1:5173/@vite/client (299) +346ms
+  pw:api   "networkidle" event fired +156ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +817ms
+  pw:api waiting for locator('html') +1ms
+  pw:api <= Expect "toHaveAttribute" succeeded +150ms
+  pw:api => Expect "toContainText" started +3ms
+  pw:api Expect "toContainText" getByRole('button', { name: 'Independent assessment', exact: true }) with timeout 12000ms +5ms
+  pw:api waiting for getByRole('button', { name: 'Independent assessment', exact: true }) +0ms
+  pw:api <= Expect "toContainText" succeeded +8ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" getByTestId('tank-model') with timeout 12000ms +3ms
+  pw:api waiting for getByTestId('tank-model') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +4ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" getByTestId('anchor-inlet') with timeout 12000ms +2ms
+  pw:api waiting for getByTestId('anchor-inlet') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +2ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +6ms
+  pw:api   locator resolved to <body>…</body> +3ms
+  pw:api <= locator.innerText succeeded +2ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +4ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +9ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +2ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +2s
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +13ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +1ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +2ms
+  pw:api <= page.screenshot succeeded +3s
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +7ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +10ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +5ms
+  pw:api waiting for fonts to load... +3ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +426ms
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +6ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +3ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +6ms
+  pw:api waiting for fonts to load... +11ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +491ms
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +19ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: '03 No refill after draining' }) +3ms
+  pw:api   locator resolved to <button class="" aria-pressed="false">…</button> +19ms
+  pw:api attempting click action +4ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +489ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +4ms
+  pw:api   performing click action +15ms
+  pw:api   click action done +28ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +3ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Independent assessment', exact: true }) +3ms
+  pw:api   locator resolved to <button class="button">…</button> +4ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +239ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +12ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/lab/assessment" +10ms
+  pw:api   click action done +12ms
+  pw:api   waiting for scheduled navigations to finish +2ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +7ms
+  pw:api => Expect "toHaveCount" started +2ms
+  pw:api Expect "toHaveCount" locator('.learning-hint') with timeout 12000ms +2ms
+  pw:api waiting for locator('.learning-hint') +0ms
+  pw:api <= Expect "toHaveCount" succeeded +8ms
+  pw:api => Expect "toHaveCount" started +1ms
+  pw:api Expect "toHaveCount" locator('.diagnosis-answer') with timeout 12000ms +2ms
+  pw:api waiting for locator('.diagnosis-answer') +0ms
+  pw:api <= Expect "toHaveCount" succeeded +2ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" getByTestId('phase-indicator') with timeout 12000ms +2ms
+  pw:api waiting for getByTestId('phase-indicator') +0ms
+  pw:api   locator resolved to <ol data-phase="observe" class="phase-indicator" data-testid="phase-indicator" aria-label="Current training stage">…</ol> +3s
+  pw:api <= Expect "toHaveAttribute" succeeded +5ms
+  pw:api => Expect "not toHaveClass" started +1ms
+  pw:api Expect "not toHaveClass" getByRole('button', { name: 'Run retest', exact: true }) with timeout 12000ms +3ms
+  pw:api waiting for getByRole('button', { name: 'Run retest', exact: true }) +0ms
+  pw:api <= Expect "not toHaveClass" succeeded +5ms
+  pw:api => Expect "not toContainText" started +1ms
+  pw:api Expect "not toContainText" locator('.current-task') with timeout 12000ms +2ms
+  pw:api waiting for locator('.current-task') +0ms
+  pw:api <= Expect "not toContainText" succeeded +3ms
+  pw:api => page.setViewportSize started +0ms
+  pw:api <= page.setViewportSize succeeded +9ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +4ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check water level', exact: true }) with timeout 12000ms +4ms
+  pw:api waiting for getByRole('button', { name: 'Check water level', exact: true }) +0ms
+[WebServer] 8:55:07 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  pw:browser [pid=91][err] [1005/205507.922501:INFO:CONSOLE:299] "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.", source: http://127.0.0.1:5173/@vite/client (299) +11s
+  pw:api <= Expect "toBeInViewport" succeeded +11ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check supply', exact: true }) with timeout 12000ms +915ms
+  pw:api waiting for getByRole('button', { name: 'Check supply', exact: true }) +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +102ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" locator('.persistent-safety') with timeout 12000ms +9ms
+  pw:api waiting for locator('.persistent-safety') +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +20ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +5ms
+  pw:api   locator resolved to <body>…</body> +3ms
+  pw:api <= locator.innerText succeeded +9ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +5ms
+  pw:api waiting for fonts to load... +5ms
+  pw:api fonts loaded +0ms
+  pw:api <= page.screenshot succeeded +2s
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +22ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +5ms
+  pw:api => Expect "toBeInViewport" started +2ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check water level', exact: true }) with timeout 12000ms +3ms
+  pw:api waiting for getByRole('button', { name: 'Check water level', exact: true }) +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +386ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check supply', exact: true }) with timeout 12000ms +7ms
+  pw:api waiting for getByRole('button', { name: 'Check supply', exact: true }) +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +103ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" locator('.persistent-safety') with timeout 12000ms +3ms
+  pw:api waiting for locator('.persistent-safety') +1ms
+  pw:api <= Expect "toBeInViewport" succeeded +8ms
+  pw:api => locator.innerText started +0ms
+  pw:api waiting for locator('body') +19ms
+  pw:api   locator resolved to <body>…</body> +2ms
+  pw:api <= locator.innerText succeeded +3ms
+  pw:api => page.screenshot started +4ms
+  pw:api taking page screenshot +5ms
+  pw:api waiting for fonts to load... +2ms
+  pw:api fonts loaded +5ms
+  pw:api <= page.screenshot succeeded +2s
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +7ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +26ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check water level', exact: true }) with timeout 12000ms +2ms
+  pw:api waiting for getByRole('button', { name: 'Check water level', exact: true }) +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +18ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" getByRole('button', { name: 'Check supply', exact: true }) with timeout 12000ms +4ms
+  pw:api waiting for getByRole('button', { name: 'Check supply', exact: true }) +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +11ms
+  pw:api => Expect "toBeInViewport" started +1ms
+  pw:api Expect "toBeInViewport" locator('.persistent-safety') with timeout 12000ms +2ms
+  pw:api waiting for locator('.persistent-safety') +0ms
+  pw:api <= Expect "toBeInViewport" succeeded +13ms
+  pw:api => locator.innerText started +2ms
+  pw:api waiting for locator('body') +2ms
+  pw:api   locator resolved to <body>…</body> +4ms
+  pw:api <= locator.innerText succeeded +2ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +7ms
+  pw:api waiting for fonts to load... +2ms
+  pw:api fonts loaded +6ms
+  pw:api <= page.screenshot succeeded +147ms
+  pw:api => page.setViewportSize started +2ms
+  pw:api <= page.setViewportSize succeeded +11ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +22ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +3ms
+  pw:api   locator resolved to <body>…</body> +6ms
+  pw:api <= locator.innerText succeeded +3ms
+  pw:api => page.screenshot started +5ms
+  pw:api taking page screenshot +5ms
+  pw:api waiting for fonts to load... +3ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +164ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +9ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Check water level', exact: true }) +3ms
+  pw:api   locator resolved to <button class="button">Check water level</button> +28ms
+  pw:api attempting click action +3ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +20ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +7ms
+  pw:api   click action done +21ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +2ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Check supply', exact: true }) +2ms
+  pw:api   locator resolved to <button class="button">Check supply</button> +5ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +22ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +0ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +19ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByTestId('part-inlet') +2ms
+  pw:api   locator resolved to <button class="selected" aria-pressed="true" data-testid="part-inlet">…</button> +3ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +30ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +5ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +5ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Record observation', exact: true }) +28ms
+  pw:api   locator resolved to <button class="button observe-button ">…</button> +7ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +26ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +27ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +2ms
+  pw:api <= locator.click succeeded +5ms
+  pw:api => Expect "toHaveText" started +2ms
+  pw:api Expect "toHaveText" getByTestId('evidence-count') with timeout 12000ms +3ms
+  pw:api waiting for getByTestId('evidence-count') +0ms
+  pw:api <= Expect "toHaveText" succeeded +7ms
+  pw:api => page.evaluate started +2ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByRole('button', { name: '中文', exact: true }) +4ms
+  pw:api   locator resolved to <button lang="zh-CN" aria-pressed="false">中文</button> +6ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +26ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +8ms
+  pw:api   click action done +76ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +4ms
+  pw:api <= locator.click succeeded +24ms
+  pw:api => Expect "toHaveAttribute" started +2ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +4ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +16ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +25ms
+  pw:api => Expect "toBeVisible" started +1ms
+  pw:api Expect "toBeVisible" getByRole('button', { name: '查看水位', exact: true }) with timeout 12000ms +7ms
+  pw:api waiting for getByRole('button', { name: '查看水位', exact: true }) +0ms
+  pw:api <= Expect "toBeVisible" succeeded +6ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +11ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByRole('button', { name: 'English', exact: true }) +3ms
+  pw:api   locator resolved to <button lang="en" aria-pressed="false">English</button> +5ms
+  pw:api attempting click action +0ms
+  pw:api   waiting for element to be visible, enabled and stable +1ms
+  pw:api   element is visible, enabled and stable +18ms
+  pw:api   scrolling into view if needed +1ms
+  pw:api   done scrolling +3ms
+  pw:api   performing click action +7ms
+  pw:api   click action done +37ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +6ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +3ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +4ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +3ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +5ms
+  pw:api => locator.selectOption started +2ms
+  pw:api waiting for getByLabel('Choose a diagnosis', { exact: true }) +3ms
+  pw:api   locator resolved to <select id="diagnosis">…</select> +3ms
+  pw:api attempting select option action +1ms
+  pw:api   waiting for element to be visible and enabled +2ms
+  pw:api   selected specified option(s) +12ms
+  pw:api <= locator.selectOption succeeded +12ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Submit diagnosis', exact: true }) +2ms
+  pw:api   locator resolved to <button class="button primary full-width">Submit diagnosis</button> +8ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +31ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +25ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +3ms
+  pw:api => Expect "toContainText" started +1ms
+  pw:api Expect "toContainText" locator('.diagnosis-answer') with timeout 12000ms +6ms
+  pw:api waiting for locator('.diagnosis-answer') +0ms
+  pw:api <= Expect "toContainText" succeeded +7ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('tab', { name: 'Simulated repair', exact: true }) +7ms
+  pw:api   locator resolved to <button role="tab" tabindex="-1" id="tab-operate" aria-selected="false" aria-controls="action-content">Simulated repair</button> +5ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +20ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +2ms
+  pw:api   performing click action +9ms
+  pw:api   click action done +22ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +2ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: '中文', exact: true }) +3ms
+  pw:api   locator resolved to <button lang="zh-CN" aria-pressed="false">中文</button> +6ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +29ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +0ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +47ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +5ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +14ms
+  pw:api waiting for locator('html') +1ms
+  pw:api <= Expect "toHaveAttribute" succeeded +4ms
+  pw:api => page.evaluate started +2ms
+  pw:api <= page.evaluate succeeded +10ms
+  pw:api => page.reload started +1ms
+  pw:api waiting for navigation until "load" +5ms
+  pw:api   "commit" event fired +1s
+  pw:api   navigated to "http://127.0.0.1:5173/#/lab/assessment" +0ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/lab/assessment" +0ms
+  pw:browser [pid=91][err] [1005/205516.889893:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5173/@vite/client (883) +9s
+  pw:browser [pid=91][err] [1005/205516.902145:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5173/@vite/client (996) +12ms
+  pw:browser [pid=91][err] [1005/205517.060542:INFO:CONSOLE:15558] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=e4eee7c6 (15558)
+  pw:api   "domcontentloaded" event fired +196ms
+  pw:api   "load" event fired +1ms
+[WebServer] 8:55:17 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  pw:browser [pid=91][err] [1005/205517.460174:INFO:CONSOLE:299] "THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.", source: http://127.0.0.1:5173/@vite/client (299) +395ms
+  pw:api <= page.reload succeeded +423ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api   "networkidle" event fired +74ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +573ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +927ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +54ms
+  pw:api => locator.click started +3ms
+  pw:api waiting for getByRole('button', { name: 'English', exact: true }) +7ms
+  pw:api   locator resolved to <button lang="en" aria-pressed="false">English</button> +24ms
+  pw:api attempting click action +5ms
+  pw:api   waiting for element to be visible, enabled and stable +1ms
+  pw:api   element is visible, enabled and stable +38ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +6ms
+  pw:api   click action done +45ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +6ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +7ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +5ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('tab', { name: 'Simulated repair', exact: true }) +3ms
+  pw:api   locator resolved to <button role="tab" tabindex="-1" id="tab-operate" aria-selected="false" aria-controls="action-content">Simulated repair</button> +5ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +239ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +10ms
+  pw:api   click action done +299ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +2ms
+  pw:api <= locator.click succeeded +13ms
+  pw:api => locator.getAttribute started +0ms
+  pw:api waiting for getByTestId('tank-model') +3ms
+  pw:api   locator resolved to <div class="tank-model " data-supply="closed" data-selected="inlet" data-renderer="webgl" data-testid="tank-model" data-water-level="0.060" data-reduced-motion="false" data-inlet-installed="true" data-drain-installed="true">…</div> +1ms
+  pw:api <= locator.getAttribute succeeded +2ms
+  pw:api => locator.click started +0ms
+  pw:api waiting for getByRole('button', { name: 'Restore supply', exact: true }) +2ms
+  pw:api   locator resolved to <button class="button">Restore supply</button> +4ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +155ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +135ms
+  pw:api   performing click action +29ms
+  pw:api   click action done +737ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +2ms
+  pw:api <= locator.click succeeded +18ms
+  pw:api => Expect "toHaveText" started +1ms
+  pw:api Expect "toHaveText" getByTestId('supply-reading') with timeout 12000ms +14ms
+  pw:api waiting for getByTestId('supply-reading') +0ms
+  pw:api <= Expect "toHaveText" succeeded +5ms
+  pw:api => locator.getAttribute started +2ms
+  pw:api waiting for getByTestId('tank-model') +4ms
+  pw:api   locator resolved to <div data-supply="open" class="tank-model " data-selected="inlet" data-renderer="webgl" data-testid="tank-model" data-water-level="0.115" data-reduced-motion="false" data-inlet-installed="true" data-drain-installed="true">…</div> +2ms
+  pw:api <= locator.getAttribute succeeded +2ms
+  pw:api => locator.getAttribute started +103ms
+  pw:api waiting for getByTestId('tank-model') +3ms
+  pw:api   locator resolved to <div data-supply="open" class="tank-model " data-selected="inlet" data-renderer="webgl" data-testid="tank-model" data-water-level="0.115" data-reduced-motion="false" data-inlet-installed="true" data-drain-installed="true">…</div> +2ms
+  pw:api <= locator.getAttribute succeeded +2ms
+  pw:api => locator.getAttribute started +252ms
+  pw:api waiting for getByTestId('tank-model') +6ms
+  pw:api   locator resolved to <div data-supply="open" class="tank-model " data-selected="inlet" data-renderer="webgl" data-testid="tank-model" data-water-level="0.170" data-reduced-motion="false" data-inlet-installed="true" data-drain-installed="true">…</div> +7ms
+  pw:api <= locator.getAttribute succeeded +6ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Run retest', exact: true }) +6ms
+  pw:api   locator resolved to <button class="button primary full-width">…</button> +6ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +355ms
+  pw:api   scrolling into view if needed +1ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +7ms
+  pw:api   click action done +675ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +17ms
+  pw:api <= locator.click succeeded +33ms
+  pw:api => Expect "toContainText" started +2ms
+  pw:api Expect "toContainText" getByTestId('retest-message') with timeout 20000ms +13ms
+  pw:api waiting for getByTestId('retest-message') +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +7ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +27ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +53ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +107ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +103ms
+  pw:api   unexpected value "Observing refill to the working water level…" +1ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +504ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Observing refill to the working water level…</p> +503ms
+  pw:api   unexpected value "Observing refill to the working water level…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking that the water level holds after inflow …</p> +503ms
+  pw:api   unexpected value "Checking that the water level holds after inflow stops…" +1ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking that the water level holds after inflow …</p> +504ms
+  pw:api   unexpected value "Checking that the water level holds after inflow stops…" +1ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking that the water level holds after inflow …</p> +508ms
+  pw:api   unexpected value "Checking that the water level holds after inflow stops…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Stable level verified; simulating drainage…</p> +503ms
+  pw:api   unexpected value "Stable level verified; simulating drainage…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Stable level verified; simulating drainage…</p> +505ms
+  pw:api   unexpected value "Stable level verified; simulating drainage…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Stable level verified; simulating drainage…</p> +503ms
+  pw:api   unexpected value "Stable level verified; simulating drainage…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +504ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +503ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +512ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +503ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +504ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +0ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Checking automatic refill and shut-off after drai…</p> +502ms
+  pw:api   unexpected value "Checking automatic refill and shut-off after draining…" +1ms
+  pw:api   locator resolved to <p class="small" aria-live="polite" data-testid="retest-message">Retest passed: inflow stops, the level holds, and…</p> +505ms
+  pw:api <= Expect "toContainText" succeeded +5ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +5ms
+  pw:api   locator resolved to <body>…</body> +7ms
+  pw:api <= locator.innerText succeeded +3ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Finish & view report', exact: true }) +10ms
+  pw:api   locator resolved to <button class="button small-button">…</button> +9ms
+  pw:api attempting click action +5ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +237ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +2ms
+  pw:api   performing click action +9ms
+  pw:api   click action done +432ms
+  pw:api   waiting for scheduled navigations to finish +1ms
+  pw:api   navigations have finished +4ms
+  pw:api <= locator.click succeeded +14ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +16ms
+  pw:api   locator resolved to <body>…</body> +5ms
+  pw:api <= locator.innerText succeeded +3ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByRole('dialog').getByRole('button', { name: 'Finish & view report', exact: true }) +33ms
+  pw:api   locator resolved to <button class="button primary">Finish & view report</button> +26ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +201ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +2ms
+  pw:api   performing click action +8ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/report/SYH-31577967-6381-41d1-99d1-ae5632d48f8e" +3ms
+  pw:browser [pid=91][err] [1005/205533.961590:ERROR:../gpu/command_buffer/service/shared_image/shared_image_manager.cc:254] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox. +17s
+  pw:api   click action done +3s
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +9ms
+  pw:api <= locator.click succeeded +21ms
+  pw:api => Expect "toBeVisible" started +2ms
+  pw:api Expect "toBeVisible" getByTestId('total-score') with timeout 12000ms +10ms
+  pw:api waiting for getByTestId('total-score') +0ms
+  pw:api <= Expect "toBeVisible" succeeded +6ms
+  pw:api => Expect "toHaveText" started +2ms
+  pw:api Expect "toHaveText" getByTestId('total-score') with timeout 12000ms +8ms
+  pw:api waiting for getByTestId('total-score') +0ms
+  pw:api <= Expect "toHaveText" succeeded +6ms
+  pw:api => Expect "toHaveClass" started +2ms
+  pw:api Expect "toHaveClass" locator('.report-page') with timeout 12000ms +2ms
+  pw:api waiting for locator('.report-page') +0ms
+  pw:api <= Expect "toHaveClass" succeeded +6ms
+  pw:api => locator.innerText started +0ms
+  pw:api waiting for locator('body') +3ms
+  pw:api   locator resolved to <body>…</body> +2ms
+  pw:api <= locator.innerText succeeded +1ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +10ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +3ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +4ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +3ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +371ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +12ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +5ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +8ms
+  pw:api waiting for fonts to load... +3ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +117ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +11ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +6ms
+  pw:api waiting for fonts to load... +2ms
+  pw:api fonts loaded +3ms
+  pw:api <= page.screenshot succeeded +96ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +9ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +9ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +2ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +78ms
+  pw:api => page.setViewportSize started +1ms
+  pw:api <= page.setViewportSize succeeded +11ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('button', { name: 'Create completion record', exact: true }) +2ms
+  pw:api   locator resolved to <button class="button">…</button> +2ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +23ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +4ms
+  pw:api   click action done +14ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +3ms
+  pw:api => Expect "toContainText" started +1ms
+  pw:api Expect "toContainText" locator('.certificate-notice') with timeout 12000ms +2ms
+  pw:api waiting for locator('.certificate-notice') +0ms
+  pw:api <= Expect "toContainText" succeeded +5ms
+  pw:api => locator.innerText started +1ms
+  pw:api waiting for locator('body') +9ms
+  pw:api   locator resolved to <body>…</body> +2ms
+  pw:api <= locator.innerText succeeded +3ms
+  pw:api => page.emulateMedia started +1ms
+  pw:api <= page.emulateMedia succeeded +8ms
+  pw:api => Expect "toBeVisible" started +2ms
+  pw:api Expect "toBeVisible" locator('.certificate') with timeout 12000ms +3ms
+  pw:api waiting for locator('.certificate') +0ms
+  pw:api <= Expect "toBeVisible" succeeded +3ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +3ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +123ms
+  pw:api => page.emulateMedia started +1ms
+  pw:api <= page.emulateMedia succeeded +11ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByRole('button', { name: 'Close dialog', exact: true }) +3ms
+  pw:api   locator resolved to <button class="icon-button" aria-label="Close dialog">…</button> +8ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +16ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +2ms
+  pw:api   performing click action +5ms
+  pw:api   click action done +12ms
+  pw:api   waiting for scheduled navigations to finish +1ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => locator.click started +0ms
+  pw:api waiting for getByRole('button', { name: '中文', exact: true }) +4ms
+  pw:api   locator resolved to <button lang="zh-CN" aria-pressed="false">中文</button> +4ms
+  pw:api attempting click action +3ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +14ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +9ms
+  pw:api   click action done +19ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +4ms
+  pw:api => Expect "toHaveAttribute" started +5ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +3ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +4ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => Expect "toBeVisible" started +2ms
+  pw:api Expect "toBeVisible" getByText('本原型测评合格', { exact: true }) with timeout 12000ms +2ms
+  pw:api waiting for getByText('本原型测评合格', { exact: true }) +0ms
+  pw:api <= Expect "toBeVisible" succeeded +5ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +2ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +130ms
+  pw:api => locator.click started +3ms
+  pw:api waiting for getByRole('button', { name: '生成示范完成证明', exact: true }) +8ms
+  pw:api   locator resolved to <button class="button">…</button> +11ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +31ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +6ms
+  pw:api   click action done +13ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +0ms
+  pw:api <= locator.click succeeded +2ms
+  pw:api => Expect "toContainText" started +1ms
+  pw:api Expect "toContainText" locator('.certificate') with timeout 12000ms +2ms
+  pw:api waiting for locator('.certificate') +0ms
+  pw:api <= Expect "toContainText" succeeded +4ms
+  pw:api => page.screenshot started +1ms
+  pw:api taking page screenshot +3ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api <= page.screenshot succeeded +125ms
+  pw:api => locator.click started +2ms
+  pw:api waiting for getByRole('button', { name: '关闭弹窗', exact: true }) +4ms
+  pw:api   locator resolved to <button aria-label="关闭弹窗" class="icon-button">…</button> +7ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +26ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +2ms
+  pw:api   performing click action +7ms
+  pw:api   click action done +10ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +4ms
+  pw:api <= locator.click succeeded +3ms
+  pw:api => locator.click started +0ms
+  pw:api waiting for getByRole('button', { name: 'English', exact: true }) +2ms
+  pw:api   locator resolved to <button lang="en" aria-pressed="false">English</button> +3ms
+  pw:api attempting click action +2ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +17ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +4ms
+  pw:api   click action done +9ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +3ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +5ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +3ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +3ms
+  pw:api => page.reload started +1ms
+  pw:api waiting for navigation until "load" +3ms
+  pw:api   "commit" event fired +14ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/report/SYH-31577967-6381-41d1-99d1-ae5632d48f8e" +0ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/report/SYH-31577967-6381-41d1-99d1-ae5632d48f8e" +0ms
+  pw:browser [pid=91][err] [1005/205535.866781:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5173/@vite/client (883) +2s
+  pw:browser [pid=91][err] [1005/205535.872141:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5173/@vite/client (996) +0ms
+  pw:browser [pid=91][err] [1005/205536.001758:INFO:CONSOLE:15558] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=e4eee7c6 (15558)
+  pw:api   "domcontentloaded" event fired +322ms
+  pw:api   "load" event fired +0ms
+  pw:api <= page.reload succeeded +365ms
+  pw:api => Expect "toHaveAttribute" started +1ms
+  pw:api Expect "toHaveAttribute" locator('html') with timeout 12000ms +2ms
+  pw:api waiting for locator('html') +0ms
+  pw:api <= Expect "toHaveAttribute" succeeded +18ms
+  pw:api => page.evaluate started +0ms
+  pw:api <= page.evaluate succeeded +6ms
+  pw:api => locator.click started +1ms
+  pw:api waiting for getByRole('link', { name: 'All learning records', exact: true }) +9ms
+  pw:api   locator resolved to <a href="#/history" class="text-link">All learning records</a> +5ms
+  pw:api attempting click action +1ms
+  pw:api   waiting for element to be visible, enabled and stable +0ms
+  pw:api   element is visible, enabled and stable +4ms
+  pw:api   scrolling into view if needed +0ms
+  pw:api   done scrolling +1ms
+  pw:api   performing click action +5ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/history" +3ms
+  pw:api   click action done +0ms
+  pw:api   waiting for scheduled navigations to finish +0ms
+  pw:api   navigations have finished +1ms
+  pw:api <= locator.click succeeded +2ms
+  pw:api => Expect "toHaveCount" started +1ms
+  pw:api Expect "toHaveCount" getByTestId('history-row') with timeout 12000ms +2ms
+  pw:api waiting for getByTestId('history-row') +1ms
+  pw:api   locator resolved to 1 element +10ms
+  pw:api <= Expect "toHaveCount" succeeded +5ms
+  pw:api => locator.innerText started +0ms
+  pw:api waiting for locator('body') +2ms
+  pw:api   locator resolved to <body>…</body> +6ms
+  pw:api <= locator.innerText succeeded +2ms
+  pw:api => page.screenshot started +2ms
+  pw:api taking page screenshot +1ms
+  pw:api waiting for fonts to load... +1ms
+  pw:api fonts loaded +1ms
+  pw:api   "networkidle" event fired +41ms
+  pw:api <= page.screenshot succeeded +30ms
+  pw:api => page.reload started +2ms
+  pw:api waiting for navigation until "load" +7ms
+  pw:api   "commit" event fired +11ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/history" +3ms
+  pw:api   navigated to "http://127.0.0.1:5173/#/history" +0ms
+  pw:browser [pid=91][err] [1005/205536.750538:INFO:CONSOLE:883] "[vite] connecting...", source: http://127.0.0.1:5173/@vite/client (883) +760ms
+  pw:browser [pid=91][err] [1005/205536.754069:INFO:CONSOLE:996] "[vite] connected.", source: http://127.0.0.1:5173/@vite/client (996) +0ms
+  pw:browser [pid=91][err] [1005/205536.757597:INFO:CONSOLE:15558] "Download the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold", source: http://127.0.0.1:5173/node_modules/.vite/deps/react-dom_client.js?v=e4eee7c6 (15558)
+  pw:api   "domcontentloaded" event fired +173ms
+  pw:api   "load" event fired +2ms
+  pw:api <= page.reload succeeded +422ms
+  pw:api => page.evaluate started +1ms
+  pw:api <= page.evaluate succeeded +14ms
+  pw:api => page.evaluate started +2ms
+  pw:api <= page.evaluate succeeded +12ms
+  pw:api taking page screenshot +7ms
+  pw:api waiting for fonts to load... +2ms
+  pw:api fonts loaded +1ms
+  pw:api   "networkidle" event fired +37ms
+  pw:api => browserContext.close started +9ms
+  pw:api <= browserContext.close succeeded +6ms
+  ✓  1 e2e/bilingual.spec.ts:63:1 › English defaults in a Chinese browser; full assessment, bilingual report and certificate preserve one record (41.5s)
+  pw:api => browser.close started +11ms
+  pw:browser [pid=91] <gracefully close start> +540ms
+  pw:browser [pid=91] <process did exit: exitCode=0, signal=null> +28ms
+  pw:browser [pid=91] starting temporary directories cleanup +0ms
+  pw:browser [pid=91] finished temporary directories cleanup +4ms
+  pw:browser [pid=91] <gracefully close end> +0ms
+  pw:api <= browser.close succeeded +34ms
+
+  1 passed (42.5s)

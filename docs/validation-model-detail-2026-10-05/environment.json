@@ -1,0 +1,30 @@
+{
+  "timestamp": "2026-10-05T11:51:10.127363+00:00",
+  "node": "v24.19.0",
+  "npm": "11.9.0",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.39",
+  "projectVersion": "0.2.0",
+  "dependencies": {
+    "@react-three/fiber": "9.8.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "three": "0.186.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "26.6.3",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/three": "0.186.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "typescript": "5.9.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  },
+  "browser": "Chromium 153.0.8010.0: existing temporary test executable",
+  "browserExecutable": "/tmp/shouyihuo-chromium/chromium",
+  "testFont": "Temporary local Noto Sans SC in test host only; no app download",
+  "baselinePublicCommit": "a6fb4636874e236ea815c157e1b58bb7863bad22",
+  "scope": "Cloud Linux software WebGL; no dependency or storage migration"
+}

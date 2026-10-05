@@ -69,3 +69,7 @@ Drag to orbit and use the wheel to zoom on desktop. The view controls do not awa
 The report separates evidence, diagnosis, process, and verification scores from the final pass decision. A passing independent assessment offers **Create completion record** (生成示范完成证明). **Print / Save as PDF** (打印 / 另存为 PDF) invokes browser printing. The printable record is local, editable, and explicitly not a professional qualification, practical-skills assessment, or permission to perform work. Exploration and guided practice do not issue this record.
 
 For the architecture, trade-offs, and dated validation evidence, read the [technical case study](TECHNICAL_CASE_STUDY.md). For contribution and tool-use disclosure, read [provenance](PROVENANCE.md).
+
+## Inspect the latest model detail
+
+Start **Explore the model**, open the lid and inspect the rim, lid underside, linked chain and hollow pipe mouths. Double-click a mesh to focus it; use **Focus selection** for the keyboard-accessible equivalent. Plain selection leaves the camera alone. In **Simulated repair**, turn supply off, flush, then restore supply to see the float arm rotate around its fixed pivot. This exploration is unscored. The [detail note](../MODEL_DETAIL_REFINEMENT.md) explains the geometry, instancing, local normal map and verification boundaries.

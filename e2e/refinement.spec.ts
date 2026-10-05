@@ -5,8 +5,8 @@ import type { LocalStore } from '../src/storage/local';
 import { scoreAttempt } from '../src/domain/engine';
 import { LEVEL } from '../src/domain/course';
 
-const evidenceDir = 'docs/validation-refinement-2026-10-05';
-const shotsDir = 'docs/screenshots/refinement-2026-10-05';
+const evidenceDir = process.env.E2E_VALIDATION_DIR ?? 'docs/validation-refinement-2026-10-05';
+const shotsDir = process.env.E2E_BILINGUAL_SCREENSHOT_DIR ?? 'docs/screenshots/refinement-2026-10-05';
 const button = (page: Page, name: string) => page.getByRole('button', { name, exact: true });
 async function startSupply(page: Page) {
   await page.goto('/');

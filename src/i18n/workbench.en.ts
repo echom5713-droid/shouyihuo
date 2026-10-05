@@ -60,6 +60,7 @@ export const workbenchEnglish: Record<string, string> = {
   "前壁已隐藏 · 可观察内部": "Front wall hidden · interior visible",
   "完整外观": "Complete exterior",
   "拖动旋转 · 滚轮缩放": "Drag to orbit · scroll to zoom",
+  "拖动旋转 · 滚轮缩放 · 双击聚焦": "Drag to orbit · scroll to zoom · double-click to focus",
   "单指滚页 · 双指旋转缩放": "One finger to scroll · two to orbit / zoom",
   "放回箱盖": "Replace lid",
   "打开箱盖": "Open lid",
