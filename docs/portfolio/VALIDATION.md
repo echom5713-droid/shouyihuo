@@ -1,8 +1,78 @@
 # Validation evidence — 5 October 2026
 
-This report distinguishes the portfolio checks **before localisation** from the subsequent **English-default bilingual edition**. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
+This report distinguishes the latest **rendering and interaction refinement**, the **English-default bilingual edition**, and the portfolio checks **before localisation**. It separates executable software checks from visual checks and does not claim that the prototype has been evaluated for learning outcomes, professional repair accuracy, or real-world safety.
 
-## Bilingual edition: acceptance status
+## Rendering and interaction refinement: acceptance status
+
+A separate refinement run completed on **5 October 2026**. Its results come from new executions, not the earlier 47/18 test counts below. The final production preview was checked after rebuilding with the updated reviewer images and PDF.
+
+| Refinement check | Current result | Evidence |
+|---|---|---|
+| `npm run typecheck` | **PASS** | [TypeScript log](../validation-refinement-2026-10-05/typecheck.log) |
+| `npm run test`, including deterministic invariant sequences | **PASS — 56 tests / 4 files** | [Unit log](../validation-refinement-2026-10-05/unit-tests.log) |
+| `npm run test:e2e`, full browser regression and rendering checks | **PASS — 21 tests, 6.3 minutes** | [Final browser log](../validation-refinement-2026-10-05/e2e-final.log) |
+| `npm run build` | **PASS** | [Final build log](../validation-refinement-2026-10-05/build.log) |
+| `npm run preview`, exercised by the production smoke script | **PASS — actual WebGL 2, bilingual review and PDF** | [Preview result](../validation-refinement-2026-10-05/production-preview.json) · [Script](../validation-refinement-2026-10-05/production-smoke.mjs) |
+| New desktop and narrow-screen visual inspection | **PASS within the recorded viewport checks** | New screenshot links below; physical-device limits remain |
+
+Technical rationale and scope: [Rendering and interaction refinement](../RENDERING_REFINEMENT.md). Evidence for this iteration is kept in `docs/validation-refinement-2026-10-05/` and `docs/screenshots/refinement-2026-10-05/`; the earlier evidence directories are preserved.
+
+### Business behaviour and rendering are separate checks
+
+The 56 unit tests include nine new bounded invariant tests: **3,888 deterministic event transitions** and **1,944 serialised schema-v1 continuation steps**. Assertions cover rejected unsafe changes, immutable inputs, first-diagnosis retention, fault clearing, assembly prerequisites, score bounds, verification invalidation and idempotent archiving. Coverage assertions require the generated paths to reach actual assembly changes, active retests and rejected unsafe actions. Fixed seeds belong to the test generator; the course itself does not introduce random behaviour. This sampling is not exhaustive model checking or a proof.
+
+The 21 browser tests retain the original 12 workflows and six bilingual workflows, then add three rendering checks. They perform actual user journeys across all three scenarios, select a real mesh, observe state-driven water changes, preserve old records and safety errors, and verify the amber 100-point failed report. The new checks instrument actual WebGL draw entry points, test label visibility after cutaway/explosion/language changes, and deliberately lose a real WebGL context before continuing component checks in the 2D fallback. They do not inject a completed attempt to make a user journey pass.
+
+The final production preview reported Chromium **153.0.8010.0**, **WebGL 2 through ANGLE / Vulkan SwiftShader**, **zero external requests** and **zero uncaught page errors**. It checked desktop/mobile reviewer layouts, local images, the linked PDF, language persistence and entry into the live application. Its server was stopped after the check. See the new [environment record](../validation-refinement-2026-10-05/environment.json) and [13-file integrity comparison](../validation-refinement-2026-10-05/core-integrity.json): course, engine, types, persistence, dependencies and original tests remain unchanged from the refinement baseline.
+
+### New visual evidence
+
+These images were generated from the running refined application. Representative desktop, narrow-screen, safety-failure, exploded-model and production-review captures were opened and inspected. Full-page images can be taller than their browser viewport.
+
+| View | 1440×900 | 1366×768 | 1280×800 | 390×844 |
+|---|---|---|---|---|
+| Course entrance | [Capture](../screenshots/refinement-2026-10-05/40-home-en-1440.png) | [Capture](../screenshots/refinement-2026-10-05/40-home-en-1366.png) | [Capture](../screenshots/refinement-2026-10-05/40-home-en-1280.png) | [Capture](../screenshots/refinement-2026-10-05/40-home-en-390.png) |
+| Workbench | [Capture](../screenshots/refinement-2026-10-05/41-workbench-en-1440.png) | [Capture](../screenshots/refinement-2026-10-05/41-workbench-en-1366.png) | [Capture](../screenshots/refinement-2026-10-05/41-workbench-en-1280.png) | [Capture](../screenshots/refinement-2026-10-05/41-workbench-en-390.png) |
+| Assessment report | [Capture](../screenshots/refinement-2026-10-05/42-report-en-1440.png) | [Capture](../screenshots/refinement-2026-10-05/42-report-en-1366.png) | [Capture](../screenshots/refinement-2026-10-05/42-report-en-1280.png) | [Capture](../screenshots/refinement-2026-10-05/42-report-en-390.png) |
+
+Additional evidence: [100-point safety failure](../screenshots/refinement-2026-10-05/48-safety-report-en.png), [English exploded model](../screenshots/refinement-2026-10-05/55-exploded-en.png), [live context-loss fallback](../screenshots/refinement-2026-10-05/23-live-context-loss-en.png), [production review desktop](../screenshots/refinement-2026-10-05/60-review-desktop-en.png), [production review mobile](../screenshots/refinement-2026-10-05/61-review-mobile-en.png) and [Chinese review mobile](../screenshots/refinement-2026-10-05/63-review-mobile-zh.png). The `zh-regression/` subdirectory holds new captures from the original Chinese workflows.
+
+The matched pre-refinement captures are [home](../screenshots/refinement-2026-10-05/00-before-home-en-1440.png) and [workbench](../screenshots/refinement-2026-10-05/01-before-workbench-en-1440.png). Both workbench comparisons use the same no-refill scenario, viewport and initial part selection. In one settled scene, the instrumented baseline recorded **5,180 draw calls in 3,004 ms**; the final demand-render sample recorded **0 in 3,027 ms**, while simulation time advanced. Camera input and restored supply woke the renderer, and it settled after refill. [Baseline](../validation-refinement-2026-10-05/baseline-runtime.json) · [Final measurement](../validation-refinement-2026-10-05/demand-rendering.json). These are idle-drawing observations on software WebGL, not frame-rate, energy or native-GPU benchmarks.
+
+The computed safety-text contrast was **8.46:1 at 14px** and component-description contrast **6.54:1 at 14px** in this browser. [Samples](../validation-refinement-2026-10-05/contrast.json) cover those elements only, not a complete accessibility audit.
+
+### Reproducible refinement commands
+
+On a machine with the normal Playwright Chromium installation, run the standard commands above and omit the test-host overrides. The actual cloud browser run used:
+
+```sh
+FONTCONFIG_FILE=/tmp/shouyihuo-test-fonts/fonts.conf \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/tmp/shouyihuo-chromium/chromium \
+E2E_SCREENSHOT_DIR=docs/screenshots/refinement-2026-10-05/zh-regression \
+E2E_BILINGUAL_SCREENSHOT_DIR=docs/screenshots/refinement-2026-10-05 \
+E2E_VALIDATION_DIR=docs/validation-refinement-2026-10-05 \
+npm run test:e2e
+
+npm run build
+FONTCONFIG_FILE=/tmp/shouyihuo-test-fonts/fonts.conf \
+PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=/tmp/shouyihuo-chromium/chromium \
+node docs/validation-refinement-2026-10-05/production-smoke.mjs
+```
+
+The environment overrides are temporary test-host settings, not application requirements. `capture-baseline.mjs` uses a separate pre-refinement source copy; set `BASELINE_SOURCE_DIR` to a checkout of commit `df00d6808569b06dd36578ce66012a3b2a9a4b80` to repeat that historical measurement. `capture-exploded.mjs` obtains its image through ordinary current UI actions.
+
+### Failures found, corrected and retained
+
+- An initial development run overlapped with source edits/HMR; its two failures are retained in [round-one log](../validation-refinement-2026-10-05/refinement-round1.log), not reported as successful acceptance.
+- The stable rendering check initially tried to restore supply before observation and diagnosis. The domain correctly rejected it. The test was corrected to collect three observations and submit the diagnosis first; no course guard was relaxed.
+- A settled cutaway transition revealed a real occlusion-cache defect: raycasting could read old world matrices before Three.js updated them. The correction invalidates geometry-dependent occlusion and updates camera/part matrices before raycasting. The test checks an actual visible → hidden → visible label sequence. [Stable failures](../validation-refinement-2026-10-05/refinement-stable.log) · [Corrected three-test run](../validation-refinement-2026-10-05/refinement-corrected.log).
+- Visual inspection corrected an oversized shadow and compact English toolbar wrapping. The new images above show the final layout. The PDF's third-page spacing was also corrected after rendering all three pages and checking the footer.
+
+The production build retains a **large Three.js vendor-chunk warning**. The installed rendering dependency reports **`THREE.Clock` deprecation**; it does not produce an uncaught page error. Neither was hidden by raising warning thresholds or changing dependencies. The deliberate context-loss test can produce a renderer-disposal warning after the loss; ordinary production preview recorded only the Clock warning.
+
+**Unverified:** Windows/native-GPU performance, Safari/Firefox, physical touch devices and printers, professional repair accuracy, real equipment calibration, learner outcomes and a complete accessibility audit. No hosted live demo or newly executed GitHub Actions run is claimed.
+
+## Bilingual edition: completed historical baseline
 
 The final bilingual run on **5 October 2026** passed type checking, **47 unit tests** and **18 Playwright tests (3.6 minutes)**. The final production build and separately executed production-preview smoke check also passed. The preview rendered a real **WebGL 2** scene through **ANGLE / Vulkan SwiftShader**, with **zero external requests and zero uncaught page errors**.
 

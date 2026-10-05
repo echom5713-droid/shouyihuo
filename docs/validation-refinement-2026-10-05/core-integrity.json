@@ -1,0 +1,70 @@
+{
+  "scope": "Comparison to code snapshot before rendering refinement",
+  "files": [
+    {
+      "path": "src/domain/course.ts",
+      "unchanged": true,
+      "sha256": "af56a14cc39218fb6085457d89d4d8e2ddda2fb2fd494cdc21767e493287ad43"
+    },
+    {
+      "path": "src/domain/engine.ts",
+      "unchanged": true,
+      "sha256": "770cc2d063d952d623ffc1f201c028082272ed5941dede391377bda1f162fd0d"
+    },
+    {
+      "path": "src/domain/types.ts",
+      "unchanged": true,
+      "sha256": "334a5c9d2d7bfe218b55f966ae3e80c3c72f270ac695c440cbbf24076193e921"
+    },
+    {
+      "path": "src/storage/local.ts",
+      "unchanged": true,
+      "sha256": "ae8a4c3aed2a2204a64769a356a6e4c7a2ea4b175c9aa3517f2f8b9c979f7042"
+    },
+    {
+      "path": "package.json",
+      "unchanged": true,
+      "sha256": "955ce26073065308548aef208b756e4afd871958f6c076d1bb1b037e92b5b1f9"
+    },
+    {
+      "path": "package-lock.json",
+      "unchanged": true,
+      "sha256": "3b8bac2b086b4573e1914a750f65a7d53debeb9cdba939c05f6102af3dd2c3ba"
+    },
+    {
+      "path": "tests/engine.test.ts",
+      "unchanged": true,
+      "sha256": "ec6593be89bc73359ca7ce429d37fef186a6a320f1571d648daa51662a20c7c1"
+    },
+    {
+      "path": "tests/presentation.test.ts",
+      "unchanged": true,
+      "sha256": "c695b42bd4abc37287839b56cbd5b378259f4d95d6e1767e2cf186d7c270660a"
+    },
+    {
+      "path": "tests/i18n.test.ts",
+      "unchanged": true,
+      "sha256": "5948da8b878a73a07372d725b4b02391b4e6b6300959718ad95374bea3f32c96"
+    },
+    {
+      "path": "e2e/flows.spec.ts",
+      "unchanged": true,
+      "sha256": "57c5893f67298c783e594c3fb27e04da0bdf43ccd7086bb807622703cd02064c"
+    },
+    {
+      "path": "e2e/bilingual.spec.ts",
+      "unchanged": true,
+      "sha256": "2882a813f39470fa9a50bc14eb460acda9e89f6393694b4346c065f03d3db0e4"
+    },
+    {
+      "path": "src/ui/presentation.ts",
+      "unchanged": true,
+      "sha256": "4c03a8f41b438464a94faa7a062c9142870240a144cd961e80213ca1896be2f4"
+    },
+    {
+      "path": "src/i18n/index.tsx",
+      "unchanged": true,
+      "sha256": "276bc230ba4f6ce75b492d2bcc439253bf27b79a84504b0c4c521dc3e3ac637d"
+    }
+  ]
+}

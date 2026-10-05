@@ -8,7 +8,7 @@ Shouyihuo connects an interactive 3D model to a deterministic training simulatio
 
 This is a teaching prototype, not a digital twin or real repair guidance. Its content has not been reviewed by a repair professional. The three scenarios apply only to the built-in simplified model. [Provenance and AI assistance](PROVENANCE.md) describe how the project was produced.
 
-![The v0.2 training workbench in a real browser run](../screenshots/bilingual-2026-10-05/41-workbench-en-1440.png)
+![The v0.2 training workbench in a real browser run](../screenshots/refinement-2026-10-05/41-workbench-en-1440.png)
 
 *Actual English-interface browser screenshot, captured on 5 October 2026. The model is rendered with WebGL, not a background image.*
 
@@ -59,7 +59,7 @@ Attempt IDs and timestamps are supplied at creation. Their generation is separat
 
 ## 4. Invariants matter more than a progress animation
 
-The reducer enforces the following rules, with focused tests in [engine.test.ts](../../tests/engine.test.ts):
+The reducer enforces the following rules, with focused tests in [engine.test.ts](../../tests/engine.test.ts) and bounded sequence checks in [invariants.test.ts](../../tests/invariants.test.ts):
 
 - Removing an installed component requires an open lid, closed supply, confirmation of isolation, and completed drainage. A rejected action leaves the component installed, records feedback and a log entry, and retains the relevant safety error.
 - Closing the supply changes water behaviour but does not clear a defect.
@@ -70,6 +70,8 @@ The reducer enforces the following rules, with focused tests in [engine.test.ts]
 - Completed attempts ignore later reducer events. Starting again creates a new attempt rather than rewriting an archived result.
 
 Safety errors are deduplicated by code, while rejected attempts remain visible in the action log. Camera resets, panel changes, and page refreshes cannot clear a stored safety error.
+
+The refinement extends verification without replacing the reducer. Fixed-seed event sequences explore six reachable checkpoints across all cases and modes; a separate comparison checks that repeated schema-v1 serialisation and restoration preserve the same continuation and score. The tests also distinguish eventual retest decisions from exact intermediate timestamps when using different supported time steps. These are bounded regression checks, not a formal proof. Their scope and actual run status are recorded in the [refinement note](../RENDERING_REFINEMENT.md) and [validation report](VALIDATION.md).
 
 ## 5. Explainable scores and a separate pass gate
 
@@ -86,7 +88,7 @@ At least two applicable observations are required before diagnosis. Independent 
 
 This distinction is visible in the report: **a score of 100 can still be a failed assessment**. The report uses the pass gate, not the numeric score alone, to choose its result treatment and certificate eligibility. A successful guided attempt does not issue the independent-assessment completion certificate.
 
-![A 100-point attempt that fails because of a retained critical safety error](../screenshots/bilingual-2026-10-05/48-safety-report-en.png)
+![A 100-point attempt that fails because of a retained critical safety error](../screenshots/refinement-2026-10-05/48-safety-report-en.png)
 
 *Actual English-interface browser evidence from 5 October 2026. The unsafe removal was blocked; completing the later treatment did not erase it.*
 
@@ -108,6 +110,8 @@ Exploded and cutaway views are observational transforms: they do not mark compon
 
 The implementation favours responsive procedural illustration over photorealism. Reduced-motion settings affect visual transitions; a clear interactive 2D fallback is provided when WebGL is unavailable. The fallback preserves access to rule-based training but is not counted as successful 3D validation.
 
+The subsequent [rendering refinement](../RENDERING_REFINEMENT.md) separates the simulation timer from the decision to draw another frame. The intended benefit is reduced redundant drawing while a view is settled, with explicit wake-up for camera input, active flow and changes to visible course state. A local procedural lighting environment improves material separation without remote assets. Neither mechanism changes the authoritative attempt or its scoring rules; render scheduling is verified separately from business logic.
+
 ## 8. An observed regression and the corrective loop
 
 During the v0.2 browser run, changing viewport size exposed a genuine layout failure: the Canvas container's percentage sizing expanded a grid track and the footer intercepted clicks on **运行复测** (“Run retest”). Playwright could locate the button but could not perform a normal click.
@@ -118,7 +122,7 @@ Evidence: [preserved failure context](../validation-v0.2/regression-found/retest
 
 ## 9. Verification and remaining uncertainty
 
-The historical validation dated **26 September 2026** reports successful type checking, **40 unit tests**, **12 E2E tests**, a production build, and a production-preview check. These are dated results, not a claim that those commands were rerun when this English document was prepared. The separately dated [validation report](VALIDATION.md) distinguishes the 5 October pre-localisation run from the bilingual acceptance checks. See the [full original validation report](../TEST_REPORT.md) and [production-preview evidence](../validation-v0.2/production-preview.json).
+The [validation report](VALIDATION.md) records the completed **5 October rendering refinement** (**56 unit tests**, **21 E2E tests**, type checking and production build) separately from the earlier **5 October bilingual baseline** (**47 unit tests**, **18 E2E tests**) and the **26 September UI baseline** (**40 unit tests**, **12 E2E tests**). Each result applies to its own dated run. Earlier evidence is retained in the [original validation report](../TEST_REPORT.md) and [production-preview record](../validation-v0.2/production-preview.json).
 
 The browser evidence used Linux Chromium with a real WebGL 2.0 context backed by ANGLE/Vulkan SwiftShader. It covered real Canvas selection, all three complete scenario paths, persisted records, a 100-point safety failure, old-store compatibility, fallback behaviour, and desktop/narrow-screen layouts. It did not establish native-GPU performance, Safari/Firefox support, real touchscreen usability, physical printing, or learning effectiveness. No participant study or professional repair-content review has been conducted as part of this work.
 

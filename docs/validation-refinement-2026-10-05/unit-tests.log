@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.2.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /workspace/scratch/fb9e791b5de1/shouyihuo-local
+
+
+ Test Files  4 passed (4)
+      Tests  56 passed (56)
+   Start at  20:10:51
+   Duration  2.30s (tests 65%, transform 21%, import 14%, worker 1%)
+

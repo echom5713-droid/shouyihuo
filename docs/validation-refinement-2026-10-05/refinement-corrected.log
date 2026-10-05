@@ -1,0 +1,23 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:12:18 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:12:21 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  1 e2e/refinement.spec.ts:50:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes (21.4s)
+[WebServer] 8:12:40 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:12:41 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 e2e/refinement.spec.ts:98:1 › reduced-motion labels update on explosion and language changes without changing an attempt (6.5s)
+[WebServer] 8:12:46 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:12:50 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:12:55 PM [vite] (client) [console.warn] THREE.WebGLRenderer: WEBGL_lose_context extension not supported.
+  ✓  3 e2e/refinement.spec.ts:130:1 › a real WebGL context loss preserves the attempt and leaves component checks operable (10.4s)
+
+  3 passed (39.4s)

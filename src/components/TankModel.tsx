@@ -1,8 +1,9 @@
-import { Component, createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Component, createContext, memo, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { Attempt, PartId } from '../domain/types';
 import { flows } from '../domain/engine';
 import { PARTS } from '../domain/course';
@@ -29,21 +30,21 @@ function useReducedMotion() {
   }, []);
   return reduced;
 }
-function Material({ color = '#dbe1d8', metal = 0, roughness = 0.46 }: { color?: string; metal?: number; roughness?: number }) {
+function Material({ color = '#dbe1d8', metal = 0, roughness = 0.46, side = THREE.FrontSide }: { color?: string; metal?: number; roughness?: number; side?: THREE.Side }) {
   const id = useContext(PartContext);
   const { selected, hovered } = useContext(SceneContext);
   const active = selected === id, over = hovered === id;
-  const tint = useMemo(() => new THREE.Color(color).lerp(new THREE.Color('#39836c'), active ? 0.42 : over ? 0.2 : 0), [color, active, over]);
+  const tint = useMemo(() => new THREE.Color(color).lerp(new THREE.Color('#39836c'), active ? 0.32 : over ? 0.16 : 0), [color, active, over]);
   const ceramic = id === 'tank' || id === 'lid';
-  return <meshPhysicalMaterial color={tint} roughness={ceramic ? 0.27 : roughness} metalness={metal} clearcoat={ceramic ? 0.2 : 0} clearcoatRoughness={0.35} emissive={active || over ? '#205c45' : '#000'} emissiveIntensity={active ? 0.09 : over ? 0.035 : 0} />;
+  return <meshPhysicalMaterial color={tint} side={side} roughness={ceramic ? 0.29 : roughness} metalness={metal} clearcoat={ceramic ? 0.32 : 0} clearcoatRoughness={0.3} emissive={active || over ? '#205c45' : '#000'} emissiveIntensity={active ? 0.075 : over ? 0.025 : 0} />;
 }
 function Box({ position = [0, 0, 0], size, color, radius = 0.04, metal }: { position?: Vec3; size: Vec3; color?: string; radius?: number; metal?: number }) {
   const geo = useMemo(() => new RoundedBoxGeometry(...size, 3, radius), [size[0], size[1], size[2], radius]);
   useEffect(() => () => geo.dispose(), [geo]);
   return <mesh geometry={geo} position={position} castShadow receiveShadow><Material color={color} metal={metal} /></mesh>;
 }
-function Cylinder({ position = [0, 0, 0], radius = 0.12, height = 1, color, rotation = [0, 0, 0], metal = 0, roughness = 0.46 }: { position?: Vec3; radius?: number; height?: number; color?: string; rotation?: Vec3; metal?: number; roughness?: number }) {
-  return <mesh position={position} rotation={rotation} castShadow receiveShadow><cylinderGeometry args={[radius, radius, height, 32]} /><Material color={color} metal={metal} roughness={roughness} /></mesh>;
+function Cylinder({ position = [0, 0, 0], radius = 0.12, height = 1, color, rotation = [0, 0, 0], metal = 0, roughness = 0.46, segments = 32, hollow = false }: { position?: Vec3; radius?: number; height?: number; color?: string; rotation?: Vec3; metal?: number; roughness?: number; segments?: number; hollow?: boolean }) {
+  return <mesh position={position} rotation={rotation} castShadow receiveShadow><cylinderGeometry args={[radius, radius, height, segments, 1, hollow]} /><Material color={color} metal={metal} roughness={roughness} side={hollow ? THREE.DoubleSide : THREE.FrontSide} /></mesh>;
 }
 function Pipe({ points, radius = 0.06, color = '#b3c2b6', metal = 0.1 }: { points: Vec3[]; radius?: number; color?: string; metal?: number }) {
   const data = JSON.stringify(points);
@@ -55,18 +56,21 @@ function Part({ id, target = [0, 0, 0], children, partRefs }: { id: PartId; targ
   const group = useRef<THREE.Group>(null);
   const ctx = useContext(SceneContext);
   const reduced = useContext(MotionContext);
+  const invalidate = useThree(state => state.invalidate);
   const destination = useMemo(() => new THREE.Vector3(...target), [target[0], target[1], target[2]]);
   useEffect(() => { if (group.current) partRefs.current[id] = group.current; }, [id, partRefs]);
+  useEffect(() => { invalidate(); }, [destination, reduced, invalidate]);
   useFrame((_, dt) => {
-    if (reduced) group.current?.position.copy(destination);
-    else group.current?.position.lerp(destination, 1 - Math.exp(-dt * 8));
+    if (!group.current) return;
+    if (reduced || group.current.position.distanceToSquared(destination) < 0.000001) group.current.position.copy(destination);
+    else { group.current.position.lerp(destination, 1 - Math.exp(-Math.min(dt, 0.05) * 8)); invalidate(); }
   });
   const click = (e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); if (e.delta > 4) return; ctx.onSelect(id, 'model'); };
   return <PartContext.Provider value={id}><group ref={group} userData={{ partId: id }} onClick={click} onPointerOver={e => { e.stopPropagation(); ctx.setHovered(id); document.body.style.cursor = 'pointer'; }} onPointerOut={() => { ctx.setHovered(null); document.body.style.cursor = ''; }}>{children}</group></PartContext.Provider>;
 }
 // Presentation-only camera commands never dispatch an event to the simulation.
 function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pick<ModelProps, 'resetToken' | 'viewCommand' | 'exploded' | 'selected'> & { partRefs: React.RefObject<Partial<Record<PartId, THREE.Group>>> }) {
-  const { camera, gl, size } = useThree();
+  const { camera, gl, size, invalidate } = useThree();
   const reduced = useContext(MotionContext);
   const controls = useMemo(() => new OrbitControls(camera, gl.domElement), [camera, gl]);
   const selectedRef = useRef(selected); selectedRef.current = selected;
@@ -89,8 +93,12 @@ function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pic
     gl.domElement.style.touchAction = 'pan-y';
     const interrupt = () => { moving.current = false; gl.domElement.dataset.cameraMoving = 'false'; gl.domElement.dataset.cameraView = 'manual'; };
     controls.addEventListener('start', interrupt);
-    return () => { controls.removeEventListener('start', interrupt); controls.dispose(); document.body.style.cursor = ''; };
-  }, [controls, gl]);
+    // OrbitControls mutates the camera outside React. Its change event wakes the
+    // demand loop, including damping, then lets the renderer sleep at rest.
+    const changed = () => invalidate();
+    controls.addEventListener('change', changed);
+    return () => { controls.removeEventListener('start', interrupt); controls.removeEventListener('change', changed); controls.dispose(); document.body.style.cursor = ''; };
+  }, [controls, gl, invalidate]);
   useEffect(() => { controls.enableDamping = !reduced; }, [controls, reduced]);
   const frame = (type: CameraView, id: PartId | null) => {
     view.current = type;
@@ -133,6 +141,7 @@ function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pic
       moving.current = false;
     }
     gl.domElement.dataset.cameraMoving = String(moving.current);
+    invalidate();
   };
   // Deliberately exclude selected: selecting a part must not move the camera.
   useEffect(() => { frame(viewCommand?.type ?? 'overview', selectedRef.current); }, [viewCommand?.token, viewCommand?.type]);
@@ -140,12 +149,13 @@ function Controls({ resetToken, viewCommand, exploded, selected, partRefs }: Pic
   useEffect(() => { frame(view.current, focused.current); }, [size.width, size.height]);
   useFrame((_, dt) => {
     if (moving.current) {
-      const alpha = reduced ? 1 : 1 - Math.exp(-dt * 6);
+      const alpha = reduced ? 1 : 1 - Math.exp(-Math.min(dt, 0.05) * 6);
       camera.position.lerp(destination.eye, alpha); controls.target.lerp(destination.target, alpha);
       if (camera.position.distanceToSquared(destination.eye) < 0.00008 && controls.target.distanceToSquared(destination.target) < 0.00008) {
         camera.position.copy(destination.eye); controls.target.copy(destination.target); moving.current = false;
         gl.domElement.dataset.cameraMoving = 'false';
       }
+      if (moving.current) invalidate();
     }
     controls.update();
     const position = `${camera.position.x.toFixed(2)},${camera.position.y.toFixed(2)},${camera.position.z.toFixed(2)}`;
@@ -160,21 +170,34 @@ const ANCHORS: Record<PartId, Vec3> = {
   inlet: [-1.12, 1.95, 0], float: [-0.23, 1.65, 0.12], drain: [0.45, 0.39, 0.25],
   overflow: [1.05, 2.065, -0.2], supply: [-2.12, 0.23, 1.27], water: [1.58, 1.4, 0.67]
 };
-function LabelPositions({ partRefs, labelsRef, selected, attempt, labels, leaderRefs }: { partRefs: React.RefObject<Partial<Record<PartId, THREE.Group>>>; labelsRef: React.RefObject<Partial<Record<PartId, HTMLButtonElement>>>; selected: PartId | null; attempt: Attempt; labels: boolean; leaderRefs: React.RefObject<Partial<Record<PartId, SVGLineElement>>> }) {
-  const { camera, size } = useThree();
+function LabelPositions({ partRefs, labelsRef, selected, attempt, labels, leaderRefs, locale, occlusionKey }: { partRefs: React.RefObject<Partial<Record<PartId, THREE.Group>>>; labelsRef: React.RefObject<Partial<Record<PartId, HTMLButtonElement>>>; selected: PartId | null; attempt: Attempt; labels: boolean; leaderRefs: React.RefObject<Partial<Record<PartId, SVGLineElement>>>; locale: string; occlusionKey: string }) {
+  const { camera, size, invalidate, gl } = useThree();
   const world = useMemo(() => new THREE.Vector3(), []);
   const projected = useMemo(() => new THREE.Vector3(), []);
   const ray = useMemo(() => new THREE.Raycaster(), []);
   const direction = useMemo(() => new THREE.Vector3(), []);
-  const elapsed = useRef(0);
-  useFrame((_, dt) => {
-    elapsed.current += dt;
-    if (elapsed.current < 0.045) return;
-    elapsed.current = 0;
+  const previous = useRef('');
+  const layouts = useRef(0);
+  useEffect(() => { previous.current = ''; invalidate(); }, [locale, selected, labels, occlusionKey, invalidate]);
+  useFrame(() => {
+    // Flow markers alone do not move labels. Recompute projections/occlusion
+    // only when the camera, layout or component geometry actually changes.
+    const signature = [size.width, size.height, selected, labels, locale, occlusionKey, attempt.water,
+      ...camera.position.toArray(), ...camera.quaternion.toArray(),
+      ...Object.values(partRefs.current).flatMap(group => group?.position.toArray() ?? []),
+      partRefs.current.float?.children[0]?.position.y].join('|');
+    if (signature === previous.current) return;
+    previous.current = signature;
+    gl.domElement.dataset.labelLayouts = String(++layouts.current);
     const placed: { left: number; top: number; right: number; bottom: number }[] = [];
     const ids = Object.keys(ANCHORS) as PartId[];
     if (selected) { ids.splice(ids.indexOf(selected), 1); ids.unshift(selected); }
     const objects = Object.values(partRefs.current).filter((group): group is THREE.Group => !!group);
+    // useFrame runs before the renderer updates world matrices. A newly added
+    // cutaway wall otherwise retains its previous transform for this raycast,
+    // and the settled demand loop would cache that stale visibility forever.
+    camera.updateMatrixWorld();
+    for (const object of objects) object.updateWorldMatrix(true, true);
     for (const key of ids) {
       const node = labelsRef.current[key], group = partRefs.current[key];
       if (!node || !group) continue;
@@ -233,9 +256,13 @@ function LabelPositions({ partRefs, labelsRef, selected, attempt, labels, leader
 function Water({ attempt }: { attempt: Attempt }) {
   const body = useRef<THREE.Mesh>(null); const top = useRef<THREE.Mesh>(null);
   const reduced = useContext(MotionContext);
+  const invalidate = useThree(state => state.invalidate);
   const height = useRef(Math.max(0.008, attempt.water * 2.2));
+  const target = Math.max(0.008, attempt.water * 2.2);
+  useEffect(() => { invalidate(); }, [target, reduced, invalidate]);
   useFrame((_, dt) => {
-    height.current = THREE.MathUtils.lerp(height.current, Math.max(0.008, attempt.water * 2.2), reduced ? 1 : 1 - Math.exp(-dt * 10));
+    if (reduced || Math.abs(height.current - target) < 0.0005) height.current = target;
+    else { height.current = THREE.MathUtils.lerp(height.current, target, 1 - Math.exp(-Math.min(dt, 0.05) * 10)); invalidate(); }
     if (body.current) { body.current.scale.y = height.current; body.current.position.y = 0.16 + height.current / 2; }
     if (top.current) top.current.position.y = 0.16 + height.current;
   });
@@ -248,27 +275,76 @@ function Water({ attempt }: { attempt: Attempt }) {
 function Flow({ from, to, active }: { from: Vec3; to: Vec3; active: boolean }) {
   const ref = useRef<THREE.Group>(null);
   const reduced = useContext(MotionContext);
+  const invalidate = useThree(state => state.invalidate);
+  useEffect(() => { invalidate(); }, [active, reduced, invalidate]);
   useFrame(({ clock }) => {
     if (!active) return;
     ref.current?.children.forEach((child, i) => {
       const t = reduced ? (i + 0.5) / 5 : ((clock.elapsedTime * 0.65 + i / 5) % 1);
       child.position.set(THREE.MathUtils.lerp(from[0], to[0], t), THREE.MathUtils.lerp(from[1], to[1], t), THREE.MathUtils.lerp(from[2], to[2], t));
     });
+    if (!reduced) invalidate();
   });
   return <group ref={ref} visible={active}>{Array.from({ length: 5 }, (_, i) => <mesh key={i} raycast={() => {}}><sphereGeometry args={[0.044, 8, 8]} /><meshBasicMaterial color="#369bb2" transparent opacity={0.75} /></mesh>)}</group>;
 }
 function Float({ attempt }: { attempt: Attempt }) {
   const ball = useRef<THREE.Group>(null);
   const reduced = useContext(MotionContext);
+  const invalidate = useThree(state => state.invalidate);
   const target = 0.36 + attempt.water * 1.95;
-  useFrame((_, dt) => { if (ball.current) ball.current.position.y = THREE.MathUtils.lerp(ball.current.position.y, target, reduced ? 1 : 1 - Math.exp(-dt * 8)); });
-  return <group ref={ball} position={[0, target, 0]}>
+  const initial = useRef<Vec3>([0, target, 0]);
+  useEffect(() => { invalidate(); }, [target, reduced, invalidate]);
+  useFrame((_, dt) => {
+    if (!ball.current) return;
+    if (reduced || Math.abs(ball.current.position.y - target) < 0.0005) ball.current.position.y = target;
+    else { ball.current.position.y = THREE.MathUtils.lerp(ball.current.position.y, target, 1 - Math.exp(-Math.min(dt, 0.05) * 8)); invalidate(); }
+  });
+  return <group ref={ball} position={initial.current}>
     <Pipe points={[[-1.1, 0.18, 0], [-0.85, 0.17, 0], [-0.23, 0, 0.12]]} radius={0.026} color="#bca46d" metal={0.65} />
     <mesh position={[-0.23, 0, 0.12]} castShadow><sphereGeometry args={[0.31, 40, 32]} /><Material color="#486958" roughness={0.4} /></mesh>
     <mesh position={[-0.23, 0, 0.12]} rotation={[Math.PI / 2, 0, 0]}><torusGeometry args={[0.309, 0.009, 8, 40]} /><Material color="#94ac98" /></mesh>
   </group>;
 }
-function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, viewCommand, labels, labelsRef, leaderRefs }: ModelProps & { labelsRef: React.RefObject<Partial<Record<PartId, HTMLButtonElement>>>; leaderRefs: React.RefObject<Partial<Record<PartId, SVGLineElement>>> }) {
+function StudioLighting() {
+  const { gl, scene, invalidate } = useThree();
+  useEffect(() => {
+    // A small, procedural studio reflection map. No HDRI, texture download or
+    // post-processing pass; the generator and its room geometry are disposed.
+    const room = new RoomEnvironment();
+    const generator = new THREE.PMREMGenerator(gl);
+    const environment = generator.fromScene(room, 0.04, 0.1, 100, { size: 128 });
+    const previous = scene.environment;
+    const intensity = scene.environmentIntensity;
+    scene.environment = environment.texture; scene.environmentIntensity = 0.5;
+    room.dispose(); generator.dispose(); invalidate();
+    return () => { scene.environment = previous; scene.environmentIntensity = intensity; environment.dispose(); };
+  }, [gl, scene, invalidate]);
+  return <>
+    <ambientLight intensity={0.18} />
+    <hemisphereLight args={['#f8fbfa', '#a6b3aa', 0.45]} />
+    <directionalLight position={[-2, 10, 3]} intensity={1.8} color="#fff8ec" castShadow shadow-mapSize={[1024, 1024]} shadow-bias={-0.0003} shadow-normalBias={0.025} shadow-radius={3} shadow-camera-left={-4.5} shadow-camera-right={4.5} shadow-camera-top={6} shadow-camera-bottom={-3.5} />
+    <directionalLight position={[5, 4, -3]} intensity={0.75} color="#dce8f4" />
+  </>;
+}
+function RenderMetrics() {
+  // These are WebGLRenderer's counters from the preceding completed frame,
+  // exposed for repeatable browser checks, not a fabricated FPS rating.
+  useFrame(({ gl }) => {
+    gl.domElement.dataset.renderedFrames = String(gl.info.render.frame);
+    gl.domElement.dataset.drawCalls = String(gl.info.render.calls);
+    gl.domElement.dataset.triangles = String(gl.info.render.triangles);
+  });
+  return null;
+}
+type SceneProps = ModelProps & { labelsRef: React.RefObject<Partial<Record<PartId, HTMLButtonElement>>>; leaderRefs: React.RefObject<Partial<Record<PartId, SVGLineElement>>>; locale: string };
+// Keep the business clock running without redrawing an unchanged scene. This
+// projection contains every Attempt field the geometry and flows read; it never
+// caches or substitutes business state, diagnostics, logs or assessment scores.
+function visualState(a: Attempt) {
+  return [a.water, a.supplyOpen, a.lidOpen, a.drainRemaining > 0, a.defects.inlet, a.defects.seal,
+    a.assembly.inlet.installed, a.assembly.inlet.replaced, a.assembly.drain.installed, a.assembly.drain.replaced].join('|');
+}
+const Scene = memo(function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, viewCommand, labels, labelsRef, leaderRefs, locale }: SceneProps) {
   const [hovered, setHovered] = useState<PartId | null>(null);
   const partRefs = useRef<Partial<Record<PartId, THREE.Group>>>({});
   const f = flows(a);
@@ -276,10 +352,8 @@ function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, 
   const drainOffset: Vec3 = !a.assembly.drain.installed ? [1.4, 0.75, 0.45] : exploded ? [0.25, 1, 0.15] : [0, 0, 0];
   return <SceneContext.Provider value={{ selected, hovered, setHovered, onSelect }}>
     <Controls resetToken={resetToken} viewCommand={viewCommand} exploded={exploded} selected={selected} partRefs={partRefs} />
-    <ambientLight intensity={0.65} />
-    <hemisphereLight args={['#ffffff', '#c7cece', 0.95]} />
-    <directionalLight position={[-2, 9, 3]} intensity={2.5} castShadow shadow-mapSize={[512, 512]} shadow-bias={-0.0003} shadow-normalBias={0.02} shadow-radius={3} shadow-camera-left={-5} shadow-camera-right={5} shadow-camera-top={6} shadow-camera-bottom={-4} />
-    <directionalLight position={[5, 3, -2]} intensity={1.4} color="#edf3fa" />
+    <StudioLighting />
+    <RenderMetrics />
     <group position={[0, 0, 0]}>
       <Part id="tank" partRefs={partRefs}>
         <Box position={[0, 0.07, 0]} size={[3.65, 0.2, 1.82]} color="#f1f1ed" />
@@ -295,11 +369,12 @@ function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, 
       </Part>
       <Part id="lid" target={[0, exploded ? 1.25 : a.lidOpen ? 0.72 : 0, exploded || a.lidOpen ? -1.95 : 0]} partRefs={partRefs}>
         <Box position={[0, 2.57, 0]} size={[3.83, 0.2, 1.99]} color="#f5f5f1" radius={0.08} />
+        <Box position={[0, 2.46, 0]} size={[3.35, 0.065, 1.48]} color="#dcdfd6" radius={0.025} />
         <Cylinder position={[0.95, 2.71, 0.08]} radius={0.18} height={0.08} color="#aeb9ad" metal={0.65} />
       </Part>
       <Part id="pipe" partRefs={partRefs}>
         <Pipe points={[[-2.12, 0.12, 1.27], [-2.1, -0.38, 1.27], [-1.63, -0.51, 0.8], [-1.12, -0.28, 0], [-1.12, 0.26, 0]]} radius={0.063} color="#959f95" metal={0.65} />
-        <Cylinder position={[-1.12, -0.07, 0]} radius={0.12} height={0.12} color="#bea66d" metal={0.7} />
+        <Cylinder position={[-1.12, -0.07, 0]} radius={0.12} height={0.12} color="#bea66d" metal={0.7} segments={6} />
       </Part>
       <Part id="supply" partRefs={partRefs}>
         <Cylinder position={[-2.12, 0.06, 1.27]} radius={0.11} height={0.3} color="#b7a16e" metal={0.65} />
@@ -326,9 +401,9 @@ function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, 
         <Pipe points={[[0.45, 0.4, 0.26], [0.5, 1.0, 0.24], [0.56, 1.62, 0.07], [0.9, 2.25, 0.02]]} radius={0.012} color="#a09f7d" metal={0.65} />
       </Part>
       <Part id="overflow" target={exploded ? [0.5, 0.3, 0] : [0, 0, 0]} partRefs={partRefs}>
-        <Cylinder position={[1.05, 1.1, -0.2]} radius={0.15} height={1.9} color="#d1d7c3" />
+        <Cylinder position={[1.05, 1.1, -0.2]} radius={0.15} height={1.9} color="#d1d7c3" hollow />
         <mesh position={[1.05, 2.06, -0.2]} rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[0.104, 0.17, 40]} /><Material color="#f0ede0" /></mesh>
-        <Cylinder position={[1.05, 2.045, -0.2]} radius={0.103} height={0.015} color="#3e5149" />
+        <Cylinder position={[1.05, 1.65, -0.2]} radius={0.104} height={0.79} color="#8a9783" hollow />
         <Pipe points={[[1.05, 0.25, -0.2], [1.03, 0.23, 0.1], [0.56, 0.23, 0.22]]} radius={0.12} color="#cdd4c1" />
       </Part>
       <Part id="water" partRefs={partRefs}><Water attempt={a} /></Part>
@@ -336,10 +411,14 @@ function Scene({ attempt: a, cutaway, exploded, selected, onSelect, resetToken, 
       <Flow active={(f.leaking || f.draining) && !exploded} from={[0.45, 0.27, 0.25]} to={[0.5, -0.65, 0.25]} />
       <Flow active={f.overflowing && !exploded} from={[1.05, 2.12, -0.2]} to={[1.05, 0.38, -0.2]} />
     </group>
-    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.73, 0]} receiveShadow><circleGeometry args={[5.5, 80]} /><shadowMaterial transparent opacity={0.05} /></mesh>
-    <LabelPositions partRefs={partRefs} labelsRef={labelsRef} selected={selected} attempt={a} labels={labels} leaderRefs={leaderRefs} />
+    <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.73, 0]} receiveShadow><circleGeometry args={[5.5, 80]} /><shadowMaterial transparent opacity={0.055} /></mesh>
+    <LabelPositions partRefs={partRefs} labelsRef={labelsRef} selected={selected} attempt={a} labels={labels} leaderRefs={leaderRefs} locale={locale} occlusionKey={`${cutaway}|${visualState(a)}`} />
   </SceneContext.Provider>;
-}
+}, (before, next) => visualState(before.attempt) === visualState(next.attempt)
+  && before.selected === next.selected && before.cutaway === next.cutaway && before.exploded === next.exploded
+  && before.labels === next.labels && before.resetToken === next.resetToken && before.locale === next.locale
+  && before.viewCommand?.type === next.viewCommand?.type && before.viewCommand?.token === next.viewCommand?.token
+  && before.onSelect === next.onSelect && before.labelsRef === next.labelsRef && before.leaderRefs === next.leaderRefs);
 function Fallback({ attempt, onSelect, selected }: Pick<ModelProps, 'attempt' | 'onSelect' | 'selected'>) {
   const { t } = useLocale();
   return <div className="fallback" data-testid="webgl-fallback">
@@ -362,7 +441,9 @@ function supportsWebGL() {
   try { const canvas = document.createElement('canvas'); const context = canvas.getContext('webgl2'); if (!context) return false; context.getExtension('WEBGL_lose_context')?.loseContext(); return true; } catch { return false; }
 }
 export function TankModel(props: ModelProps) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  const onSelectRef = useRef(props.onSelect); onSelectRef.current = props.onSelect;
+  const select = useCallback<ModelProps['onSelect']>((id, source) => onSelectRef.current(id, source), []);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   useEffect(() => { canvasRef.current?.setAttribute('aria-label', t('可旋转、缩放和点击部件的三维水箱')); }, [t]);
   const [supported] = useState(supportsWebGL);
@@ -378,14 +459,15 @@ export function TankModel(props: ModelProps) {
   }, [supported, lost, ready, props.onRendererChange]);
   return <div className={`tank-model ${props.compact ? 'compact-model' : ''}`} style={{ touchAction: 'pan-y' }} data-testid="tank-model" data-selected={props.selected ?? ''} data-reduced-motion={reduced} data-renderer={supported && ready && !lost ? 'webgl' : 'pending-or-fallback'} data-water-level={props.attempt.water.toFixed(3)} data-supply={props.attempt.supplyOpen ? 'open' : 'closed'} data-inlet-installed={props.attempt.assembly.inlet.installed} data-drain-installed={props.attempt.assembly.drain.installed}>
     {supported && !lost ? <ModelBoundary fallback={fallback} onFailure={() => setLost(true)}>
-      <Canvas shadows={{ type: THREE.PCFShadowMap }} dpr={[1, 1.5]} camera={{ position: [3.8, 3.9, 8.1], fov: 36, near: 0.1, far: 60 }} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }} onCreated={({ gl }) => {
-        gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.02;
+      <Canvas frameloop="demand" shadows={{ type: THREE.PCFShadowMap }} dpr={[1, 1.5]} camera={{ position: [3.8, 3.9, 8.1], fov: 36, near: 0.1, far: 60 }} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }} onCreated={({ gl }) => {
+        gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 0.93;
+        gl.domElement.dataset.renderLoop = 'demand';
         canvasRef.current = gl.domElement;
         gl.domElement.setAttribute('aria-label', t('可旋转、缩放和点击部件的三维水箱'));
         gl.domElement.addEventListener('webglcontextlost', e => { e.preventDefault(); setLost(true); }, { once: true });
         setReady(true);
       }} fallback={fallback}>
-        <MotionContext.Provider value={reduced}><Scene {...props} labelsRef={labelsRef} leaderRefs={leaderRefs} /></MotionContext.Provider>
+        <MotionContext.Provider value={reduced}><Scene {...props} onSelect={select} labelsRef={labelsRef} leaderRefs={leaderRefs} locale={locale} /></MotionContext.Provider>
       </Canvas>
       <svg aria-hidden="true" className="model-label-leaders" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>{Object.keys(ANCHORS).map(key => { const id = key as PartId; return <line key={id} ref={el => { if (el) leaderRefs.current[id] = el; }} stroke={props.selected === id ? '#22644d' : '#7c9086'} strokeWidth={props.selected === id ? 1.5 : 1} style={{ visibility: 'hidden' }} />; })}</svg>
       <div className={`model-labels ${props.labels ? '' : 'labels-hidden'}`} aria-hidden={!props.labels}>

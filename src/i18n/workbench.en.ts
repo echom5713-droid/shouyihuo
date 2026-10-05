@@ -1,4 +1,6 @@
 export const workbenchEnglish: Record<string, string> = {
+  "观察工具": "View tools",
+  "模型说明": "Model notes",
   "先查看水位、检查供水。选择部件并记录观察，补充水流位置的证据。": "Check the water level and supply first. Select a part and record what you observe about the flow path.",
   "对照已记录的水位、供水和水流路径，选择最能解释现象的原因。": "Use the recorded water level, supply state and flow path to choose the most likely cause.",
   "回看诊断解释和证据。引导训练可以重试，但会保留首次诊断情况。": "Review the explanation and evidence. Guided practice allows another diagnosis, but keeps your first answer.",
@@ -130,7 +132,7 @@ export const workbenchEnglish: Record<string, string> = {
   "更换与装配操作需先拆下组件。": "Remove the component before replacing or reassembling it.",
   "当前部件不提供拆装。可在上方选择进水或排水组件作为操作目标。": "This part cannot be removed. Select the inlet or flush assembly above to work on it.",
   "学习提示 · 本地课程规则": "Learning hint · local course rules",
-  "拆卸前：关水 → 检查确认 → 排空 → 开盖。观察与检查无需先关水。": "Before removal: isolate supply → confirm isolation → drain → open lid. Observation and checks need no isolation.",
+  "拆卸前：关水 → 检查确认 → 排空 → 开盖。观察与检查无需先关水。": "Before removal: supply off → confirm isolation → drain → open lid. Observation and checks need no isolation.",
   "正常工作演示": "Normal operation demo",
   "工作状态验证": "Working-state check",
   "正在执行复测…": "Retest running…",

@@ -1,6 +1,11 @@
 // Local, presentation-only language preference. The simulation storage is never touched.
 const LOCALE_KEY = 'shouyihuo.locale.v1';
 const zh = {
+  renderEyebrow: '进一步检查工程实现',
+  renderTitle: '模拟负责时间推进，<br />渲染响应可见变化。',
+  renderDescription: '水流、镜头移动与部件过渡会请求绘制新帧；画面稳定后停止不必要的绘制。精简的视觉状态投影让日志、经过时间等更新不再唤醒静止场景。',
+  renderTradeoff: '<strong>设计取舍：</strong>按需渲染减少无用绘制，但必须正确响应每种可见变化。因此测试同时检查两个方向：静止时停止绘制，操作与模拟变化后重新开始绘制。',
+  renderEvidence: '测量方法、渲染取舍和限制见 <code>docs/RENDERING_REFINEMENT.md</code>。另外，有限的事件序列测试检查模拟的安全与持久化不变量；这并非对所有可能行为的形式化证明。',
   skip: '跳到主要内容', overview: '手艺活项目概览', navigation: '项目审阅导航', language: '界面语言',
   navEngineering: '工程设计', navEvidence: '验证证据', navTry: '体验原型',
   heroEyebrow: '交互系统 · Web3D · 软件验证',
@@ -30,7 +35,7 @@ const zh = {
   evidenceEyebrow: '已记录的证据', evidenceTitle: '可见的交互，明确的失败结果', evidenceNote: '以下为应用实际运行截图，不是界面设计稿。',
   explodedLink: '打开完整尺寸的爆炸视图截图', explodedAlt: '水箱的爆炸视图将部件在视觉上分离，便于观察内部结构。', explodedCaption: '02 / 显示方式不等于模拟状态', explodedDescription: '爆炸视图帮助理解结构；它不会执行拆卸，也不能绕过拆卸的前置条件。',
   reportLink: '打开完整尺寸的关键安全错误报告截图', reportAlt: '实际报告得分为 100 分，但显示琥珀色未合格结果，并保留关键安全错误。该尝试并未被判为合格。', reportCaption: '03 / 分数不是最终结论', reportDescription: '这次尝试获得了 100 分，但由于保留了关键安全错误，最终结果仍为未合格。',
-  validationTitle: '双语版本验收 · 2026 年 10 月 5 日', validationDescription: '本地化后的新一轮验证：检查业务规则、完整用户流程与语言切换。可在源码仓库复现命令并查看带日期的实际日志。', unitPassed: '单元测试通过', browserPassed: '浏览器测试通过',
+  validationTitle: '精修版本验收 · 2026 年 10 月 5 日', validationDescription: '本轮重新检查原有课程规则与双语完整流程，并验证静止时停止绘制、标签失效更新及真实 WebGL 上下文丢失。可在源码仓库复现命令并查看带日期的实际日志。', unitPassed: '单元测试通过', browserPassed: '浏览器测试通过',
   evidenceLimit: '类型检查与生产构建也已通过。浏览器验证覆盖完整流程、双语报告、记录持久化、非法拆卸拒绝及 390 至 1440 像素布局。这些结果验证已覆盖的软件行为，不代表学习效果、物理准确性或所有设备的兼容性。',
   walkthroughEyebrow: '约五分钟的审阅路径', walkthroughTitle: '体验一个完整的引导案例', launch: '进入应用 <span aria-hidden="true">↗</span>',
   walkthroughIntro: '本路径仅公开<strong>无法补水案例</strong>的答案。请使用引导训练体验完整交互。下面的控件名称对应当前语言；启动自动复测后，请等待它完成。',

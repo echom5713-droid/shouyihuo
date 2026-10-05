@@ -2,7 +2,7 @@
 
 This document generator is not part of the application runtime.
 Uses actual, dated application screenshots; no network assets.
-The default is the approved 5 October English workbench capture.
+The default is the verified 5 October refined English workbench capture.
 Optional SHOUYIHUO_BRIEF_SCREENSHOT and SHOUYIHUO_BRIEF_CAPTION override both.
 """
 from pathlib import Path
@@ -28,8 +28,8 @@ else:
  pdfmetrics.registerFontFamily('PortfolioSans', normal='PortfolioSans', bold='PortfolioSans-Bold')
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'docs/portfolio/Shouyihuo_Project_Brief.pdf'
-SCREENSHOT = Path(os.environ.get('SHOUYIHUO_BRIEF_SCREENSHOT', str(ROOT/'docs/screenshots/bilingual-2026-10-05/41-workbench-en-1440.png')))
-SCREENSHOT_CAPTION = os.environ.get('SHOUYIHUO_BRIEF_CAPTION', 'Actual English-interface WebGL workbench, recorded on 5 October 2026. The app defaults to English; the English / Chinese switch preserves the current attempt.')
+SCREENSHOT = Path(os.environ.get('SHOUYIHUO_BRIEF_SCREENSHOT', str(ROOT/'docs/screenshots/refinement-2026-10-05/41-workbench-en-1440.png')))
+SCREENSHOT_CAPTION = os.environ.get('SHOUYIHUO_BRIEF_CAPTION', 'Actual refined WebGL workbench, recorded on 5 October 2026. English is the default; the English / Chinese switch preserves the attempt and its assessment.')
 OUT.parent.mkdir(parents=True, exist_ok=True)
 W, H = 595.276, 841.89
 M, CW = 44, 507.276
@@ -71,7 +71,7 @@ def page(number,label):
  text('SHOUYIHUO / ENGINEERING PORTFOLIO',M,30,8,GREEN,'PortfolioSans-Bold')
  text(label,W-170,30,8,MUTED)
  line(783)
- text('Local MVP v0.2 | Bilingual edition | 5 October 2026',M,803,8,MUTED)
+ text('Local MVP v0.2 | Rendering refinement | 5 October 2026',M,803,8,MUTED)
  text(f'{number} / 3',W-M-24,803,8,MUTED)
  text('Source: github.com/echom5713-droid/shouyihuo',M,819,8,GREEN)
  c.linkURL('https://github.com/echom5713-droid/shouyihuo',(M,H-824,M+285,H-809),relative=0)
@@ -109,7 +109,7 @@ y+=197
 for num,title,body in [
  ('02','Determinism with bounded claims','The same initial state and event sequence produce the same outcome. The UI advances the model by 0.25 simulation seconds per tick; the reducer uses internal steps of at most 0.05 seconds. Water is normalised teaching state, not a measured hydraulic quantity.'),
  ('03','Safety is a gate, not a score deduction','Evidence, diagnosis, process and verification receive 25, 30, 25 and 20 points. Passing also requires correct diagnosis and treatment, complete verification and no critical safety error. Even a 100-point attempt may fail.'),
- ('04','Visual controls cannot bypass business rules','The 3D view reads the authoritative attempt. Cutaway, exploded view, camera focus and workspace expansion change presentation only. Model selection, the part list and the operation target share one selection.'),
+ ('04','A live simulation, an on-demand renderer','An explicit visual projection isolates geometry from elapsed-time and log updates. Camera, water and part transitions request frames until settled; active flow keeps drawing. Local procedural lighting separates materials without network assets. These changes never dispatch repair events or award points.'),
  ('05','Persistence preserves both progress and errors','Schema-validated localStorage keeps separate mode sessions and archives each completed attempt once by ID. The original attempt key and schema remain compatible. Locale is a separate preference; changing language cannot repair a fault or erase an error.')]:
  y=section(num,title,y);y=para(body,M,y)+19
 para('<b>Inspect in the repository:</b> src/domain/engine.ts, src/storage/local.ts, src/components/TankModel.tsx, tests/engine.test.ts and e2e/flows.spec.ts.',M,y,style='small')
@@ -117,23 +117,24 @@ c.showPage()
 
 page(3,'EVIDENCE AND REVIEW')
 text('Evidence with clear limits',M,77,25,GREEN,'PortfolioSans-Bold')
-y=para('Review the behaviour, the implementation and the recorded checks together.',M,91,style='lead')+19
+y=para('Review the behaviour, the implementation and the recorded checks together.',M,91,style='lead')+15
 y=section('06','Verification record',y)
-y=para('The <b>5 October 2026 bilingual run</b> passed type checking, <b>47 unit tests</b>, <b>18 browser tests</b> and a production build. The final production-preview status, actual environment, logs and fresh screenshots are recorded in <b>docs/portfolio/VALIDATION.md</b>. Earlier checks are retained separately as dated historical evidence.',M,y)+12
-y=para('Browser evidence includes real Canvas selection, all three complete scenario paths, persistence, rejected operations, retained safety errors, legacy-store compatibility and narrow-screen layouts. WebGL was exercised in Linux Chromium through SwiftShader software rendering.',M,y)+17
+y=para('The <b>5 October 2026 refinement run</b> passed type checking, <b>56 unit tests</b>, <b>21 browser tests</b> and a production build. Logs, software-WebGL checks and fresh desktop/mobile captures are in <b>docs/portfolio/VALIDATION.md</b>. Earlier results remain dated historical evidence.',M,y)+12
+y=para('Nine invariant tests exercise 3,888 seeded state transitions and 1,944 persisted continuation steps. Browser tests cover all three cases, real mesh selection, safety rejection, old records, language changes, idle-render wake-up and live context loss.',M,y)+12
 y=section('07','A failure that changed the implementation',y)
-y=para('A viewport change exposed a Canvas sizing regression: the footer intercepted a retest click. The fix constrained the grid and Canvas container. The browser test kept a normal click, rather than forcing it through the obstruction. The failure screenshot and corrective record are retained.',M,y)+18
+y=para('Demand rendering exposed a label-cache bug: a stationary cutaway change could retain stale occlusion. The correction includes geometry changes in cache invalidation and updates world matrices before raycasting. The browser regression toggles the wall and checks actual label visibility.',M,y)+12
+y=para('In one matched idle scene, actual WebGL draw calls changed from 5,180 over approximately 3 seconds to zero. The simulation clock continued advancing. This demonstrates removed idle drawing; it does not measure frame rate, energy use or native-GPU performance.',M,y)+12
 y=section('08','Review in five minutes',y)
 for head,body in [
  ('Run','Use npm ci and npm run dev from the project folder. Open http://127.0.0.1:5173/review/ for the English-default bilingual introduction.'),
  ('Interact','Follow docs/portfolio/REVIEWER_GUIDE.md to complete the supply-valve case, inspect a score report and refresh the saved record.'),
  ('Challenge','Start a new attempt, request premature removal and inspect the rejected action. Complete the case to see why a numeric score alone cannot pass.')]:
- y=para(f'<b>{head}.</b> {body}',M,y)+9
-y+=19
+ y=para(f'<b>{head}.</b> {body}',M,y)+7
+y+=12
 y=section('09','Contribution and limitations',y)
 y=para('<b>AI-assisted development:</b> the project owner supplied the product brief and acceptance constraints. OpenAI Codex contributed substantial implementation, testing, debugging and documentation. The artefact does not imply unaided solo coding; personal contribution claims require their own evidence.',M,y)+12
 y=para('No professional repair review, learner study, physical validation or improved-learning claim is made. Native-GPU performance, every browser/device and physical printing have not been established. Local records are editable and are not formal certificates. The project demonstrates software design and verification practices, not machine learning or computational fluid dynamics.',M,y)+13
-para('<b>Reading order:</b> README.md → TECHNICAL_CASE_STUDY.md → VALIDATION.md → source and tests. Contribution details: PROVENANCE.md. All documentation filenames after README are under docs/portfolio/.',M,y,style='small')
+para('<b>Reading order:</b> README.md, docs/RENDERING_REFINEMENT.md, the case study and validation report in docs/portfolio/, then source and tests. Contribution details: docs/portfolio/PROVENANCE.md.',M,y,style='small')
 c.save()
 shutil.copyfile(OUT, ROOT/'public/review/Shouyihuo_Project_Brief.pdf')
 print(OUT)

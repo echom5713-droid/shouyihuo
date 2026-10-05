@@ -4,14 +4,14 @@
 
 Shouyihuo (手艺活, “craft skills”) turns a small teaching scenario into an inspectable software system: a learner explores a simplified gravity-fed toilet cistern, gathers evidence, diagnoses a fault, performs simulated actions and verifies the result. The workbench runs in the browser, with no backend, account or API key.
 
-**Local MVP v0.2 · Bilingual portfolio edition · English by default · 5 October 2026**
+**Local MVP v0.2 · Rendering and interaction refinement · English by default · 5 October 2026**
 
 [Public source repository](https://github.com/echom5713-droid/shouyihuo)  
-[中文运行说明](README.zh-CN.md) · [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) · [Five-minute review guide](docs/portfolio/REVIEWER_GUIDE.md) · [Project brief (PDF)](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [Validation evidence](docs/portfolio/VALIDATION.md)
+[中文运行说明](README.zh-CN.md) · [Technical case study](docs/portfolio/TECHNICAL_CASE_STUDY.md) · [Five-minute review guide](docs/portfolio/REVIEWER_GUIDE.md) · [Project brief (PDF)](docs/portfolio/Shouyihuo_Project_Brief.pdf) · [Validation evidence](docs/portfolio/VALIDATION.md) · [Rendering decisions](docs/RENDERING_REFINEMENT.md)
 
-![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/bilingual-2026-10-05/41-workbench-en-1440.png)
+![Actual Shouyihuo v0.2 workbench: 3D cistern, evidence collection and contextual operations](docs/screenshots/refinement-2026-10-05/41-workbench-en-1440.png)
 
-*Actual English-interface WebGL capture from 5 October 2026. The application starts in English and supports an English / 中文 switch. [Validation](docs/portfolio/VALIDATION.md) separates bilingual checks from earlier runs.*
+*Actual refined English-interface WebGL capture from 5 October 2026. The application starts in English and supports an English / 中文 switch. [Validation](docs/portfolio/VALIDATION.md) separates this refinement from earlier runs.*
 
 ## What to inspect first
 
@@ -43,9 +43,10 @@ This is a bounded software-engineering prototype. It is **not** computational fl
 - **Three modes:** structure exploration, guided practice and independent assessment. Independent assessment locks the first diagnosis; guided practice permits retries.
 - **Real WebGL model:** procedural tank cavity, lid, inlet, float, drain, overflow, supply valve and water. Rotate, zoom, select, inspect a cutaway, explode the view, focus a part and look down into the tank.
 - **Connected visual state:** water level, flow indicators, valve direction and component assembly reflect the reducer state.
+- **Rendering refinement:** the scene requests frames for visible changes and settles when idle. Procedurally generated lighting improves material separation without external environment maps. [The engineering note](docs/RENDERING_REFINEMENT.md) explains invalidation, memoisation and their correctness risks.
 - **A complete attempt:** observe → diagnose → simulate treatment → retest → explain the score → save locally.
 - **Failure handling:** illegal disassembly is rejected and recorded, corrupt storage is reported, and unavailable WebGL has an explicit 2D fallback.
-- **UI refinement:** stage-specific action hierarchy, persistent safety feedback, keyboard focus handling, responsive layouts and a workspace expansion that preserves the same attempt and Canvas.
+- **UI refinement:** stage-specific action hierarchy, readable safety feedback, keyboard focus handling, responsive layouts and a workspace expansion that preserves the same attempt and Canvas. A clearer component inspector separates the current action from optional technical explanation.
 - **Bilingual presentation:** English by default, with an English / 中文 switch for the application and review page. Language changes affect labels and explanations, not case IDs, events, assessment or progress.
 
 The 25/30/25/20 score covers evidence, diagnosis, process and verification. Passing additionally requires at least 80 points, a correct diagnosis and repair, all applicable verification conditions and **no critical safety error**. A score of 100 can therefore still fail. [See the rule explanation](docs/portfolio/TECHNICAL_CASE_STUDY.md).
@@ -82,7 +83,7 @@ npm run preview
 
 Use `E2E_SCREENSHOT_DIR` and `E2E_VALIDATION_DIR` to select new evidence directories instead of replacing the historical v0.2 captures. Shell-specific examples and the actual current results are in [Validation](docs/portfolio/VALIDATION.md).
 
-The **5 October bilingual run** passed type checking, **47 unit tests**, **18 browser tests** and a production build. [Validation](docs/portfolio/VALIDATION.md) records the final production-preview status separately. Earlier September and pre-localisation October results remain dated historical evidence. Tests demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
+The **5 October refinement run** passed type checking, **56 unit tests**, **21 browser tests (6.3 minutes)** and a production build. Nine new invariant tests exercise 3,888 deterministic transitions and 1,944 persisted continuation steps; three new browser tests check idle-render wake-up, label invalidation and live WebGL context loss. The [validation report](docs/portfolio/VALIDATION.md) retains the earlier 47/18 bilingual result as historical evidence. Tests demonstrate the checked behaviours, not learning effectiveness or universal hardware compatibility.
 
 ## Source map
 

@@ -1,0 +1,117 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:32) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:45) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:79) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:55:06 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:55:11 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  1 e2e/refinement.spec.ts:49:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes (23.5s)
+(node:165) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:55:29 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:55:31 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✘  2 e2e/refinement.spec.ts:82:1 › reduced-motion labels update on explosion and language changes without changing an attempt (15.9s)
+(node:247) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 6:55:45 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:55:49 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 6:55:53 PM [vite] (client) [console.warn] THREE.WebGLRenderer: WEBGL_lose_context extension not supported.
+  ✓  3 e2e/refinement.spec.ts:109:1 › a real WebGL context loss preserves the attempt and leaves component checks operable (9.2s)
+
+
+  1) e2e/refinement.spec.ts:49:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator: locator('canvas')
+    Expected: "false"
+    Timeout: 12000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveAttribute" locator('canvas') with timeout 12000ms
+      - waiting for locator('canvas')
+        - locator resolved to <canvas width="818" height="420" data-focus-part="" data-draw-calls="72" data-camera-view="top" data-triangles="31708" data-label-layouts="30" data-render-loop="demand" data-camera-moving="true" data-rendered-frames="61" data-engine="three.js r186" data-camera-position="1.63,6.55,4.62" data-camera-target="-0.10,1.37,-0.27" aria-label="Interactive 3D cistern: rotate, zoom and select components">…</canvas>
+        - unexpected value "true"
+        - locator resolved to <canvas width="818" height="420" data-focus-part="" data-draw-calls="72" data-camera-view="top" data-triangles="31708" data-label-layouts="32" data-render-loop="demand" data-camera-moving="true" data-rendered-frames="63" data-engine="three.js r186" data-camera-position="1.35,7.48,3.75" data-camera-target="-0.09,1.35,-0.37" aria-label="Interactive 3D cistern: rotate, zoom and select components">…</canvas>
+        - unexpected value "true"
+        - locator resolved to <canvas width="818" height="420" data-focus-part="" data-draw-calls="72" data-camera-view="top" data-triangles="31708" data-label-layouts="35" data-render-loop="demand" data-camera-moving="true" data-rendered-frames="66" data-engine="three.js r186" data-camera-position="0.96,8.76,2.53" data-camera-target="-0.08,1.32,-0.51" aria-label="Interactive 3D cistern: rotate, zoom and select components">…</canvas>
+        2 × unexpected value "true"
+          - locator resolved to <canvas width="818" height="420" data-focus-part="" data-draw-calls="72" data-camera-view="top" data-triangles="31708" data-label-layouts="38" data-render-loop="demand" data-camera-moving="true" data-rendered-frames="69" data-engine="three.js r186" data-camera-position="0.67,9.75,1.61" data-camera-target="-0.07,1.30,-0.61" aria-label="Interactive 3D cistern: rotate, zoom and select components">…</canvas>
+        - unexpected value "true"
+        - locator resolved to <canvas>…</canvas>
+        - unexpected value "null"
+
+
+      60 |   const initialPosition = await page.locator('canvas').getAttribute('data-camera-position');
+      61 |   const idleCount = await drawCount(page);
+    > 62 |   await button(page, 'Top view').click();
+         |                                        ^
+      63 |   await expect(page.locator('canvas')).toHaveAttribute('data-camera-moving', 'false');
+      64 |   expect(await page.locator('canvas').getAttribute('data-camera-position')).not.toBe(initialPosition);
+      65 |   expect(await drawCount(page)).toBeGreaterThan(idleCount);
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/refinement.spec.ts:62:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/refinement.spec.ts:82:1 › reduced-motion labels update on explosion and language changes without changing an attempt 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('anchor-inlet')
+    Expected: "true"
+    Received: "false"
+    Timeout:  12000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('anchor-inlet') with timeout 12000ms
+      - waiting for getByTestId('anchor-inlet')
+        27 × locator resolved to <button type="button" tabindex="-1" class="chosen" data-x="295.7" data-y="137.3" aria-hidden="true" data-visible="false" data-testid="anchor-inlet">…</button>
+           - unexpected value "false"
+
+
+      89 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'true');
+      90 |   await button(page, 'Cutaway').click();
+    > 91 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'false');
+         |                                                  ^
+      92 |   await button(page, 'Cutaway').click();
+      93 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'true');
+      94 |   await button(page, 'Exploded view').click();
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/refinement.spec.ts:91:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e/refinement.spec.ts:49:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes 
+    e2e/refinement.spec.ts:82:1 › reduced-motion labels update on explosion and language changes without changing an attempt 
+  1 passed (53.1s)

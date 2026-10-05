@@ -143,12 +143,12 @@ function Home({ records, sessions, onStart }: { records: Attempt[]; sessions: Pa
     <div className="page-eyebrow"><span>{t("课程 001")}</span><span className="eyebrow-line" />{t("居家设施 · 基础认知")}</div>
     <section className="course-hero">
       <div className="hero-copy">
-        <div className="pill">{t("普通非电动马桶水箱")}</div>
+        <div className="course-kicker">{t("普通非电动马桶水箱")}</div>
         <h1>{t("水箱结构与")}<br />{t("基础故障诊断")}<span className="title-period">{t("。")}</span></h1>
         <p className="hero-intro">{t("在可交互的 3D 水箱中，练习观察结构、收集证据、判断原因与验证处理结果。")}</p>
         <div className="hero-facts"><span><Icon name="cube" />{t("9 个结构部件")}</span><span><Icon name="book" />{t("3 个教学情境")}</span><span><Icon name="shield" />{t("无需注册")}</span></div>
         <div className="hero-entry">
-          <div className="hero-entry-heading"><h2>{t("选择练习情境")}</h2><span>{t("用于引导训练与独立测评")}</span></div>
+          <div className="hero-entry-heading"><h2><span className="entry-number" aria-hidden="true">01—03</span>{t("选择练习情境")}</h2><span>{t("用于引导训练与独立测评")}</span></div>
           <div className="case-options" role="group" aria-label={t("选择教学情境")}>{Object.values(CASES).map(c => <button className={caseId === c.id ? 'selected' : ''} aria-pressed={caseId === c.id} key={c.id} onClick={() => setCaseId(c.id)}><span>{c.index}</span>{t(c.symptom)}<Icon name={caseId === c.id ? 'check' : 'chevron'} size={16} /></button>)}</div>
           <div className="start-buttons home-mode-actions">
             <button className="button primary" onClick={() => onStart('explore', caseId, true)}><Icon name="cube" />{t("认识结构")}</button>
@@ -198,7 +198,7 @@ function Report({ attempt: a, onStart, onCertificate }: { attempt: Attempt; onSt
         {!score.passed && <ul className="report-reasons">{score.reasons.map(reason => <li key={reason}>{t(reason)}</li>)}</ul>}
         <p>{t("情境")}{c.index} · {t(c.symptom)}{t("。")} {a.mode === 'assessment' ? t("独立测评保留首次诊断。") : t("引导训练成绩仅用于学习反馈。")}{t("用时约")}{Math.max(1, Math.ceil(a.elapsed / 60))} {t("分钟，仅供参考。")}</p>
       </div>
-      <div className="score-dial" style={{ '--score': `${score.total}%` } as React.CSSProperties} aria-label={`${t("成绩")}: ${score.total} / 100`}><div><strong data-testid="total-score">{score.total}</strong><span>/ 100</span></div></div>
+      <div className="score-dial" aria-label={`${t("成绩")}: ${score.total} / 100`}><span className="score-caption">{t("成绩")}</span><div><strong data-testid="total-score">{score.total}</strong><span>/ 100</span></div></div>
     </div>
     <section className="review-priorities" aria-labelledby="review-priorities-title">
       <div className="review-heading"><div><span className="eyebrow">{t("基于本次记录")}</span><h2 id="review-priorities-title">{t("下一次优先练习")}</h2></div><button className={`button ${score.passed ? '' : 'primary'}`} onClick={() => onStart('guided', a.caseId, true)}>{t("重新训练")}<Icon name="arrow" size={16} /></button></div>

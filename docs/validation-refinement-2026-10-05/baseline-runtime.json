@@ -1,0 +1,20 @@
+{
+  "scope": "Pre-refinement runtime baseline, unchanged English-first v0.2 source copy",
+  "date": "2026-10-05T09:53:08.430Z",
+  "url": "http://127.0.0.1:5174/#/lab/assessment",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "renderer": "webgl",
+  "idleWindowMs": 3004,
+  "idleDrawCalls": 5180,
+  "externalRequests": [],
+  "pageErrors": [],
+  "browserVersion": "153.0.8010.0",
+  "screenshots": [
+    "00-before-home-en-1440.png",
+    "01-before-workbench-en-1440.png"
+  ],
+  "note": "WebGL draw call count instrumented at drawArrays/drawElements; observational software-renderer comparison, not a hardware performance benchmark."
+}

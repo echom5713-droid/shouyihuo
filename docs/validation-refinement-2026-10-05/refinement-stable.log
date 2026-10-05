@@ -1,0 +1,115 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:31) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:44) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:78) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:10:55 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:10:56 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+[WebServer] 8:10:58 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:10:58 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+  ✘  1 e2e/refinement.spec.ts:50:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes (26.1s)
+(node:158) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:11:21 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:11:22 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+[WebServer] 8:11:23 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:11:24 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+  ✘  2 e2e/refinement.spec.ts:90:1 › reduced-motion labels update on explosion and language changes without changing an attempt (16.1s)
+(node:238) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 8:11:38 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:11:38 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+[WebServer] 8:11:41 PM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 8:11:41 PM [vite] (client) [console.warn] THREE.WebGLShadowMap: PCFSoftShadowMap has been removed. Using PCFShadowMap instead.
+[WebServer] 8:11:46 PM [vite] (client) [console.warn] THREE.WebGLRenderer: WEBGL_lose_context extension not supported.
+  ✓  3 e2e/refinement.spec.ts:122:1 › a real WebGL context loss preserves the attempt and leaves component checks operable (9.5s)
+
+
+  1) e2e/refinement.spec.ts:50:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('tank-model')
+    Expected: "open"
+    Received: "closed"
+    Timeout:  12000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('tank-model') with timeout 12000ms
+      - waiting for getByTestId('tank-model')
+        28 × locator resolved to <div class="tank-model " data-supply="closed" data-selected="inlet" data-renderer="webgl" data-testid="tank-model" data-water-level="0.060" data-reduced-motion="false" data-inlet-installed="true" data-drain-installed="true">…</div>
+           - unexpected value "closed"
+
+
+      77 |   const beforeWater = Number(await page.getByTestId('tank-model').getAttribute('data-water-level'));
+      78 |   await button(page, 'Restore supply').click();
+    > 79 |   await expect(page.getByTestId('tank-model')).toHaveAttribute('data-supply', 'open');
+         |                                                ^
+      80 |   await expect.poll(async () => Number(await page.getByTestId('tank-model').getAttribute('data-water-level'))).toBeGreaterThan(beforeWater + 0.15);
+      81 |   expect(await drawCount(page)).toBeGreaterThan(beforeFlow);
+      82 |   await expect.poll(async () => Number(await page.getByTestId('tank-model').getAttribute('data-water-level'))).toBeCloseTo(LEVEL.normal, 2);
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/refinement.spec.ts:79:48
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/refinement-on-demand-WebGL-c6b67-era-and-real-supply-changes/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) e2e/refinement.spec.ts:90:1 › reduced-motion labels update on explosion and language changes without changing an attempt 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByTestId('anchor-inlet')
+    Expected: "false"
+    Received: "true"
+    Timeout:  12000ms
+
+    Call log:
+      - Expect "toHaveAttribute" getByTestId('anchor-inlet') with timeout 12000ms
+      - waiting for getByTestId('anchor-inlet')
+        28 × locator resolved to <button tabindex="0" type="button" class="chosen" data-x="325.8" data-y="175.1" data-visible="true" aria-hidden="false" data-testid="anchor-inlet">…</button>
+           - unexpected value "true"
+
+
+       96 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'true');
+       97 |   await button(page, 'Cutaway').click();
+    >  98 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'false');
+          |                                                  ^
+       99 |   await button(page, 'Cutaway').click();
+      100 |   await expect(page.getByTestId('anchor-inlet')).toHaveAttribute('data-visible', 'true');
+      101 |   await button(page, 'Exploded view').click();
+        at /workspace/scratch/fb9e791b5de1/shouyihuo-local/e2e/refinement.spec.ts:98:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/refinement-reduced-motion--5c6ed-without-changing-an-attempt/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    e2e/refinement.spec.ts:50:1 › on-demand WebGL sleeps at rest and wakes for camera and real supply changes 
+    e2e/refinement.spec.ts:90:1 › reduced-motion labels update on explosion and language changes without changing an attempt 
+  1 passed (54.9s)
