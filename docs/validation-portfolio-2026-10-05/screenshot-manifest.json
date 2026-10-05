@@ -1,0 +1,188 @@
+[
+  {
+    "file": "01-course-1440.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 203145
+  },
+  {
+    "file": "01b-course-1280.png",
+    "width": 1280,
+    "height": 827,
+    "bytes": 200053
+  },
+  {
+    "file": "01c-course-1366.png",
+    "width": 1366,
+    "height": 827,
+    "bytes": 201690
+  },
+  {
+    "file": "02-workbench-1440.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 241640
+  },
+  {
+    "file": "03-workbench-1280.png",
+    "width": 1280,
+    "height": 800,
+    "bytes": 210310
+  },
+  {
+    "file": "04-report-1280.png",
+    "width": 1280,
+    "height": 1429,
+    "bytes": 204472
+  },
+  {
+    "file": "05-report-1440.png",
+    "width": 1440,
+    "height": 1429,
+    "bytes": 206101
+  },
+  {
+    "file": "05b-report-1366.png",
+    "width": 1366,
+    "height": 1429,
+    "bytes": 205724
+  },
+  {
+    "file": "06-certificate-print.png",
+    "width": 1440,
+    "height": 915,
+    "bytes": 69270
+  },
+  {
+    "file": "07-history-1440.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 86676
+  },
+  {
+    "file": "07b-history-1366.png",
+    "width": 1366,
+    "height": 768,
+    "bytes": 85028
+  },
+  {
+    "file": "08-safety-report.png",
+    "width": 1440,
+    "height": 1451,
+    "bytes": 221847
+  },
+  {
+    "file": "09-exploded-model.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 234025
+  },
+  {
+    "file": "10-drained-model.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 224953
+  },
+  {
+    "file": "10a-full-model.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 227197
+  },
+  {
+    "file": "11-mobile-390.png",
+    "width": 390,
+    "height": 2475,
+    "bytes": 198911
+  },
+  {
+    "file": "12-overflow-model.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 231011
+  },
+  {
+    "file": "14-focused-component.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 282168
+  },
+  {
+    "file": "15-top-view.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 215301
+  },
+  {
+    "file": "16-expanded-workspace.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 112623
+  },
+  {
+    "file": "17-workbench-1024x768.png",
+    "width": 1024,
+    "height": 768,
+    "bytes": 158372
+  },
+  {
+    "file": "17-workbench-1280x800.png",
+    "width": 1280,
+    "height": 800,
+    "bytes": 210150
+  },
+  {
+    "file": "17-workbench-1366x768.png",
+    "width": 1366,
+    "height": 768,
+    "bytes": 204416
+  },
+  {
+    "file": "17-workbench-1440x900.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 234574
+  },
+  {
+    "file": "18-mobile-390.png",
+    "width": 390,
+    "height": 2178,
+    "bytes": 182094
+  },
+  {
+    "file": "19-guided-workbench-1440.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 171310
+  },
+  {
+    "file": "19b-guided-workbench-1366.png",
+    "width": 1366,
+    "height": 768,
+    "bytes": 201339
+  },
+  {
+    "file": "20-safety-error-workbench.png",
+    "width": 1440,
+    "height": 902,
+    "bytes": 239707
+  },
+  {
+    "file": "23-production-preview.png",
+    "width": 1440,
+    "height": 900,
+    "bytes": 200818
+  },
+  {
+    "file": "30-review-desktop.png",
+    "width": 1440,
+    "height": 5664,
+    "bytes": 1065480
+  },
+  {
+    "file": "31-review-mobile.png",
+    "width": 390,
+    "height": 7269,
+    "bytes": 661039
+  }
+]

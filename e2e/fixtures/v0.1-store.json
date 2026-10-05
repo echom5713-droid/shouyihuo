@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "nickname": "旧版学习者",
+  "sessions": {
+    "guided": {
+      "id": "SYH-v01-active-compat",
+      "mode": "guided",
+      "caseId": "seal",
+      "startedAt": "2026-09-26T08:00:00.000Z",
+      "endedAt": null,
+      "status": "active",
+      "supplyOpen": true,
+      "isolatedConfirmed": false,
+      "water": 0.44,
+      "drainRemaining": 0,
+      "lidOpen": false,
+      "defects": {
+        "seal": true,
+        "inlet": false
+      },
+      "assembly": {
+        "drain": {
+          "installed": true,
+          "replaced": false
+        },
+        "inlet": {
+          "installed": true,
+          "replaced": false
+        }
+      },
+      "evidence": {
+        "water": {
+          "id": "water",
+          "text": "当前低于正常工作水位；可见持续补水。",
+          "step": 1
+        }
+      },
+      "diagnosis": null,
+      "diagnosisTries": 0,
+      "firstDiagnosis": null,
+      "process": {
+        "isolated": false,
+        "confirmed": false,
+        "drained": false,
+        "repaired": false,
+        "assembled": false
+      },
+      "logs": [
+        {
+          "step": 0,
+          "kind": "info",
+          "text": "情境 01 已开始。请先观察并收集证据。"
+        },
+        {
+          "step": 1,
+          "text": "已记录：当前低于正常工作水位；可见持续补水。",
+          "kind": "success"
+        },
+        {
+          "step": 2,
+          "text": "拆卸被阻止，尚需：打开箱盖、关闭供水阀、关闭供水后检查确认、模拟排水并等待排空。",
+          "kind": "safety"
+        }
+      ],
+      "safetyErrors": [
+        {
+          "code": "unsafe-remove-drain",
+          "text": "拆卸被阻止，尚需：打开箱盖、关闭供水阀、关闭供水后检查确认、模拟排水并等待排空。",
+          "step": 2
+        }
+      ],
+      "retest": {
+        "phase": "idle",
+        "elapsed": 0,
+        "checks": {
+          "assembly": false,
+          "supply": false,
+          "stable": false,
+          "cycle": false
+        },
+        "message": "尚未复测"
+      },
+      "feedback": "拆卸被阻止，尚需：打开箱盖、关闭供水阀、关闭供水后检查确认、模拟排水并等待排空。",
+      "elapsed": 0,
+      "step": 2
+    }
+  },
+  "records": [
+    {
+      "id": "SYH-v01-completed-compat",
+      "mode": "assessment",
+      "caseId": "supply",
+      "startedAt": "2026-09-26T08:00:00.000Z",
+      "endedAt": "2026-09-26T08:05:00.000Z",
+      "status": "completed",
+      "supplyOpen": true,
+      "isolatedConfirmed": false,
+      "water": 0.64,
+      "drainRemaining": 0,
+      "lidOpen": false,
+      "defects": {
+        "seal": false,
+        "inlet": false
+      },
+      "assembly": {
+        "drain": {
+          "installed": true,
+          "replaced": false
+        },
+        "inlet": {
+          "installed": true,
+          "replaced": false
+        }
+      },
+      "evidence": {
+        "water": {
+          "id": "water",
+          "text": "当前低于正常工作水位；未见进水。",
+          "step": 1
+        },
+        "supply": {
+          "id": "supply",
+          "text": "供水阀处于关闭状态，已确认隔离。",
+          "step": 2
+        },
+        "inlet": {
+          "id": "inlet",
+          "text": "水位低于工作水位，进水组件当前没有水流。",
+          "step": 3
+        }
+      },
+      "diagnosis": "supply",
+      "diagnosisTries": 1,
+      "firstDiagnosis": "supply",
+      "process": {
+        "isolated": false,
+        "confirmed": true,
+        "drained": false,
+        "repaired": true,
+        "assembled": false
+      },
+      "logs": [
+        {
+          "step": 0,
+          "kind": "info",
+          "text": "情境 03 已开始。请先观察并收集证据。"
+        },
+        {
+          "step": 1,
+          "text": "已记录：当前低于正常工作水位；未见进水。",
+          "kind": "success"
+        },
+        {
+          "step": 2,
+          "text": "已记录：供水阀处于关闭状态，已确认隔离。",
+          "kind": "success"
+        },
+        {
+          "step": 3,
+          "text": "已记录：水位低于工作水位，进水组件当前没有水流。",
+          "kind": "success"
+        },
+        {
+          "step": 4,
+          "text": "诊断正确。本情境的组件没有损坏，供水阀处于关闭状态。检查并恢复供水，再验证补水与排水循环即可；无需更换零件。",
+          "kind": "success"
+        },
+        {
+          "step": 5,
+          "text": "供水已恢复，观察水位变化；还需要运行复测。",
+          "kind": "info"
+        },
+        {
+          "step": 6,
+          "text": "复测已启动，将自动执行稳定性观察与一次排水补水循环。",
+          "kind": "info"
+        },
+        {
+          "step": 7,
+          "text": "复测通过：完整工作循环已验证。",
+          "kind": "success"
+        },
+        {
+          "step": 8,
+          "text": "本次尝试已结束并保存。报告包含完成项、遗漏项与错误记录。",
+          "kind": "info"
+        }
+      ],
+      "safetyErrors": [],
+      "retest": {
+        "phase": "passed",
+        "elapsed": 3,
+        "checks": {
+          "assembly": true,
+          "supply": true,
+          "stable": true,
+          "cycle": true
+        },
+        "message": "复测通过：补水停止、水位稳定，排水后可再次正常补水。"
+      },
+      "feedback": "本次尝试已结束并保存。报告包含完成项、遗漏项与错误记录。",
+      "elapsed": 18.00000000000012,
+      "step": 8
+    }
+  ]
+}

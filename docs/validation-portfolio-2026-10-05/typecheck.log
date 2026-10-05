@@ -1,0 +1,9 @@
+Command: npm run typecheck
+Date: 2026-10-05T08:38:09.503Z
+Exit: 0
+
+
+> shouyihuo-local@0.2.0 typecheck
+> tsc --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

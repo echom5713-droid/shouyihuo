@@ -1,0 +1,18 @@
+Command: npm run test
+Date: 2026-10-05T08:38:10.233Z
+Exit: 0
+
+
+> shouyihuo-local@0.2.0 test
+> vitest run
+
+
+ RUN  v5.0.2 /workspace/scratch/fb9e791b5de1/shouyihuo-local
+
+
+ Test Files  2 passed (2)
+      Tests  40 passed (40)
+   Start at  17:38:09
+   Duration  292ms (transform 52%, import 31%, tests 14%, worker 3%)
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

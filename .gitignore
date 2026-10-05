@@ -1,0 +1,12 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+tmp/
+__pycache__/
+*.pyc
+!docs/validation-portfolio-2026-10-05/*.log
+!docs/baseline-v0.1/*.log
+!docs/validation-v0.2/*.log

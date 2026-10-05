@@ -1,0 +1,35 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> shouyihuo-local@0.1.0 test:e2e
+> playwright test
+
+[WebServer] (node:180) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[WebServer] (node:193) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 7 tests using 1 worker
+
+(node:227) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] 10:09:28 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 10:09:31 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  1 e2e/flows.spec.ts:45:1 › 真实 WebGL、模型点击、完整密封案例、持久化、证明与本地请求 (23.2s)
+[WebServer] 10:09:51 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 10:09:52 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 10:09:53 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  2 e2e/flows.spec.ts:109:1 › 非法拆卸被阻止，刷新与复位不能消除关键错误，报告保留原因 (5.6s)
+[WebServer] 10:09:56 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 10:09:57 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  3 e2e/flows.spec.ts:125:1 › 进水控制情境：观察真实溢流、处理进水组件并通过完整复测 (17.1s)
+[WebServer] 10:10:13 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[WebServer] 10:10:14 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  4 e2e/flows.spec.ts:138:1 › 供水情境无需更换零件；引导与结构认知不生成合格证明 (13.6s)
+[WebServer] 10:10:27 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  5 e2e/flows.spec.ts:160:1 › 视图、正常排水、模型状态变化和窄屏折叠 (10.9s)
+[WebServer] 10:10:38 AM [vite] (client) [console.warn] THREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+  ✓  6 e2e/flows.spec.ts:191:1 › 损坏存储不白屏、确认后只清本项目数据 (4.0s)
+  ✓  7 e2e/flows.spec.ts:206:1 › WebGL 不可用时二维界面可操作 (1.4s)
+
+  7 passed (1.3m)
